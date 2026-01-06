@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile | Sugar & Stats</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        .profile-container {
+            max-width: 600px;
+            margin: 150px auto;
+            padding: 3rem;
+            background: white;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-icon {
+            font-size: 4rem;
+            color: var(--c-accent);
+            margin-bottom: 2rem;
+        }
+
+        .logout-btn {
+            margin-top: 2rem;
+            background: #ff5252;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 82, 82, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="profile-container">
+        <div class="profile-icon">🍪</div>
+        <h1 id="user-name">Welcome Back!</h1>
+        <p id="user-email" style="opacity: 0.7; margin: 1rem 0;"></p>
+        <div style="margin: 2rem 0; border-top: 1px solid #eee; padding-top: 2rem;">
+            <p>Your precision baking journey continues here.</p>
+        </div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+        <br>
+        <a href="../index.html"
+            style="display: inline-block; margin-top: 2rem; color: var(--c-accent); text-decoration: none; font-weight: 700;">←
+            Back to The Lab</a>
+    </div>
+
+    <script>
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) {
+            window.location.href = 'auth.html';
+        } else {
+            document.getElementById('user-name').textContent = `Welcome, ${user.name || 'Baker'}!`;
+            document.getElementById('user-email').textContent = user.email || '';
+        }
+
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = 'auth.html';
+        }
+    </script>
+</body>
+
+</html>

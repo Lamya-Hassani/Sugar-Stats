@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier Client | Sugar & Stats Admin</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --c-bg: #f8f9fa;
+            --c-text: #5D4037;
+            --c-accent: #D48C9D;
+            --c-white: #ffffff;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            --radius: 16px;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: var(--c-bg);
+            color: var(--c-text);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .form-container {
+            background: var(--c-white);
+            padding: 3rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            font-family: inherit;
+            outline: none;
+            transition: 0.3s;
+            box-sizing: border-box;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: var(--c-accent);
+        }
+
+        .btn-row {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        button {
+            padding: 1rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .cancel-btn {
+            background: #f0f0f0;
+            color: var(--c-text);
+        }
+
+        .save-btn {
+            background: var(--c-accent);
+            color: white;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .id-badge {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        input:disabled {
+            background: #f9f9f9;
+            cursor: not-allowed;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <h1>Modifier Profil Client</h1>
+        <div class="id-badge" id="display-id">ID: ...</div>
+
+        <form id="clientForm">
+            <input type="hidden" id="clientId">
+
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" disabled>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Nom Complet</label>
+                <input type="text" id="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Téléphone</label>
+                <input type="tel" id="phone">
+            </div>
+
+            <div class="form-group">
+                <label for="address">Adresse</label>
+                <textarea id="address" rows="3"></textarea>
+            </div>
+
+            <div class="btn-row">
+                <button type="button" class="cancel-btn" onclick="window.location.href='list.html'">Annuler</button>
+                <button type="submit" class="save-btn">Enregistrer les Modifications</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="../../../scripts/admin/clients.js"></script>
+    <script>
+        // Security Check
+        const user = JSON.parse(localStorage.getItem('authUser')) || JSON.parse(localStorage.getItem('user'));
+        if (!user || user.role !== 'admin') {
+            window.location.href = '../../auth.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await prefillClientForm();
+            const id = document.getElementById('clientId').value;
+            if (id) document.getElementById('display-id').textContent = `ID: ${id}`;
+        });
+
+        document.getElementById('clientForm').addEventListener('submit', (e) => {
+            saveClient(e);
+        });
+    </script>
+</body>
+
+</html>

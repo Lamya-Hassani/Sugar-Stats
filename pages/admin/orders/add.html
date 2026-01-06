@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saisie de Commande | Sugar & Stats Admin</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --c-bg: #f8f9fa;
+            --c-text: #5D4037;
+            --c-accent: #D48C9D;
+            --c-white: #ffffff;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            --radius: 16px;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: var(--c-bg);
+            color: var(--c-text);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .form-container {
+            background: var(--c-white);
+            padding: 3rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            font-family: inherit;
+            outline: none;
+            transition: 0.3s;
+            box-sizing: border-box;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: var(--c-accent);
+        }
+
+        /* Dynamic Items Section */
+        .items-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #eee;
+        }
+
+        .items-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .item-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 50px;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+
+        .add-item-btn {
+            background: #f0f0f0;
+            color: var(--c-text);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .remove-item-btn {
+            background: #fff5f5;
+            color: #ff5252;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .total-display {
+            background: var(--c-bg);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--c-accent);
+        }
+
+        .btn-row {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        button {
+            padding: 1rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .cancel-btn {
+            background: #f0f0f0;
+            color: var(--c-text);
+        }
+
+        .save-btn {
+            background: var(--c-accent);
+            color: white;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <h1>Saisie de Commande</h1>
+        <form id="orderForm">
+            <div class="form-group">
+                <label for="clientId">Sujet (Client)</label>
+                <select id="clientId" required>
+                    <option value="">Chargement des sujets...</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Statut Logistique</label>
+                <select id="status" required>
+                    <option value="En attente">En attente</option>
+                    <option value="En cours">En cours</option>
+                    <option value="Livré">Livré</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="orderDate">Date de la Commande</label>
+                <input type="date" id="orderDate">
+            </div>
+
+            <div class="items-section">
+                <div class="items-header">
+                    <label>Composition Scientifique (Items)</label>
+                    <button type="button" class="add-item-btn" onclick="addItemRow()">
+                        <i class="fas fa-plus"></i> Ajouter un Produit
+                    </button>
+                </div>
+                <div id="itemsContainer">
+                    <!-- Dynamic rows go here -->
+                </div>
+            </div>
+
+            <div class="total-display">
+                <label>Montant Total Prévisionnel</label>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="total-value">$</span>
+                    <input type="text" id="totalAmount" readonly
+                        style="border:none; background:transparent; font-size:1.5rem; font-weight:700; color:var(--c-accent); width:120px; text-align:right;">
+                </div>
+            </div>
+
+            <div class="btn-row">
+                <button type="button" class="cancel-btn" onclick="window.location.href='list.html'">Annuler</button>
+                <button type="submit" class="save-btn">Valider la Commande</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="../../../scripts/admin/orders.js"></script>
+    <script>
+        // Security Check
+        const user = JSON.parse(localStorage.getItem('authUser')) || JSON.parse(localStorage.getItem('user'));
+        if (!user || user.role !== 'admin') {
+            window.location.href = '../../auth.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            prefillOrderForm();
+        });
+
+        document.getElementById('orderForm').addEventListener('submit', (e) => {
+            saveOrder(e);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+[
+  {
+    "id_categorie": 1,
+    "libelle": "Viennoiserie",
+    "description": "Croissants, pains au chocolat, brioches..."
+  },
+  {
+    "id_categorie": 2,
+    "libelle": "Pain",
+    "description": "Baguettes, pains complets, pains spéciaux..."
+  },
+  {
+    "id_categorie": 3,
+    "libelle": "Pâtisserie",
+    "description": "Tartes, gâteaux, éclairs..."
+  },
+  {
+    "id_categorie": 4,
+    "libelle": "Boisson",
+    "description": "Boissons chaudes et froides"
+  },
+  {
+    "id_categorie": 5,
+    "libelle": "Muffins",
+    "description": "Muffins frais et gourmands"
+  }
+]

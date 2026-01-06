@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Sugar & Stats</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --c-bg: #f8f9fa;
+            --c-text: #5D4037;
+            --c-accent: #D48C9D;
+            --c-white: #ffffff;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            --radius: 16px;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: var(--c-bg);
+            color: var(--c-text);
+            margin: 0;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            height: 100vh;
+            background: var(--c-white);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.02);
+            padding: 2rem;
+            position: fixed;
+        }
+
+        .brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            color: var(--c-accent);
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            text-decoration: none;
+            color: var(--c-text);
+            border-radius: 12px;
+            transition: 0.3s;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--c-accent);
+            color: white;
+        }
+
+        /* Main Content */
+        .main {
+            margin-left: 260px;
+            padding: 3rem;
+            width: 100%;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--c-white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .stat-card h3 {
+            font-size: 0.9rem;
+            opacity: 0.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .action-card {
+            background: var(--c-white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .action-icon {
+            font-size: 2.5rem;
+            color: var(--c-accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid #ff5252;
+            color: #ff5252;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #ff5252;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="brand">Sugar & Stats</div>
+        <ul class="nav-links">
+            <li><a href="#" class="nav-link active"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="products/list.html" class="nav-link"><i class="fas fa-cookie"></i> Products</a></li>
+            <li><a href="clients/list.html" class="nav-link"><i class="fas fa-users"></i> Clients</a></li>
+            <li><a href="categories/list.html" class="nav-link"><i class="fas fa-tags"></i> Categories</a></li>
+            <li><a href="orders/list.html" class="nav-link"><i class="fas fa-box"></i> Orders</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <h1>Admin Dashboard</h1>
+            <div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Orders</h3>
+                <div class="value">128</div>
+            </div>
+            <div class="stat-card">
+                <h3>Revenue</h3>
+                <div class="value">$2,450</div>
+            </div>
+            <div class="stat-card">
+                <h3>Active Clients</h3>
+                <div class="value">45</div>
+            </div>
+        </div>
+
+        <h2>Quick Actions</h2>
+        <div class="quick-actions">
+            <a href="products/add.html" class="action-card">
+                <div class="action-icon"><i class="fas fa-plus-circle"></i></div>
+                <h3>Add New Product</h3>
+                <p>Add a new scientific masterpiece to the lab.</p>
+            </a>
+            <a href="products/list.html" class="action-card">
+                <div class="action-icon"><i class="fas fa-list"></i></div>
+                <h3>Manage Catalog</h3>
+                <p>View, edit, or remove existing products.</p>
+            </a>
+            <a href="clients/list.html" class="action-card">
+                <div class="action-icon"><i class="fas fa-user-gear"></i></div>
+                <h3>Review Clients</h3>
+                <p>Manage customer data and order history.</p>
+            </a>
+            <a href="categories/list.html" class="action-card">
+                <div class="action-icon"><i class="fas fa-tags"></i></div>
+                <h3>Manage Categories</h3>
+                <p>Organize your lab into taxonomic groups.</p>
+            </a>
+            <a href="orders/list.html" class="action-card">
+                <div class="action-icon"><i class="fas fa-box-open"></i></div>
+                <h3>Manage Orders</h3>
+                <p>Track deliveries and fulfill scientific cravings.</p>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Security Check
+        const user = JSON.parse(localStorage.getItem('authUser')) || JSON.parse(localStorage.getItem('user'));
+        if (!user || user.role !== 'admin') {
+            window.location.href = '../auth.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('authUser');
+            localStorage.removeItem('user');
+            window.location.href = '../auth.html';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products | Sugar & Stats Lab</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    /* … Garde exactement TOUT ton CSS actuel ici, inchangé … */
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="../index.html" class="logo">
+        <div
+          style="width: 40px; height: 40px; background: var(--c-rose); border-radius: 50%; display: grid; place-items: center;">
+          🍰</div>
+        Sugar & Stats <span>Lab</span>
+      </a>
+      <div class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="products.html" style="color: var(--c-rose);">Menu</a>
+        <a href="#about">The Science</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <div class="search-pill">
+          <span>🔍</span> Find a craving...
+        </div>
+        <a href="../cart.html" class="btn" style="position: relative;">
+          🛒 Cart
+          <span class="cart-count" id="navCartCount"
+                style="position: absolute; top: -8px; right: -8px; background: #EACDC2; color: #3E3634; width: 20px; height: 20px; border-radius: 50%; display: none; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700;">0</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="container">
+      <h1>Our Product Lab</h1>
+      <p>Every formula is tested, perfected, and ready to delight.</p>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="container">
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+      <div class="filter-categories">
+        <button class="filter-btn active" data-category="all">All Products</button>
+        <button class="filter-btn" data-category="1">Viennoiserie</button>
+        <button class="filter-btn" data-category="2">Pain</button>
+        <button class="filter-btn" data-category="3">Pâtisserie</button>
+        <button class="filter-btn" data-category="4">Boisson</button>
+      </div>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search products...">
+      </div>
+    </div>
+
+    <!-- LOADING STATE -->
+    <div id="loadingState" class="loading">
+      <div class="spinner"></div>
+      <p>Loading delicious products...</p>
+    </div>
+
+    <!-- PRODUCTS GRID -->
+    <div id="productsGrid" class="products-grid" style="display: none;">
+      <!-- Products will be dynamically inserted here -->
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div id="emptyState" class="empty-state" style="display: none;">
+      <h3>No products found</h3>
+      <p>Try adjusting your filters or search query.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-content">
+      <div class="logo">🍰 Sugar & Stats</div>
+      <div class="nav-links" style="font-size: 0.8rem;">
+        <a href="../index.html">Home</a>
+        <a href="products.html">Menu</a>
+        <a href="#service">Service</a>
+        <a href="#delivery">Delivery</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div style="text-align: center; margin-top: 2rem; font-size: 0.7rem; opacity: 0.7;">
+      © 2024 Sugar & Stats Bakery. All rights reserved.
+    </div>
+  </footer>
+
+  <script src="../scripts/cart.js"></script>
+  <script src="../scripts/products.js"></script>
+</body>
+</html>

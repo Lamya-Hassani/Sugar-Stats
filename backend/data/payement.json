@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "orderId": 1,
+        "clientId": 1,
+        "amount": 45.50,
+        "paymentMethod": "Carte Bancaire",
+        "paymentStatus": "Payé",
+        "paymentDate": "2026-01-02T10:30:00",
+        "transactionId": "TXN001234567"
+    },
+    {
+        "id": 2,
+        "orderId": 2,
+        "clientId": 2,
+        "amount": 28.00,
+        "paymentMethod": "Espèces",
+        "paymentStatus": "Payé",
+        "paymentDate": "2026-01-03T14:15:00",
+        "transactionId": "TXN001234568"
+    },
+    {
+        "id": 3,
+        "orderId": 3,
+        "clientId": 3,
+        "amount": 67.80,
+        "paymentMethod": "Carte Bancaire",
+        "paymentStatus": "En attente",
+        "paymentDate": "2026-01-04T09:00:00",
+        "transactionId": "TXN001234569"
+    }
+]

@@ -1,14 +1,295 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <title>Sugar & Stats</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <h1>Sugar & Stats - Backoffice</h1>
-  <p>Structure du projet en place. Le vrai contenu viendra ensuite.</p>
+<html lang="en">
 
-  <script src="app.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sugar & Stats | The Science of Sweetness</title>
+
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles/main.css">
+
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
+</head>
+<script>
+  // Auth Check
+  document.addEventListener('DOMContentLoaded', () => {
+    // Check both potential keys
+    const user = JSON.parse(localStorage.getItem('user')) || JSON.parse(localStorage.getItem('authUser'));
+    const loginBtn = document.getElementById('auth-btn');
+
+    if (user) {
+      // If user exists, change Login to Profile
+      if (loginBtn) {
+        loginBtn.textContent = 'Profile';
+        loginBtn.href = 'pages/profile.html';
+      }
+    }
+  });
+</script>
+
+<body>
+
+  <!-- Mouse Cursor Effect -->
+  <div class="mouse-effect">
+    <div class="circle"></div>
+    <div class="circle-follow"></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-inner">
+      <a href="#" class="navbar-brand">
+        Sugar <span>&</span> Stats
+      </a>
+      <nav>
+        <ul>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#lab">The Lab</a></li>
+          <li><a href="#story">Our Story</a></li>
+          <li><a href="#locations">Locations</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="pages/auth.html" class="login-btn" id="auth-btn">Login</a>
+        <a href="cart.html" id="cart-link" style="font-weight: 700; text-decoration: none; color: var(--c-text);">Cart
+          (<span id="cart-count">0</span>)</a>
+        <button class="ham-btn" id="mobile-toggle">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Loading Text -->
+  <h1 class="main-txt">Sugar & Stats</h1>
+
+  <!-- Hero Content (Fixed Background + Canvas) -->
+  <section class="banner">
+    <div class="banner-inner">
+
+      <!-- Top Left -->
+      <div class="top-desc">
+        <h5>Est. 2024</h5>
+        <h6>Casablanca, Morocco</h6>
+        <span></span>
+      </div>
+
+      <!-- Bottom Layout -->
+      <div class="bottom-desc">
+        <div class="left-desc">
+          <h1>%</h1>
+          <div class="desc-inner">
+            <h5>Precision Baking</h5>
+            <h6>Calculated Sweetness</h6>
+          </div>
+        </div>
+
+        <div class="middle-desc">
+          <h2>The Science of<br><i>Pure Delight.</i></h2>
+        </div>
+
+        <div class="right-desc">
+          <h1>01</h1>
+          <div class="desc-inner">
+            <span>Follow The Lab</span>
+            <ul>
+              <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+              <li><a href="#"><i class="fa-brands fa-tiktok"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Side Text -->
+  <span class="rotated-text">Interact to mix ingredients</span>
+
+  <!-- 3D Canvas (Fixed Position) -->
+  <canvas class="webgl" id="webgl"></canvas>
+
+  <!-- === NEW SECTIONS START HERE === -->
+  <!-- Note: Added 'spa-section' class to give background color so 3D icons hide behind them -->
+
+  <!-- Top Sellers -->
+  <section id="menu" class="section-pad spa-section reveal">
+    <div class="container">
+      <div class="section-header">
+        <h2>Scientific Selections</h2>
+        <p>Our most statistically significant flavors.</p>
+      </div>
+      <div class="product-grid">
+        <!-- Item 1 -->
+        <div class="product-card" data-id="1" data-name="Velvet Equation" data-price="4.50"
+          data-image="https://images.unsplash.com/photo-1550617931-e17a7b70dce2?q=80&w=2670&auto=format&fit=crop">
+          <img src="https://images.unsplash.com/photo-1550617931-e17a7b70dce2?q=80&w=2670&auto=format&fit=crop"
+            class="product-img" alt="Cupcake">
+          <div class="product-info">
+            <h4 class="product-title">Velvet Equation</h4>
+            <span class="product-price">$4.50</span>
+            <button class="btn btn-primary add-to-cart">Add to Cart</button>
+          </div>
+        </div>
+        <!-- Item 2 -->
+        <div class="product-card" data-id="2" data-name="Perfect Torus" data-price="3.50"
+          data-image="https://images.unsplash.com/photo-1551024601-564d6e67e211?q=80&w=2670&auto=format&fit=crop">
+          <img src="https://images.unsplash.com/photo-1551024601-564d6e67e211?q=80&w=2670&auto=format&fit=crop"
+            class="product-img" alt="Donut">
+          <div class="product-info">
+            <h4 class="product-title">Perfect Torus</h4>
+            <span class="product-price">$3.50</span>
+            <button class="btn btn-primary add-to-cart">Add to Cart</button>
+          </div>
+        </div>
+        <!-- Item 3 -->
+        <div class="product-card" data-id="3" data-name="Sourdough X" data-price="8.00"
+          data-image="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=2672&auto=format&fit=crop">
+          <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=2672&auto=format&fit=crop"
+            class="product-img" alt="Bread">
+          <div class="product-info">
+            <h4 class="product-title">Sourdough X</h4>
+            <span class="product-price">$8.00</span>
+            <button class="btn btn-primary add-to-cart">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Lab / About -->
+  <section id="lab" class="section-pad spa-section reveal">
+    <div class="container lab-layout">
+      <div>
+        <img src="https://images.unsplash.com/photo-1556910103-1c02745a30bf?q=80&w=2670&auto=format&fit=crop"
+          class="lab-img" alt="Baker">
+      </div>
+      <div>
+        <h2>The Laboratory</h2>
+        <p style="margin-bottom: 1.5rem; font-size: 1.1rem;">
+          We don't just bake; we calibrate. At Sugar & Stats, every gram of flour and degree of heat is measured to
+          ensure consistent euphoria.
+        </p>
+        <p style="margin-bottom: 2rem; color: #8a6a64;">
+          Our "Stats" aren't just numbers—they are the exact temperatures required to release the oils in rosemary, or
+          the precise hydration needed for the perfect sourdough crumb.
+        </p>
+        <a href="#story" class="btn btn-primary">Read Our Methodology</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Story -->
+  <section id="story" class="section-pad spa-section reveal" style="background-color: #fff;">
+    <div class="container" style="text-align: center; max-width: 800px;">
+      <h2>Our Story</h2>
+      <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem;">
+        Founded in 2024 in the heart of Casablanca, Sugar & Stats was born from a simple question:
+        <em>Can science make food taste like love?</em>
+      </p>
+      <p style="color: #8a6a64;">
+        We replaced "a pinch of this" with "0.05 grams of that." The result is a bakery where nostalgia meets precision
+        engineering.
+      </p>
+    </div>
+  </section>
+
+  <!-- Locations -->
+  <section id="locations" class="section-pad spa-section reveal">
+    <div class="container">
+      <div class="section-header">
+        <h2>Visit The Lab</h2>
+      </div>
+      <div class="location-box">
+        <div>
+          <h3 style="margin-bottom: 1rem;">Casablanca HQ</h3>
+          <p style="margin-bottom: 1.5rem;">
+            123 Innovation Blvd, Anfa<br>
+            Casablanca, Morocco
+          </p>
+          <h5 style="margin-bottom: 0.5rem;">Hours</h5>
+          <p style="margin-bottom: 1.5rem;">
+            Mon-Fri: 7am - 8pm<br>
+            Sat-Sun: 8am - 9pm
+          </p>
+          <a href="#" class="btn btn-primary">Get Directions</a>
+        </div>
+        <div>
+          <!-- Google Maps Placeholder -->
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d106376.70295982823!2d-7.669871765802102!3d33.57311025345738!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda7cd4778aa113b%3A0xb122cd70ba9c4d39!2sCasablanca%2C%20Morocco!5e0!3m2!1sen!2sus!4v1709420000000!5m2!1sen!2sus"
+            class="map-frame" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="reveal">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="navbar-brand">Sugar <span>&</span> Stats</a>
+        <p>Where precision baking meets scientific sweetness. Engineered for euphoria since 2024.</p>
+        <div class="footer-socials">
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="#"><i class="fa-brands fa-facebook"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#lab">The Lab</a></li>
+          <li><a href="#story">Our Story</a></li>
+          <li><a href="#locations">Locations</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>The Science</h4>
+        <ul>
+          <li><a href="#">Methodology</a></li>
+          <li><a href="#">Ingredients</a></li>
+          <li><a href="#">Lab Results</a></li>
+          <li><a href="#">Case Studies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; 2024 Sugar & Stats. All Rights Reserved. Engineered in Casablanca, Morocco.</p>
+      <div style="display: flex; gap: 2rem;">
+        <a href="#" style="text-decoration: none; color: var(--c-text); opacity: 0.6; font-size: 0.8rem;">Sitemap</a>
+        <a href="#" style="text-decoration: none; color: var(--c-text); opacity: 0.6; font-size: 0.8rem;">Cookies</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="scripts/cart-logic.js"></script>
+  <script src="scripts/mobile-menu.js"></script>
+  <script src="scripts/animations.js"></script>
+  <script src="scripts/hero-3d.js"></script>
 </body>
+
 </html>

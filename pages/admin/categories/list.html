@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catégories | Sugar & Stats Admin</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --c-bg: #f8f9fa;
+            --c-text: #5D4037;
+            --c-accent: #D48C9D;
+            --c-white: #ffffff;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            --radius: 16px;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: var(--c-bg);
+            color: var(--c-text);
+            margin: 0;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            height: 100vh;
+            background: var(--c-white);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.02);
+            padding: 2rem;
+            position: fixed;
+        }
+
+        .brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            color: var(--c-accent);
+            text-decoration: none;
+            display: block;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            text-decoration: none;
+            color: var(--c-text);
+            border-radius: 12px;
+            transition: 0.3s;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--c-accent);
+            color: white;
+        }
+
+        /* Main Content */
+        .main {
+            margin-left: 260px;
+            padding: 3rem;
+            width: calc(100% - 260px);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .add-btn {
+            background: var(--c-accent);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 140, 157, 0.3);
+        }
+
+        /* Category Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            background: var(--c-white);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            gap: 1.5rem;
+            transition: 0.3s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--c-bg);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: var(--c-accent);
+            flex-shrink: 0;
+        }
+
+        .category-content {
+            flex-grow: 1;
+        }
+
+        .category-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            margin: 0 0 0.5rem;
+        }
+
+        .category-desc {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+
+        .category-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .action-btn.edit {
+            background: #f0f0f0;
+            color: var(--c-text);
+        }
+
+        .action-btn.delete {
+            background: #fff5f5;
+            color: #ff5252;
+        }
+
+        .action-btn:hover {
+            opacity: 0.8;
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid #ff5252;
+            color: #ff5252;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #ff5252;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <a href="../index.html" class="brand">Sugar & Stats</a>
+        <ul class="nav-links">
+            <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="../products/list.html" class="nav-link"><i class="fas fa-cookie"></i> Products</a></li>
+            <li><a href="../clients/list.html" class="nav-link"><i class="fas fa-users"></i> Clients</a></li>
+            <li><a href="list.html" class="nav-link active"><i class="fas fa-tags"></i> Categories</a></li>
+            <li><a href="../orders/list.html" class="nav-link"><i class="fas fa-box"></i> Orders</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <div>
+                <h1>Classification Génomique</h1>
+                <p>Gérez les taxonomies de vos créations culinaires.</p>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <a href="add.html" class="add-btn"><i class="fas fa-plus"></i> Nouvelle Catégorie</a>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+
+        <div id="categoriesGrid" class="categories-grid">
+            <!-- Loading placeholder -->
+            <p>Synchronisation des données...</p>
+        </div>
+    </div>
+
+    <script src="../../../scripts/admin/categories.js"></script>
+    <script>
+        // Security Check
+        const user = JSON.parse(localStorage.getItem('authUser')) || JSON.parse(localStorage.getItem('user'));
+        if (!user || user.role !== 'admin') {
+            window.location.href = '../../auth.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCategoriesList();
+        });
+
+        function logout() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('authUser');
+            localStorage.removeItem('user');
+            window.location.href = '../../auth.html';
+        }
+    </script>
+</body>
+
+</html>

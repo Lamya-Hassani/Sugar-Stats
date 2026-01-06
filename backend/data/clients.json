@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "username": "admin",
+    "password": "$2a$10$W5fT2QO9I2Wv1ZbU7XbZ8eQ5i8vJd43n5Qf9YlZlZxJ7a6lYz6T1a",
+    "role": "admin",
+    "name": "Admin User",
+    "email": "admin@sugarstats.com",
+    "phone": "0600000000",
+    "address": "Casablanca",
+    "registrationDate": "2025-01-01T10:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "username": "client1",
+    "password": "$2a$10$W5fT2QO9I2Wv1ZbU7XbZ8eQ5i8vJd43n5Qf9YlZlZxJ7a6lYz6T1a",
+    "role": "client",
+    "name": "Client One",
+    "email": "client1@example.com",
+    "phone": "0611111111",
+    "address": "Rabat",
+    "registrationDate": "2025-01-02T12:00:00.000Z"
+  },
+  {
+    "id": 1767531084486,
+    "username": "lamya",
+    "password": "$2b$10$UQ/ZW4Ikr3Jy1kEuxc6n7exmCQdhioNjvuW0quBn7cdqIu6s0JWvK",
+    "role": "admin",
+    "name": "lamya",
+    "email": "lamya@gmail.com",
+    "phone": "",
+    "address": "",
+    "registrationDate": "2026-01-04T12:51:24.486Z"
+  }
+]
