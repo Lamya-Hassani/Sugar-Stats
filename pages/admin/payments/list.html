@@ -4,15 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventaire | Sugar & Stats Admin</title>
+    <title>Finance | Sugar & Stats Admin</title>
+
     <!-- Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS LOCAL POUR PAYMENTS (même logique que Clients) -->
     <style>
         :root {
-            /* THEME: Vanilla Strawberry Luxury */
+            /* THEME: Vanilla Strawberry Luxury pour cette page */
             --c-text-main: #4E342E;
             --c-text-light: #8D6E63;
             --c-rose: #D81B60;
@@ -36,7 +39,7 @@
             min-height: 100vh;
         }
 
-        /* --- SIDEBAR --- */
+        /* --- SIDEBAR (on laisse admin-theme gérer la plupart, mais on garde la structure) --- */
         .sidebar {
             width: 280px;
             height: 100vh;
@@ -119,6 +122,12 @@
             margin: 0;
         }
 
+        .header p {
+            margin: 0.25rem 0 0 0;
+            color: var(--c-text-light);
+            font-size: 0.95rem;
+        }
+
         .controls-row {
             display: flex;
             justify-content: space-between;
@@ -154,6 +163,22 @@
             top: 50%;
             transform: translateY(-50%);
             color: var(--c-text-light);
+        }
+
+        .filter-select {
+            padding: 0.7rem 2rem 0.7rem 1rem;
+            border-radius: 25px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: var(--glass-bg);
+            font-family: inherit;
+            cursor: pointer;
+            outline: none;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .filter-select:hover {
+            border-color: var(--c-rose);
         }
 
         .btn {
@@ -240,32 +265,6 @@
             background: rgba(0, 0, 0, 0.01);
         }
 
-        .product-thumb {
-            width: 45px;
-            height: 45px;
-            border-radius: 12px;
-            object-fit: cover;
-            margin-right: 1rem;
-            vertical-align: middle;
-        }
-
-        .status-pill {
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-
-        .in-stock {
-            background: #E8F5E9;
-            color: #2E7D32;
-        }
-
-        .out-of-stock {
-            background: #FFEBEE;
-            color: #C62828;
-        }
-
         .actions-cell {
             display: flex;
             gap: 0.5rem;
@@ -295,6 +294,30 @@
         }
 
         .btn-delete {
+            background: #FFEBEE;
+            color: #C62828;
+        }
+
+        /* Statut badges pour paiements (optionnel, tu peux réutiliser ceux du thème global) */
+        .status-pill {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .status-completed {
+            background: #E8F5E9;
+            color: #2E7D32;
+        }
+
+        .status-pending {
+            background: #FFF3E0;
+            color: #EF6C00;
+        }
+
+        .status-failed {
             background: #FFEBEE;
             color: #C62828;
         }
@@ -334,7 +357,9 @@
             color: var(--c-rose);
         }
     </style>
-    <link rel='stylesheet' href='../../../styles/admin-theme.css'>
+
+    <!-- CSS GLOBAL ADMIN (ne pas toucher, pour le reste des pages) -->
+    <link rel="stylesheet" href="../../../styles/admin-theme.css">
 </head>
 
 <body>
@@ -342,12 +367,12 @@
         <a href="../index.html" class="brand">Sugar & Stats</a>
         <ul class="nav-links">
             <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a></li>
-            <li><a href="list.html" class="nav-link active"><i class="fas fa-cookie-bite"></i> Créations</a></li>
+            <li><a href="../products/list.html" class="nav-link"><i class="fas fa-cookie-bite"></i> Créations</a></li>
             <li><a href="../clients/list.html" class="nav-link"><i class="fas fa-users"></i> Clients</a></li>
             <li><a href="../categories/list.html" class="nav-link"><i class="fas fa-tag"></i> Segments</a></li>
             <li><a href="../orders/list.html" class="nav-link"><i class="fas fa-box-open"></i> Commandes</a></li>
             <li><a href="../employees/list.html" class="nav-link"><i class="fas fa-id-card"></i> Personnel</a></li>
-            <li><a href="../payments/list.html" class="nav-link"><i class="fas fa-wallet"></i> Finances</a></li>
+            <li><a href="list.html" class="nav-link active"><i class="fas fa-wallet"></i> Finances</a></li>
             <li><a href="../reviews/list.html" class="nav-link"><i class="fas fa-heart"></i> Avis</a></li>
         </ul>
     </div>
@@ -355,25 +380,30 @@
     <div class="main">
         <div class="header">
             <div>
-                <h1>Inventaire Scientifique</h1>
-                <p>Analyse et gestion des créations pâtissières.</p>
+                <h1>Flux Monétaire</h1>
+                <p>Analyse des transactions et revenus du laboratoire.</p>
             </div>
             <div style="display: flex; gap: 1rem;">
-                <button class="btn btn-secondary" onclick="exportProductsCSV()"><i class="fas fa-file-csv"></i> Exporter
-                    CSV</button>
-                <a href="add.html" class="btn btn-primary"><i class="fas fa-plus"></i> Nouveau Produit</a>
+                <button class="btn btn-secondary" onclick="exportPaymentsCSV()">
+                    <i class="fas fa-file-csv"></i> Exporter CSV
+                </button>
+                <a href="add.html" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Nouveau Paiement
+                </a>
             </div>
         </div>
 
         <div class="controls-row">
             <div class="search-container">
                 <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" class="search-input" placeholder="Rechercher par nom ou segment..."
+                <input type="text" id="searchInput" class="search-input" placeholder="Rechercher par TXN ou Client..."
                     oninput="handleSearch()">
             </div>
-            <select id="categoryFilter" class="btn btn-secondary" style="border-radius: 50px; padding-right: 2rem;"
-                onchange="handleSearch()">
-                <option value="">Tous les segments</option>
+            <select id="statusFilter" class="filter-select" onchange="handleSearch()">
+                <option value="">Tous les statuts</option>
+                <option value="Completed">✅ Validé</option>
+                <option value="Pending">⏳ En attente</option>
+                <option value="Failed">❌ Échec</option>
             </select>
         </div>
 
@@ -381,50 +411,37 @@
             <table>
                 <thead>
                     <tr>
-                        <th onclick="handleSort('name')">Création <i class="fas fa-sort"></i></th>
-                        <th onclick="handleSort('categoryId')">Segment Pâtissier <i class="fas fa-sort"></i></th>
-                        <th onclick="handleSort('price')">Valeur Unitaire <i class="fas fa-sort"></i></th>
-                        <th onclick="handleSort('stock')">Réserve Labo <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('transactionId')">TXN ID <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('clientId')">Sujet Gourmet <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('amount')">Valeur Market <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('paymentDate')">Date Perception <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('paymentStatus')">Statut <i class="fas fa-sort"></i></th>
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody id="productsTableBody">
-                    <!-- Dynamic Rows -->
+                <tbody id="paymentsTableBody">
+                    <!-- JS will populate rows here -->
                 </tbody>
             </table>
         </div>
 
-        <div id="pagination" class="pagination">
-            <!-- Pagination items -->
-        </div>
+        <div id="pagination" class="pagination"></div>
     </div>
 
+    <!-- Scripts -->
     <script src="https://unpkg.com/three@0.136.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.136.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="../../../scripts/admin/pastry-bg.js"></script>
 
-    <script src='../../../scripts/admin/pastry-bg.js'></script>
-    <script src='../../../scripts/admin/luxury-ui.js'></script>
     <script src="../../../scripts/admin/admin-utils.js"></script>
-    <script src="../../../scripts/admin/products.js"></script>
+    <script src="../../../scripts/admin/payments.js"></script>
     <script>
         const user = JSON.parse(localStorage.getItem('authUser')) || JSON.parse(localStorage.getItem('user'));
         if (!user || user.role !== 'admin') { window.location.href = '../../auth.html'; }
 
         document.addEventListener('DOMContentLoaded', () => {
-            initProductsList();
+            renderPaymentsTable();
         });
-
-        async function initProductsList() {
-            await fetchCategories();
-            populateCategoryFilter();
-            await renderProductsTable();
-        }
-
-        function populateCategoryFilter() {
-            const filter = document.getElementById('categoryFilter');
-            if (!filter) return;
-            filter.innerHTML = '<option value="">Tous les segments</option>' +
-                allCategories.map(c => `<option value="${c.id_categorie}">${c.libelle}</option>`).join('');
-        }
 
         function logout() {
             localStorage.removeItem('authToken');

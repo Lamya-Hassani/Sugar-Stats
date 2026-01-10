@@ -1,15 +1,20 @@
 const API_BASE_URL = "http://localhost:3000";
 let allClients = [];
 
+// Table State
+let currentPage = 1;
+const itemsPerPage = 8;
+let sortKey = 'name';
+let sortDesc = false;
+let searchQuery = '';
+
 // ==================== API CALLS ====================
 
 async function fetchClients() {
-  const token = localStorage.getItem("authToken");
   try {
     const res = await fetch(`${API_BASE_URL}/api/clients`, {
-      headers: { "Authorization": `Bearer ${token}` }
+      headers: { 'Authorization': `Bearer ${localStorage.getItem("authToken")}` }
     });
-    if (!res.ok) throw new Error("Failed to fetch clients");
     allClients = await res.json();
     return allClients;
   } catch (err) {
@@ -18,7 +23,14 @@ async function fetchClients() {
 }
 
 async function deleteClient(id) {
-  if (!confirm("Are you sure you want to remove this client from the database?")) return;
+  const confirmed = await window.showConfirmModal({
+    title: 'Extraction du Sujet',
+    text: 'Voulez-vous vraiment retirer ce gourmet de nos registres ? Ses données seront définitivement perdues.',
+    confirmText: 'Retirer',
+    icon: 'fa-user-minus'
+  });
+
+  if (!confirmed) return;
 
   try {
     const token = localStorage.getItem("authToken");
@@ -28,11 +40,11 @@ async function deleteClient(id) {
     });
 
     if (res.ok) {
-      alert("Client successfully removed.");
-      location.reload();
+      window.showToast("Sujet extrait avec succès.", "success");
+      renderClientsTable();
     } else {
       const data = await res.json();
-      alert(data.error || "Failed to remove client.");
+      window.showToast(data.error || "Échec de l'extraction.", "error");
     }
   } catch (err) {
     console.error("Error deleting client:", err);
@@ -45,71 +57,183 @@ async function saveClient(event) {
   const isEdit = !!id;
 
   const clientData = {
-    username: document.getElementById('username')?.value,
     name: document.getElementById('name').value,
     email: document.getElementById('email').value,
     phone: document.getElementById('phone').value,
-    address: document.getElementById('address').value,
+    address: document.getElementById('address').value
   };
 
   const token = localStorage.getItem("authToken");
-  const url = isEdit ? `${API_BASE_URL}/api/clients/${id}` : `${API_BASE_URL}/api/clients`;
-  const method = isEdit ? 'PUT' : 'POST';
 
   try {
-    const res = await fetch(url, {
-      method: method,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
+    const res = await fetch(isEdit ? `${API_BASE_URL}/api/clients/${id}` : `${API_BASE_URL}/api/clients`, {
+      method: isEdit ? 'PUT' : 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify(clientData)
     });
 
     if (res.ok) {
-      alert(isEdit ? "Client updated!" : "Client created!");
-      window.location.href = 'list.html';
+      window.showToast(isEdit ? "Profil gourmet mis à jour !" : "Nouveau sujet enregistré !", "success");
+      setTimeout(() => window.location.href = 'list.html', 1500);
     } else {
       const data = await res.json();
-      alert(data.error || "Save failed.");
+      window.showToast(data.error || "Erreur d'enregistrement.", "error");
     }
   } catch (err) {
     console.error("Error saving client:", err);
   }
 }
 
-// ==================== UI RENDERING ====================
+// ==================== UI RENDERING (TABLE) ====================
 
-async function loadClientsList() {
-  const grid = document.getElementById('clientsGrid');
-  if (!grid) return;
+async function renderClientsTable() {
+  if (allClients.length === 0) await fetchClients();
 
-  grid.innerHTML = '<p style="grid-column: 1/-1;">Calibrating customer data...</p>';
+  // 1. Filter
+  let filtered = allClients.filter(c => {
+    const name = (c.name || c.username || "").toLowerCase();
+    const email = (c.email || "").toLowerCase();
+    const address = (c.address || "").toLowerCase();
+    return name.includes(searchQuery.toLowerCase()) ||
+      email.includes(searchQuery.toLowerCase()) ||
+      address.includes(searchQuery.toLowerCase());
+  });
 
-  await fetchClients();
+  // 2. Sort
+  filtered = window.sortData(filtered, sortKey, sortDesc);
 
-  if (!allClients || allClients.length === 0) {
-    grid.innerHTML = '<p style="grid-column: 1/-1;">No scientific observations (clients) found in the database.</p>';
-    return;
-  }
+  // 3. Paginate
+  const { items, total, pages } = window.paginateData(filtered, currentPage, itemsPerPage);
 
-  grid.innerHTML = allClients.map(c => `
-        <div class="client-card">
-            <div class="client-avatar">${(c.name || c.username || "?")[0].toUpperCase()}</div>
-            <div class="client-content">
-                <h3 class="client-name">${c.name || c.username}</h3>
-                <div class="client-email"><i class="fas fa-envelope"></i> ${c.email || "No email recorded"}</div>
-                <div class="client-info"><i class="fas fa-calendar"></i> Joined: ${new Date(c.registrationDate || Date.now()).toLocaleDateString('fr-FR')}</div>
-                <div class="client-info"><i class="fas fa-location-dot"></i> ${c.address || "No address recorded"}</div>
-                
-                <div class="client-actions">
-                    <a href="edit.html?id=${c.id}" class="action-btn edit"><i class="fas fa-user-edit"></i> Edit</a>
-                    <button onclick="deleteClient(${c.id})" class="action-btn delete"><i class="fas fa-user-minus"></i> Remove</button>
-                </div>
+  const tbody = document.getElementById('clientsTableBody');
+  if (!tbody) return;
+
+  tbody.innerHTML = items.map(c => `
+    <tr ondblclick="showDetails(${c.id})" style="cursor:pointer;" title="Double-cliquez pour les détails">
+        <td>
+            <div class="client-avatar">${(c.name || c.username || "?").charAt(0).toUpperCase()}</div>
+            <strong>${c.name || c.username}</strong>
+        </td>
+        <td><span style="color:var(--c-text-light); font-size:0.85rem;">${c.email || "Non renseigné"}</span></td>
+        <td><span style="font-size:0.85rem;">${new Date(c.registrationDate || Date.now()).toLocaleDateString('fr-FR')}</span></td>
+        <td><span style="font-size:0.85rem; color:var(--c-text-light);">${c.address || "Aucune adresse"}</span></td>
+        <td>
+            <div class="actions-cell">
+                <a href="edit.html?id=${c.id}" class="icon-btn btn-edit" title="Modifier"><i class="fas fa-user-edit"></i></a>
+                <button onclick="event.stopPropagation(); deleteClient(${c.id})" class="icon-btn btn-delete" title="Supprimer"><i class="fas fa-trash"></i></button>
             </div>
-        </div>
-    `).join('');
+        </td>
+    </tr>
+  `).join('');
+
+  renderPagination(pages);
 }
+
+// ... (existing navigation/export functions) ...
+
+async function showDetails(id) {
+  await fetchClients();
+  const client = allClients.find(c => c.id == id);
+  if (!client) return;
+
+  const leftHTML = `
+    <div class="modal-avatar">${(client.name || client.username || "?").charAt(0).toUpperCase()}</div>
+    <div class="modal-info">
+        <h3 class="modal-title-main">${client.name || client.username}</h3>
+        <p class="modal-subtitle-main">${client.address || "Laboratoire Global"}</p>
+        <div style="text-align:center; margin-top:0.5rem;">
+            <span class="status-pill ${client.role === 'admin' ? 'livre' : 'expedie'}" style="font-size:0.7rem; padding:0.2rem 0.6rem;">
+                ${client.role === 'admin' ? "Collaborateur Admin" : "Sujet Gourmet"}
+            </span>
+        </div>
+    </div>
+  `;
+
+  const rightHTML = `
+        <div class="modal-row">
+            <span class="modal-label">Identifiant Unique</span>
+            <span class="modal-value">#${client.id}</span>
+        </div>
+        <div class="modal-row">
+            <span class="modal-label">Nom de Code</span>
+            <span class="modal-value">${client.username}</span>
+        </div>
+        <div class="modal-row">
+            <span class="modal-label">Canal Email</span>
+            <span class="modal-value">${client.email || 'N/A'}</span>
+        </div>
+        <div class="modal-row">
+            <span class="modal-label">Liaison Téléphonique</span>
+            <span class="modal-value">${client.phone || 'N/A'}</span>
+        </div>
+        <div class="modal-row">
+            <span class="modal-label">Zone de Déploiement</span>
+            <span class="modal-value">${client.address || 'N/A'}</span>
+        </div>
+        <div class="modal-row">
+            <span class="modal-label">Date d'Enregistrement</span>
+            <span class="modal-value">${new Date(client.registrationDate || Date.now()).toLocaleDateString('fr-FR')}</span>
+        </div>
+  `;
+
+  const actionsHTML = `
+    <a href="edit.html?id=${client.id}" class="modal-btn modal-btn-rose">
+        <i class="fas fa-user-edit"></i> Modifier Profil
+    </a>
+    <button onclick="window.exportToPDF()" class="modal-btn modal-btn-primary">
+        <i class="fas fa-file-pdf"></i> Exporter PDF
+    </button>
+  `;
+
+  window.showDetailsModal({
+    title: 'Fiche Analytique Gourmet',
+    icon: 'fa-user-circle',
+    leftContent: leftHTML,
+    rightContentHTML: rightHTML,
+    actionsHTML: actionsHTML
+  });
+}
+
+function exportToPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  const name = document.querySelector('.receipt-body strong').innerText;
+
+  doc.setFontSize(22);
+  doc.setTextColor(216, 27, 96);
+  doc.text('Sugar & Stats - Profil Client', 20, 20);
+
+  doc.setFontSize(14);
+  doc.setTextColor(78, 52, 46);
+
+  let y = 40;
+  const rows = document.querySelectorAll('.receipt-row');
+  rows.forEach(row => {
+    const label = row.querySelector('span').innerText;
+    const value = row.querySelector('strong').innerText;
+    doc.text(`${label}: ${value}`, 20, y);
+    y += 10;
+  });
+
+  doc.save(`SugarStats_Client_${name.replace(/\s+/g, '_')}.pdf`);
+}
+
+window.goToPage = function (page) {
+  currentPage = page;
+  renderClientsTable();
+};
+
+window.handleSearch = function () {
+  searchQuery = document.getElementById('searchInput').value;
+  currentPage = 1;
+  renderClientsTable();
+};
+
+window.handleSort = function (key) {
+  if (sortKey === key) sortDesc = !sortDesc;
+  else { sortKey = key; sortDesc = false; }
+  renderClientsTable();
+};
 
 async function prefillClientForm() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -118,22 +242,18 @@ async function prefillClientForm() {
 
   await fetchClients();
   const client = allClients.find(c => c.id == id);
-
   if (client) {
     document.getElementById('clientId').value = client.id;
-    document.getElementById('name').value = client.name || '';
-    document.getElementById('email').value = client.email || '';
-    document.getElementById('phone').value = client.phone || '';
-    document.getElementById('address').value = client.address || '';
-    if (document.getElementById('username')) {
-      document.getElementById('username').value = client.username || '';
-      document.getElementById('username').disabled = true; // Typically don't change username
-    }
+    document.getElementById('name').value = client.name || client.username;
+    document.getElementById('email').value = client.email || "";
+    document.getElementById('phone').value = client.phone || "";
+    document.getElementById('address').value = client.address || "";
   }
 }
 
-// Export functions
-window.loadClientsList = loadClientsList;
 window.deleteClient = deleteClient;
-window.saveClient = saveClient;
+window.renderClientsTable = renderClientsTable;
 window.prefillClientForm = prefillClientForm;
+window.saveClient = saveClient;
+window.showDetails = showDetails;
+window.exportToPDF = exportToPDF;

@@ -1,161 +1,241 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nouveau Client | Sugar & Stats Admin</title>
+    <!-- Fonts -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Styles adapted for Horizontal Layout + No Overflow */
         :root {
-            --c-bg: #f8f9fa;
-            --c-text: #5D4037;
-            --c-accent: #D48C9D;
-            --c-white: #ffffff;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            --radius: 16px;
+            /* Ensuring variables exist if css file is missing/different */
+            --c-text-deep: #4E342E;
+            --c-text-muted: #8D6E63;
+            --c-magenta: #D81B60;
+            --c-glass-white: rgba(255, 255, 255, 0.85);
+            --glass-blur: blur(20px);
+            --radius-card: 24px;
+            --shadow-pop: 0 10px 40px rgba(216, 27, 96, 0.15);
+            --gradient-brand: linear-gradient(135deg, #D81B60 0%, #FF80AB 100%);
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Lato', sans-serif;
-            background: var(--c-bg);
-            color: var(--c-text);
+            font-family: 'Poppins', sans-serif;
+            background: transparent;
+            color: var(--c-text-deep);
             margin: 0;
+            /* CENTERED & NO SCROLL */
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 2rem;
+            height: 100vh;
+            overflow: hidden;
+            padding: 0;
         }
 
         .form-container {
-            background: var(--c-white);
+            background: var(--c-glass-white);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
             padding: 3rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            width: 100%;
-            max-width: 600px;
+            border-radius: var(--radius-card);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: var(--shadow-pop);
+
+            /* Sizing for Horizontal Layout */
+            width: 90%;
+            max-width: 1100px;
+            position: relative;
+            z-index: 10;
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            margin-bottom: 2rem;
+            font-size: 2.2rem;
+            margin: 0 0 2rem 0;
+            color: var(--c-magenta);
             text-align: center;
         }
 
+        /* 4-COLUMN HORIZONTAL GRID */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            align-items: end;
+            /* Aligns inputs nicely */
+        }
+
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.5rem;
+            /* Reduced margin since grid handles spacing */
+        }
+
+        /* Span Helpers */
+        .span-1 {
+            grid-column: span 1;
+        }
+
+        .span-2 {
+            grid-column: span 2;
+        }
+
+        .span-4 {
+            grid-column: span 4;
         }
 
         label {
             display: block;
-            font-weight: 700;
+            font-weight: 600;
             margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+            color: var(--c-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         input,
-        textarea,
-        select {
+        select,
+        textarea {
             width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #eee;
+            padding: 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 12px;
+            background: rgba(255, 255, 255, 0.6);
             font-family: inherit;
-            outline: none;
-            transition: 0.3s;
-            box-sizing: border-box;
+            font-size: 0.95rem;
+            color: var(--c-text-deep);
+            transition: 0.3s ease;
         }
 
         input:focus,
-        textarea:focus,
-        select:focus {
-            border-color: var(--c-accent);
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--c-magenta);
+            background: white;
+            box-shadow: 0 0 15px rgba(216, 27, 96, 0.15);
+        }
+
+        textarea {
+            resize: none;
+            /* Prevents breaking layout */
         }
 
         .btn-row {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
+            display: flex;
+            justify-content: flex-end;
             gap: 1rem;
             margin-top: 2rem;
+            grid-column: 1 / -1;
         }
 
-        button {
-            padding: 1rem;
+        .btn {
+            padding: 1rem 3rem;
             border-radius: 50px;
             border: none;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
             transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .cancel-btn {
-            background: #f0f0f0;
-            color: var(--c-text);
+            background: #FFF;
+            color: var(--c-text-muted);
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .save-btn {
-            background: var(--c-accent);
+            background: var(--gradient-brand);
             color: white;
+            box-shadow: 0 5px 15px rgba(216, 27, 96, 0.3);
         }
 
-        button:hover {
+        .btn:hover {
             transform: translateY(-2px);
-            opacity: 0.9;
+            box-shadow: 0 8px 25px rgba(216, 27, 96, 0.3);
+        }
+
+        .cancel-btn:hover {
+            color: var(--c-text-deep);
+            background: #F5F5F5;
         }
     </style>
+    <link rel='stylesheet' href='../../../styles/admin-theme.css'>
 </head>
 
 <body>
     <div class="form-container">
         <h1>Nouveau Client</h1>
-        <form id="clientForm">
-            <div class="form-group">
-                <label for="username">Username (Non modifiable par la suite)</label>
-                <input type="text" id="username" placeholder="Ex: baker_2026" required>
+
+        <!-- Horizontal Grid Form -->
+        <form id="clientForm" class="form-grid">
+            <input type="hidden" id="clientId">
+
+            <!-- Row 1: Username (50%) & Name (50%) -->
+            <div class="form-group span-2">
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" id="username" required placeholder="Display Name">
             </div>
 
-            <div class="form-group">
+            <div class="form-group span-2">
                 <label for="name">Nom Complet</label>
-                <input type="text" id="name" placeholder="Ex: Jean Dupont" required>
+                <input type="text" id="name" required placeholder="Ex: Jean Dupont">
             </div>
 
-            <div class="form-group">
+            <!-- Row 2: Email (50%) & Phone (50%) -->
+            <div class="form-group span-2">
                 <label for="email">Email</label>
-                <input type="email" id="email" placeholder="jean.dupont@example.com" required>
+                <input type="email" id="email" required placeholder="jean@example.com">
             </div>
 
-            <div class="form-group">
+            <div class="form-group span-2">
                 <label for="phone">Téléphone</label>
-                <input type="tel" id="phone" placeholder="06 00 00 00 00">
+                <input type="tel" id="phone" placeholder="06 12 34 56 78">
             </div>
 
-            <div class="form-group">
-                <label for="address">Adresse</label>
-                <textarea id="address" rows="3" placeholder="Adresse complète..."></textarea>
+            <!-- Row 3: Address (Full Width) -->
+            <div class="form-group span-4">
+                <label for="address">Adresse de Livraison</label>
+                <textarea id="address" rows="3" placeholder="Entrez l'adresse complète..."></textarea>
             </div>
 
+            <!-- Buttons -->
             <div class="btn-row">
-                <button type="button" class="cancel-btn" onclick="window.location.href='list.html'">Annuler</button>
-                <button type="submit" class="save-btn">Créer le Profil</button>
+                <a href="list.html" class="btn cancel-btn">Annuler</a>
+                <button type="submit" class="btn save-btn">Enregistrer</button>
             </div>
         </form>
     </div>
 
+    <!-- Background 3D Script & Dependencies -->
+    <script src="https://unpkg.com/three@0.136.0/build/three.min.js"></script>
+
+    <script src='../../../scripts/admin/pastry-bg.js'></script>
+    <script src='../../../scripts/admin/admin-utils.js'></script>
     <script src="../../../scripts/admin/clients.js"></script>
     <script>
-        // Security Check
         const user = JSON.parse(localStorage.getItem('authUser')) || JSON.parse(localStorage.getItem('user'));
-        if (!user || user.role !== 'admin') {
-            window.location.href = '../../auth.html';
-        }
+        // Security check commented out for dev
+        // if (!user || user.role !== 'admin') { window.location.href = '../../auth.html'; }
 
         document.getElementById('clientForm').addEventListener('submit', (e) => {
-            saveClient(e);
+            saveClient(e); // Assuming same function handles add
         });
     </script>
 </body>

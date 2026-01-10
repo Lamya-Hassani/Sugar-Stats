@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nouvelle Commande | Sugar & Stats Admin</title>
+    <title>Modifier le Chercheur | Sugar & Stats Admin</title>
     <!-- Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
@@ -64,6 +64,17 @@
             margin: 0 0 2rem 0;
             color: var(--c-magenta);
             text-align: center;
+        }
+
+        .id-badge {
+            display: table;
+            margin: 0 auto 2rem auto;
+            background: rgba(216, 27, 96, 0.1);
+            color: var(--c-magenta);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
 
         /* 4-COLUMN HORIZONTAL GRID */
@@ -175,68 +186,56 @@
             color: var(--c-text-deep);
             background: #F5F5F5;
         }
-
-        .items-list {
-            margin-top: 0.5rem;
-            background: rgba(0, 0, 0, 0.02);
-            padding: 1rem;
-            border-radius: 16px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            max-height: 150px;
-            overflow-y: auto;
-        }
     </style>
     <link rel='stylesheet' href='../../../styles/admin-theme.css'>
 </head>
 
 <body>
     <div class="form-container">
-        <h1>Initialiser Commande</h1>
+        <h1>Modifier le Chercheur</h1>
+        <div class="id-badge" id="display-id">ID: ...</div>
 
         <!-- Horizontal Grid Form -->
-        <form id="orderForm" class="form-grid">
-            <input type="hidden" id="orderId">
+        <form id="employeeForm" class="form-grid">
+            <input type="hidden" id="employeeId">
 
-            <!-- Row 1: Client (50%) & Status (50%) -->
+            <!-- Row 1: Name (50%) & Position (50%) -->
             <div class="form-group span-2">
-                <label for="clientId">Sujet Client</label>
-                <select id="clientId" required></select>
+                <label for="name">Nom Complet</label>
+                <input type="text" id="name" required placeholder="Ex: Chef Auguste Escoffier">
             </div>
 
             <div class="form-group span-2">
-                <label for="status">Statut Logistique</label>
-                <select id="status">
-                    <option value="En attente">En attente</option>
-                    <option value="Expédié">Expédié</option>
-                    <option value="Livré">Livré</option>
-                </select>
+                <label for="position">Spécialité</label>
+                <input type="text" id="position" required placeholder="Ex: Maître Pâtissier">
             </div>
 
-            <!-- Row 2: Amount (50%) & Date (50%) -->
+            <!-- Row 2: Email (50%) & Phone (50%) -->
             <div class="form-group span-2">
-                <label for="totalAmount">Montant Prévisionnel ($)</label>
-                <input type="number" id="totalAmount" step="0.01" required placeholder="0.00">
+                <label for="email">Email</label>
+                <input type="email" id="email" required placeholder="chef@sugarstats.com">
             </div>
 
             <div class="form-group span-2">
-                <label for="orderDate">Date d'Emission</label>
-                <input type="date" id="orderDate">
+                <label for="phone">Téléphone</label>
+                <input type="tel" id="phone" placeholder="06 12 34 56 78">
             </div>
 
-            <!-- Row 3: Items (Full Width) -->
-            <div class="form-group span-4">
-                <label>Inventaire des Produits</label>
-                <div id="itemsContainer" class="items-list">
-                    <!-- Placeholder text since items are usually added dynamically -->
-                    <p style="color: var(--c-text-muted); font-size: 0.9rem; text-align: center;">Les produits seront
-                        ajoutés après création initiale.</p>
-                </div>
+            <!-- Row 3: Salary (50%) & Hire Date (50%) -->
+            <div class="form-group span-2">
+                <label for="salary">Honoraires ($)</label>
+                <input type="number" id="salary" required placeholder="Ex: 45000">
+            </div>
+
+            <div class="form-group span-2">
+                <label for="hireDate">Date d'Entrée</label>
+                <input type="date" id="hireDate">
             </div>
 
             <!-- Buttons -->
             <div class="btn-row">
                 <a href="list.html" class="btn cancel-btn">Annuler</a>
-                <button type="submit" class="btn save-btn">Créer</button>
+                <button type="submit" class="btn save-btn">Mettre à Jour</button>
             </div>
         </form>
     </div>
@@ -246,22 +245,20 @@
 
     <script src='../../../scripts/admin/pastry-bg.js'></script>
     <script src='../../../scripts/admin/admin-utils.js'></script>
-    <script src="../../../scripts/admin/orders.js"></script>
+    <script src="../../../scripts/admin/employees.js"></script>
     <script>
         const user = JSON.parse(localStorage.getItem('authUser')) || JSON.parse(localStorage.getItem('user'));
         // Security check commented out for dev
         // if (!user || user.role !== 'admin') { window.location.href = '../../auth.html'; }
 
-        // Assuming prefillOrderForm might handle 'add' mode for dropdowns only?
-        // Actually orders.js likely has "loadClients()" separate. 
-        // I will trust the JS structure is consistent.
-        document.addEventListener('DOMContentLoaded', () => {
-            // Try to load clients.
-            if (typeof loadClients === 'function') loadClients();
+        document.addEventListener('DOMContentLoaded', async () => {
+            await prefillEmployeeForm();
+            const id = document.getElementById('employeeId').value;
+            if (id) document.getElementById('display-id').textContent = `Chercheur #${id}`;
         });
 
-        document.getElementById('orderForm').addEventListener('submit', (e) => {
-            saveOrder(e);
+        document.getElementById('employeeForm').addEventListener('submit', (e) => {
+            saveEmployee(e);
         });
     </script>
 </body>

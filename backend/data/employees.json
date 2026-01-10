@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": 1767902539790,
+    "name": "re",
+    "position": "chef",
+    "email": "csev@umich.edu",
+    "phone": "1234567",
+    "hireDate": "2002-02-22",
+    "salary": 2333
+  }
+]

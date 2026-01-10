@@ -1,228 +1,182 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | Sugar & Stats</title>
+    <!-- Fonts -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --c-bg: #f8f9fa;
-            --c-text: #5D4037;
-            --c-accent: #D48C9D;
-            --c-white: #ffffff;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            --radius: 16px;
-        }
-
-        body {
-            font-family: 'Lato', sans-serif;
-            background: var(--c-bg);
-            color: var(--c-text);
-            margin: 0;
-            display: flex;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 260px;
-            height: 100vh;
-            background: var(--c-white);
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.02);
-            padding: 2rem;
-            position: fixed;
-        }
-
-        .brand {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin-bottom: 3rem;
-            color: var(--c-accent);
-        }
-
-        .nav-links {
-            list-style: none;
-            padding: 0;
-        }
-
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            text-decoration: none;
-            color: var(--c-text);
-            border-radius: 12px;
-            transition: 0.3s;
-            margin-bottom: 0.5rem;
-        }
-
-        .nav-link:hover,
-        .nav-link.active {
-            background: var(--c-accent);
-            color: white;
-        }
-
-        /* Main Content */
-        .main {
-            margin-left: 260px;
-            padding: 3rem;
-            width: 100%;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 3rem;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .stat-card {
-            background: var(--c-white);
-            padding: 2rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-        }
-
-        .stat-card h3 {
-            font-size: 0.9rem;
-            opacity: 0.6;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-card .value {
-            font-size: 2rem;
-            font-weight: 700;
-        }
-
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .action-card {
-            background: var(--c-white);
-            padding: 2rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            text-align: center;
-            transition: 0.3s;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .action-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .action-icon {
-            font-size: 2.5rem;
-            color: var(--c-accent);
-            margin-bottom: 1.5rem;
-        }
-
-        .logout-btn {
-            background: transparent;
-            border: 1px solid #ff5252;
-            color: #ff5252;
-            padding: 0.6rem 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 700;
-            transition: 0.3s;
-        }
-
-        .logout-btn:hover {
-            background: #ff5252;
-            color: white;
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../../styles/admin-theme.css">
 </head>
 
 <body>
+    <!-- Sidebar -->
     <div class="sidebar">
         <div class="brand">Sugar & Stats</div>
         <ul class="nav-links">
-            <li><a href="#" class="nav-link active"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="products/list.html" class="nav-link"><i class="fas fa-cookie"></i> Products</a></li>
+            <li><a href="#" class="nav-link active"><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="products/list.html" class="nav-link"><i class="fas fa-cookie-bite"></i> Créations</a></li>
             <li><a href="clients/list.html" class="nav-link"><i class="fas fa-users"></i> Clients</a></li>
-            <li><a href="categories/list.html" class="nav-link"><i class="fas fa-tags"></i> Categories</a></li>
-            <li><a href="orders/list.html" class="nav-link"><i class="fas fa-box"></i> Orders</a></li>
+            <li><a href="categories/list.html" class="nav-link"><i class="fas fa-tag"></i> Segments</a></li>
+            <li><a href="orders/list.html" class="nav-link"><i class="fas fa-box-open"></i> Commandes</a></li>
+            <li><a href="employees/list.html" class="nav-link"><i class="fas fa-id-card"></i> Personnel</a></li>
+            <li><a href="payments/list.html" class="nav-link"><i class="fas fa-wallet"></i> Finances</a></li>
+            <li><a href="reviews/list.html" class="nav-link"><i class="fas fa-heart"></i> Avis</a></li>
         </ul>
     </div>
 
+    <!-- Main Content -->
     <div class="main">
         <div class="header">
-            <h1>Admin Dashboard</h1>
+            <h1>Bonjour, Admin</h1>
             <div>
-                <button class="logout-btn" onclick="logout()">Logout</button>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                </button>
             </div>
         </div>
 
+        <div class="filters-bar">
+            <span><i class="fas fa-filter"></i> Filtre Analytique:</span>
+            <select id="dashboardFilter" class="filter-select" onchange="applyDashboardFilters()">
+                <option value="all">Toutes les périodes</option>
+                <option value="today">Aujourd'hui</option>
+                <option value="week">Cette semaine</option>
+                <option value="month">Ce mois</option>
+            </select>
+        </div>
+
+
+        <!-- Stats Overview -->
         <div class="stats-grid">
-            <div class="stat-card">
-                <h3>Total Orders</h3>
+            <div class="stat-card" id="card-orders">
+                <h3>Total Commandes</h3>
                 <div class="value">128</div>
             </div>
-            <div class="stat-card">
-                <h3>Revenue</h3>
+            <div class="stat-card" id="card-revenue">
+                <h3>Revenu Mensuel</h3>
                 <div class="value">$2,450</div>
             </div>
-            <div class="stat-card">
-                <h3>Active Clients</h3>
+            <div class="stat-card" id="card-clients">
+                <h3>Gourmets Actifs</h3>
                 <div class="value">45</div>
             </div>
         </div>
 
-        <h2>Quick Actions</h2>
+        <!-- Charts Section (Now interactive like cards) -->
+        <div class="charts-section">
+            <div class="chart-container full-width">
+                <div class="chart-header">
+                    <h3 class="chart-title">Aperçu des Revenus</h3>
+                </div>
+                <canvas id="revenueChart" height="100"></canvas>
+            </div>
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title">Distribution des Produits</h3>
+                </div>
+                <canvas id="categoryChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title">Tendances des Commandes</h3>
+                </div>
+                <canvas id="trendChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title">Corrélations Prix/Ventes</h3>
+                </div>
+                <canvas id="scatterChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title">Temps de Livraison</h3>
+                </div>
+                <canvas id="deliveryChart"></canvas>
+            </div>
+        </div>
+
+        <div class="recent-orders">
+            <div class="chart-header">
+                <h3 class="chart-title">Commandes Récentes</h3>
+                <a href="orders/list.html"
+                    style="text-decoration:none; color:var(--c-rose); font-weight:600; font-size:0.9rem;">Voir Tout</a>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Client</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody id="recentOrdersBody">
+                    <!-- Dynamic Rows -->
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Atelier Actions</h2>
+
+
         <div class="quick-actions">
             <a href="products/add.html" class="action-card">
-                <div class="action-icon"><i class="fas fa-plus-circle"></i></div>
-                <h3>Add New Product</h3>
-                <p>Add a new scientific masterpiece to the lab.</p>
+                <div class="icon-wrapper"><i class="fas fa-plus action-icon"></i></div>
+                <h3>Nouvelle Création</h3>
+                <p>Ajouter une pièce maîtresse au menu.</p>
             </a>
             <a href="products/list.html" class="action-card">
-                <div class="action-icon"><i class="fas fa-list"></i></div>
-                <h3>Manage Catalog</h3>
-                <p>View, edit, or remove existing products.</p>
+                <div class="icon-wrapper"><i class="fas fa-book-open action-icon"></i></div>
+                <h3>Le Catalogue</h3>
+                <p>Gérer votre collection de douceurs.</p>
             </a>
             <a href="clients/list.html" class="action-card">
-                <div class="action-icon"><i class="fas fa-user-gear"></i></div>
-                <h3>Review Clients</h3>
-                <p>Manage customer data and order history.</p>
-            </a>
-            <a href="categories/list.html" class="action-card">
-                <div class="action-icon"><i class="fas fa-tags"></i></div>
-                <h3>Manage Categories</h3>
-                <p>Organize your lab into taxonomic groups.</p>
+                <div class="icon-wrapper"><i class="fas fa-user-circle action-icon"></i></div>
+                <h3>Clientèle</h3>
+                <p>Gérer vos fidèles gourmets.</p>
             </a>
             <a href="orders/list.html" class="action-card">
-                <div class="action-icon"><i class="fas fa-box-open"></i></div>
-                <h3>Manage Orders</h3>
-                <p>Track deliveries and fulfill scientific cravings.</p>
+                <div class="icon-wrapper"><i class="fas fa-shopping-bag action-icon"></i></div>
+                <h3>Commandes</h3>
+                <p>Suivre les livraisons et envies.</p>
+            </a>
+            <a href="employees/list.html" class="action-card">
+                <div class="icon-wrapper"><i class="fas fa-users action-icon"></i></div>
+                <h3>L'Équipe</h3>
+                <p>Gérer vos pâtissiers et staff.</p>
+            </a>
+            <a href="payments/list.html" class="action-card">
+                <div class="icon-wrapper"><i class="fas fa-coins action-icon"></i></div>
+                <h3>Finances</h3>
+                <p>Suivre les revenus et flux.</p>
             </a>
         </div>
     </div>
 
+    <!-- Background 3D Script -->
+    <script src="https://unpkg.com/three@0.136.0/build/three.min.js"></script>
+    <script src="../../scripts/admin/pastry-bg.js"></script>
+
+    <!-- Custom Scripts -->
+    <script src="../../scripts/admin/dashboard-charts.js"></script>
+    <script src="../../scripts/admin/luxury-ui.js"></script>
+    <script src="../../scripts/admin/admin-utils.js"></script>
+
     <script>
-        // Security Check
         const user = JSON.parse(localStorage.getItem('authUser')) || JSON.parse(localStorage.getItem('user'));
-        if (!user || user.role !== 'admin') {
-            window.location.href = '../auth.html';
-        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initDashboard();
+        });
+
 
         function logout() {
             localStorage.removeItem('authToken');

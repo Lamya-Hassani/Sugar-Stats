@@ -1,1 +1,148 @@
-[]
+[
+    {
+        "id": 1001,
+        "clientId": 2,
+        "items": [
+            {
+                "productId": 1,
+                "quantity": 2
+            },
+            {
+                "productId": 4,
+                "quantity": 1
+            }
+        ],
+        "totalAmount": 42.00,
+        "status": "Delivered",
+        "orderDate": "2026-01-01T14:30:00.000Z"
+    },
+    {
+        "id": 1002,
+        "clientId": 3,
+        "items": [
+            {
+                "productId": 5,
+                "quantity": 1
+            },
+            {
+                "productId": 2,
+                "quantity": 3
+            }
+        ],
+        "totalAmount": 24.60,
+        "status": "Pending",
+        "orderDate": "2026-01-02T10:15:00.000Z"
+    },
+    {
+        "id": 1003,
+        "clientId": 4,
+        "items": [
+            {
+                "productId": 8,
+                "quantity": 1
+            }
+        ],
+        "totalAmount": 28.00,
+        "status": "Processing",
+        "orderDate": "2026-01-03T16:45:00.000Z"
+    },
+    {
+        "id": 1004,
+        "clientId": 5,
+        "items": [
+            {
+                "productId": 3,
+                "quantity": 5
+            },
+            {
+                "productId": 1,
+                "quantity": 2
+            }
+        ],
+        "totalAmount": 21.00,
+        "status": "Delivered",
+        "orderDate": "2026-01-04T09:20:00.000Z"
+    },
+    {
+        "id": 1005,
+        "clientId": 2,
+        "items": [
+            {
+                "productId": 10,
+                "quantity": 10
+            }
+        ],
+        "totalAmount": 32.00,
+        "status": "Shipped",
+        "orderDate": "2026-01-05T13:00:00.000Z"
+    },
+    {
+        "id": 1006,
+        "clientId": 3,
+        "items": [
+            {
+                "productId": 4,
+                "quantity": 2
+            }
+        ],
+        "totalAmount": 70.00,
+        "status": "Delivered",
+        "orderDate": "2026-01-06T11:00:00.000Z"
+    },
+    {
+        "id": 1007,
+        "clientId": 4,
+        "items": [
+            {
+                "productId": 7,
+                "quantity": 1
+            },
+            {
+                "productId": 2,
+                "quantity": 1
+            }
+        ],
+        "totalAmount": 10.70,
+        "status": "Pending",
+        "orderDate": "2026-01-07T15:30:00.000Z"
+    },
+    {
+        "id": 1008,
+        "clientId": 5,
+        "items": [
+            {
+                "productId": 6,
+                "quantity": 4
+            }
+        ],
+        "totalAmount": 18.00,
+        "status": "Delivered",
+        "orderDate": "2026-01-08T10:00:00.000Z"
+    },
+    {
+        "id": 1009,
+        "clientId": 2,
+        "items": [
+            {
+                "productId": 9,
+                "quantity": 2
+            }
+        ],
+        "totalAmount": 9.60,
+        "status": "Processing",
+        "orderDate": "2026-01-08T14:45:00.000Z"
+    },
+    {
+        "id": 1010,
+        "clientId": 3,
+        "items": [
+            {
+                "productId": 1,
+                "quantity": 1
+            }
+        ],
+        "totalAmount": 3.50,
+        "status": "Delivered",
+        "orderDate": "2026-01-07T08:00:00.000Z"
+    }
+]

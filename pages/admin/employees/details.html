@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DÃƒÂ©tails du Chef-d'Ã…â€œuvre | Sugar & Stats Admin</title>
+    <title>Dossier RH | Sugar & Stats Admin</title>
     <!-- Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
@@ -48,7 +48,7 @@
             border: var(--glass-border);
             box-shadow: var(--glass-shadow);
             width: 100%;
-            max-width: 1050px;
+            max-width: 980px;
             position: relative;
             z-index: 10;
         }
@@ -73,7 +73,7 @@
         }
 
         .details-left {
-            flex: 0 0 320px;
+            flex: 0 0 280px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -89,11 +89,18 @@
             gap: 1.25rem;
         }
 
-        .product-image {
-            width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            border: 5px solid white;
+        .emp-avatar {
+            width: 110px;
+            height: 110px;
+            background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.95), var(--glass-bg));
+            border: 2px solid var(--c-rose);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.6rem;
+            color: var(--c-rose);
+            box-shadow: 0 10px 30px rgba(216, 27, 96, 0.35);
         }
 
         .detail-info h3 {
@@ -101,7 +108,6 @@
             color: var(--c-text-main);
             margin: 0.3rem 0 0.25rem;
             text-align: center;
-            font-family: 'Playfair Display', serif;
         }
 
         .detail-subtitle {
@@ -129,14 +135,6 @@
         .detail-value {
             font-size: 0.96rem;
             color: var(--c-text-main);
-        }
-
-        .price-big {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            color: var(--c-rose);
-            font-weight: 700;
-            margin-top: 1rem;
         }
 
         .btn {
@@ -199,17 +197,17 @@
 
 <body>
     <div class="details-card">
-        <h2><i class="fas fa-cookie-bite"></i> Fiche d'Excellence</h2>
+        <h2><i class="fas fa-user-tie"></i> Dossier Professionnel</h2>
         <div class="details-card-inner">
             <div class="details-left">
-                <img src="" id="prodImage" class="product-image" alt="Pastry">
+                <div class="emp-avatar" id="empAvatar"><i class="fas fa-user"></i></div>
                 <div class="detail-info">
-                    <h3 id="prodName">Nom</h3>
-                    <div id="prodPrice" class="price-big">$0.00</div>
+                    <h3 id="empName">Nom</h3>
+                    <p class="detail-subtitle" id="empPosition">Position</p>
                 </div>
-                <div style="display: flex; flex-direction: column; gap: 0.8rem; width: 100%; margin-top: 1rem;">
+                <div style="display: flex; flex-direction: column; gap: 0.8rem; width: 100%; margin-top: 1.5rem;">
                     <a href="#" id="editBtn" class="btn btn-rose">
-                        <i class="fas fa-edit"></i> Modifier Masterpiece
+                        <i class="fas fa-edit"></i> Modifier Dossier
                     </a>
                     <button onclick="exportToPDF()" class="btn btn-primary">
                         <i class="fas fa-file-pdf"></i> Exporter PDF
@@ -226,7 +224,7 @@
     
     <script src='../../../scripts/admin/pastry-bg.js'></script>
     <script src='../../../scripts/admin/luxury-ui.js'></script>
-    <script src="../../../scripts/admin/products.js"></script>
+    <script src="../../../scripts/admin/employees.js"></script>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get('id');

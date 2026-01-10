@@ -7,7 +7,7 @@
     "name": "Admin User",
     "email": "admin@sugarstats.com",
     "phone": "0600000000",
-    "address": "Casablanca",
+    "address": "Casablanca OULFA",
     "registrationDate": "2025-01-01T10:00:00.000Z"
   },
   {
@@ -31,5 +31,70 @@
     "phone": "",
     "address": "",
     "registrationDate": "2026-01-04T12:51:24.486Z"
+  },
+  {
+    "id": 3,
+    "username": "jaafar",
+    "password": "$2a$10$W5fT2QO9I2Wv1ZbU7XbZ8eQ5i8vJd43n5Qf9YlZlZxJ7a6lYz6T1a",
+    "role": "client",
+    "name": "Jaafar Al Marhoun",
+    "email": "jaafar@example.com",
+    "phone": "0622222222",
+    "address": "Qatif",
+    "registrationDate": "2026-01-05T09:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "username": "sarah",
+    "password": "$2a$10$W5fT2QO9I2Wv1ZbU7XbZ8eQ5i8vJd43n5Qf9YlZlZxJ7a6lYz6T1a",
+    "role": "client",
+    "name": "Sarah Baker",
+    "email": "sarah@example.com",
+    "phone": "0633333333",
+    "address": "Casablanca",
+    "registrationDate": "2026-01-06T15:30:00.000Z"
+  },
+  {
+    "id": 5,
+    "username": "omar",
+    "password": "$2a$10$W5fT2QO9I2Wv1ZbU7XbZ8eQ5i8vJd43n5Qf9YlZlZxJ7a6lYz6T1a",
+    "role": "client",
+    "name": "Omar Chef",
+    "email": "omar@example.com",
+    "phone": "0644444444",
+    "address": "Marrakech",
+    "registrationDate": "2026-01-07T11:20:00.000Z"
+  },
+  {
+    "id": 1768046934287,
+    "name": "Haassani Lamya",
+    "email": "Hassani.Lamya@emsi-edu.ma",
+    "phone": "124456",
+    "address": "Casa\n",
+    "registrationDate": "2026-01-10T12:08:54.287Z"
+  },
+  {
+    "id": 1768047798792,
+    "name": "Haassani Lamya",
+    "email": "Hassani.Lamya@emsi-edu.ma",
+    "phone": "124456",
+    "address": "Casa\n",
+    "registrationDate": "2026-01-10T12:23:18.792Z"
+  },
+  {
+    "id": 1768047800966,
+    "name": "Haassani Lamya",
+    "email": "Hassani.Lamya@emsi-edu.ma",
+    "phone": "124456",
+    "address": "Casa\n",
+    "registrationDate": "2026-01-10T12:23:20.966Z"
+  },
+  {
+    "id": 1768047828132,
+    "name": "Haassani Lamya",
+    "email": "Hassani.Lamya@emsi-edu.ma",
+    "phone": "1234",
+    "address": "CASA",
+    "registrationDate": "2026-01-10T12:23:48.132Z"
   }
 ]

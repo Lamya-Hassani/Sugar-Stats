@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DÃƒÂ©tails du Chef-d'Ã…â€œuvre | Sugar & Stats Admin</title>
+    <title>DÃƒÂ©tails du Client | Sugar & Stats</title>
+
     <!-- Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         :root {
             /* THEME: Vanilla Strawberry Luxury */
@@ -17,6 +19,8 @@
             --c-text-light: #8D6E63;
             --c-rose: #D81B60;
             --c-pop: #FF6D00;
+
+            /* Glassmorphism */
             --glass-bg: rgba(255, 255, 255, 0.80);
             --glass-border: 1px solid rgba(255, 255, 255, 0.9);
             --glass-shadow: 0 18px 45px rgba(216, 27, 96, 0.18);
@@ -39,6 +43,7 @@
             padding: 2rem;
         }
 
+        /* ==== CARD LAYOUT PRINCIPAL (HORIZONTAL) ==== */
         .details-card {
             background: var(--glass-bg);
             backdrop-filter: blur(26px);
@@ -48,16 +53,18 @@
             border: var(--glass-border);
             box-shadow: var(--glass-shadow);
             width: 100%;
-            max-width: 1050px;
+            max-width: 980px;
             position: relative;
             z-index: 10;
         }
 
         h2 {
+            position: relative;
             font-family: 'Playfair Display', serif;
             font-size: 1.9rem;
             margin: 0 0 1.4rem 0;
             color: var(--c-rose);
+            text-align: left;
             border-bottom: 1px solid rgba(216, 27, 96, 0.22);
             padding-bottom: 0.75rem;
             display: flex;
@@ -72,8 +79,9 @@
             align-items: flex-start;
         }
 
+        /* colonne gauche = avatar + rÃƒÂ©sumÃƒÂ© + bouton */
         .details-left {
-            flex: 0 0 320px;
+            flex: 0 0 260px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -82,26 +90,36 @@
             padding-right: 2rem;
         }
 
+        /* colonne droite = dÃƒÂ©tails en grille */
         .details-right {
             flex: 1;
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.25rem;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: 1.75rem;
+            row-gap: 1rem;
         }
 
-        .product-image {
-            width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            border: 5px solid white;
+        .client-avatar {
+            width: 110px;
+            height: 110px;
+            background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.95), var(--glass-bg));
+            border: 2px solid var(--c-rose);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: var(--c-rose);
+            box-shadow: 0 10px 30px rgba(216, 27, 96, 0.35);
         }
 
         .detail-info h3 {
+            font-family: 'Playfair Display', serif;
             font-size: 1.7rem;
             color: var(--c-text-main);
             margin: 0.3rem 0 0.25rem;
             text-align: center;
-            font-family: 'Playfair Display', serif;
         }
 
         .detail-subtitle {
@@ -111,6 +129,17 @@
             margin: 0;
         }
 
+        .badge-pill {
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            background: rgba(216, 27, 96, 0.08);
+            color: var(--c-rose);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        /* ==== LIGNES DE DÃƒâ€°TAILS EN MODE GRID ==== */
         .detail-row {
             border-bottom: 1px dashed rgba(141, 110, 99, 0.2);
             padding-bottom: 0.45rem;
@@ -120,6 +149,7 @@
         }
 
         .detail-label {
+            font-weight: 600;
             color: var(--c-text-light);
             text-transform: uppercase;
             font-size: 0.7rem;
@@ -131,14 +161,7 @@
             color: var(--c-text-main);
         }
 
-        .price-big {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            color: var(--c-rose);
-            font-weight: 700;
-            margin-top: 1rem;
-        }
-
+        /* Bouton retour */
         .btn {
             padding: 0.8rem 2rem;
             border-radius: 999px;
@@ -158,20 +181,21 @@
             background: linear-gradient(135deg, var(--c-text-main) 0%, #3E2723 100%);
             color: white;
             box-shadow: 0 6px 18px rgba(78, 52, 46, 0.4);
+            margin-top: 1.8rem;
+            align-self: stretch;
         }
 
-        .btn-rose {
-            background: var(--c-rose);
-            color: white;
-            box-shadow: 0 6px 18px rgba(216, 27, 96, 0.3);
-        }
-
-        .btn:hover {
+        .btn-primary:hover {
             transform: translateY(-1px);
-            opacity: 0.9;
+            box-shadow: 0 9px 26px rgba(78, 52, 46, 0.5);
         }
 
+        /* ==== RESPONSIVE ==== */
         @media (max-width: 900px) {
+            body {
+                padding: 1.5rem;
+            }
+
             .details-card {
                 max-width: 95%;
                 padding: 2rem 1.5rem;
@@ -179,18 +203,24 @@
 
             .details-card-inner {
                 flex-direction: column;
+                gap: 1.8rem;
             }
 
             .details-left {
+                flex: 1;
                 border-right: none;
                 border-bottom: 1px solid rgba(141, 110, 99, 0.25);
                 padding-right: 0;
                 padding-bottom: 1.75rem;
-                width: 100%;
             }
 
             .details-right {
                 grid-template-columns: 1fr;
+            }
+
+            .btn-primary {
+                width: 100%;
+                align-self: stretch;
             }
         }
     </style>
@@ -198,39 +228,73 @@
 </head>
 
 <body>
+
     <div class="details-card">
-        <h2><i class="fas fa-cookie-bite"></i> Fiche d'Excellence</h2>
+        <h2><i class="fas fa-user-circle"></i> Fiche Client</h2>
+
         <div class="details-card-inner">
+            <!-- Colonne gauche -->
             <div class="details-left">
-                <img src="" id="prodImage" class="product-image" alt="Pastry">
-                <div class="detail-info">
-                    <h3 id="prodName">Nom</h3>
-                    <div id="prodPrice" class="price-big">$0.00</div>
+                <div class="client-avatar" id="clientAvatar">
+                    <!-- Initiales client via JS -->
                 </div>
-                <div style="display: flex; flex-direction: column; gap: 0.8rem; width: 100%; margin-top: 1rem;">
-                    <a href="#" id="editBtn" class="btn btn-rose">
-                        <i class="fas fa-edit"></i> Modifier Masterpiece
+                <div class="detail-info">
+                    <h3 id="clientName">Nom du Client</h3>
+                    <p class="detail-subtitle" id="clientLab">Laboratoire / Ville</p>
+                    <span class="badge-pill" id="clientType">Type de client</span>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 0.8rem; width: 100%; margin-top: 1.5rem;">
+                    <a href="#" id="editBtn" class="btn btn-primary"
+                        style="margin-top: 0; background: var(--c-rose); box-shadow: 0 6px 18px rgba(216, 27, 96, 0.3);">
+                        <i class="fas fa-user-edit"></i> Modifier Profil
                     </a>
-                    <button onclick="exportToPDF()" class="btn btn-primary">
+                    <button onclick="exportToPDF()" class="btn btn-primary" style="margin-top: 0;">
                         <i class="fas fa-file-pdf"></i> Exporter PDF
                     </button>
                 </div>
             </div>
+
+            <!-- Colonne droite : dÃƒÂ©tails en 2 colonnes -->
             <div class="details-right" id="detailsContent">
-                <p style="text-align:center; grid-column: 1/-1;">Chargement...</p>
+                <!-- Le JS va injecter les .detail-row ici -->
+                <p style="grid-column: 1 / -1; text-align:center; margin:0;">
+                    Chargement des données du laboratoire...
+                </p>
             </div>
         </div>
     </div>
 
+    <!-- Background 3D Script & Dependencies -->
     <script src="https://unpkg.com/three@0.136.0/build/three.min.js"></script>
     
     <script src='../../../scripts/admin/pastry-bg.js'></script>
     <script src='../../../scripts/admin/luxury-ui.js'></script>
-    <script src="../../../scripts/admin/products.js"></script>
+
+    <!-- Ton script clients -->
+    <script src="../../../scripts/admin/clients.js"></script>
+
     <script>
+        // Check Auth
+        const user = JSON.parse(localStorage.getItem('authUser')) || JSON.parse(localStorage.getItem('user'));
+
         const urlParams = new URLSearchParams(window.location.search);
-        const id = urlParams.get('id');
-        if (id) showDetails(id);
+        const clientId = urlParams.get('id');
+
+        if (clientId) {
+            // showDetails doit:
+            // - remplir clientName, clientLab, clientType, clientAvatar
+            // - remplir #detailsContent avec des .detail-row
+            // Exemple de structure de .detail-row:
+            // <div class="detail-row">
+            //   <span class="detail-label">Email</span>
+            //   <span class="detail-value">client@example.com</span>
+            // </div>
+            showDetails(clientId);
+        } else {
+            const detailsContent = document.getElementById('detailsContent');
+            detailsContent.innerHTML = "<p style='grid-column:1/-1; text-align:center; margin:0;'>Client introuvable.</p>";
+        }
     </script>
 </body>
 

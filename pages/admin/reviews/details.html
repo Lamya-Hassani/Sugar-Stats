@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DÃƒÂ©tails de l'Avis | Sugar & Stats</title>
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        :root {
+            /* THEME: Vanilla Strawberry Luxury */
+            --c-text-main: #4E342E;
+            --c-text-light: #8D6E63;
+            --c-rose: #D81B60;
+            --c-pop: #FF6D00;
+
+            /* Glassmorphism */
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: 1px solid rgba(255, 255, 255, 1.0);
+            --glass-shadow: 0 8px 32px 0 rgba(216, 27, 96, 0.05);
+            --radius-card: 24px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: transparent;
+            color: var(--c-text-main);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .details-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 3rem;
+            border-radius: var(--radius-card);
+            border: var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            z-index: 10;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: var(--c-rose);
+            text-align: center;
+            border-bottom: 1px solid rgba(216, 27, 96, 0.2);
+            padding-bottom: 1rem;
+        }
+
+        #detailsContent {
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--c-rose) 0%, #EC407A 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(216, 27, 96, 0.3);
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(216, 27, 96, 0.4);
+        }
+    </style>
+    <link rel='stylesheet' href='../../../styles/admin-theme.css'>
+</head>
+
+<body>
+
+    <div class="details-card">
+        <h2><i class="fas fa-star"></i> Rapport d'Avis</h2>
+        <div id="detailsContent">
+            <p style="text-align:center;">Analyse des niveaux de satisfaction...</p>
+        </div>
+
+        <a href="list.html" class="btn btn-primary" style="background:var(--c-text-main); margin-top: 1rem;"><i
+                class="fas fa-arrow-left"></i> Retour ÃƒÂ  la Liste</a>
+    </div>
+
+    <!-- Background 3D Script & Dependencies -->
+    <script src="https://unpkg.com/three@0.136.0/build/three.min.js"></script>
+    
+    <script src='../../../scripts/admin/pastry-bg.js'></script>
+    <script src='../../../scripts/admin/luxury-ui.js'></script>
+
+    <script src="../../../scripts/admin/reviews.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const reviewId = urlParams.get('id');
+        if (reviewId) {
+            showDetails(reviewId);
+        } else {
+            document.getElementById('detailsContent').innerHTML = "<p style='text-align:center;'>Avis introuvable.</p>";
+        }
+    </script>
+</body>
+
+</html>

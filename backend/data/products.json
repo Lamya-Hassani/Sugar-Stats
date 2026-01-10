@@ -3,7 +3,7 @@
     "id": 1,
     "name": "Butter Croissant",
     "description": "Classic flaky French croissant made with real butter",
-    "price": 3.50,
+    "price": 3.5,
     "stock": 45,
     "categoryId": 1,
     "image": "https://www.weekendbakery.com/wp-content/uploads/IMG_9702-720x480.jpg"
@@ -12,7 +12,7 @@
     "id": 2,
     "name": "Pain au Chocolat",
     "description": "Croissant filled with dark chocolate",
-    "price": 4.20,
+    "price": 4.2,
     "stock": 32,
     "categoryId": 1,
     "image": "https://www.shutterstock.com/image-photo/almond-croissant-pastry-on-white-600nw-2486674021.jpg"
@@ -21,7 +21,7 @@
     "id": 3,
     "name": "Traditional Baguette",
     "description": "Crispy crust, soft inside - fresh daily",
-    "price": 2.80,
+    "price": 2.8,
     "stock": 60,
     "categoryId": 2,
     "image": "https://images.getbento.com/accounts/2a9801c410ad54d61bf287bf23e32841/media/images/889370O6A5073.jpg?w=1800&fit=max&auto=compress,format&cs=origin&h=1800"
@@ -30,7 +30,7 @@
     "id": 4,
     "name": "Chocolate Fudge Cake",
     "description": "Rich layered chocolate cake with ganache",
-    "price": 35.00,
+    "price": 35,
     "stock": 8,
     "categoryId": 3,
     "image": "https://ilgiardinodeldolce.com/cdn/shop/products/IMG_0383.jpg?v=1588633396"
@@ -39,7 +39,7 @@
     "id": 5,
     "name": "Colorful Macarons (Box of 6)",
     "description": "Assorted flavors: pistachio, raspberry, vanilla",
-    "price": 12.00,
+    "price": 12,
     "stock": 25,
     "categoryId": 4,
     "image": "https://thumbs.dreamstime.com/b/stack-colorful-macarons-blue-background-delicious-french-desserts-cakes-delicate-texture-perfect-surface-sweet-snack-385668015.jpg"
@@ -47,8 +47,8 @@
   {
     "id": 6,
     "name": "Almond Croissant",
-    "description": "Filled with almond cream and topped with flakes",
-    "price": 4.50,
+    "description": "Filled with almond cream and topped with flakes.",
+    "price": 4.5,
     "stock": 28,
     "categoryId": 1,
     "image": "https://static01.nyt.com/images/2021/04/07/dining/06croissantsrex1/merlin_184841898_ccc8fb62-ee41-44e8-9ddf-b95b198b88db-blog480.jpg"
@@ -57,7 +57,7 @@
     "id": 7,
     "name": "Sourdough Loaf",
     "description": "Naturally fermented artisan bread",
-    "price": 6.50,
+    "price": 6.5,
     "stock": 15,
     "categoryId": 2,
     "image": "https://www.kroger.com/product/images/xlarge/front/0001111006998"
@@ -66,7 +66,7 @@
     "id": 8,
     "name": "Strawberry Tart",
     "description": "Fresh strawberries on custard base",
-    "price": 28.00,
+    "price": 28,
     "stock": 12,
     "categoryId": 3,
     "image": "https://parisbaguette.com/wp-content/uploads/2024/10/9867560b776f4899b039b120176e7022-3.jpg"
@@ -75,7 +75,7 @@
     "id": 9,
     "name": "Éclair au Chocolat",
     "description": "Classic chocolate éclair with cream filling",
-    "price": 4.80,
+    "price": 4.8,
     "stock": 20,
     "categoryId": 4,
     "image": "https://media.gettyimages.com/id/2181953975/photo/close-up-to-croissants.jpg?s=612x612&w=gi&k=20&c=79R_PZ9hAnKh_7ZKjgSpkqaYVL0lc8DvBUcN9Xu99d0="
@@ -84,9 +84,27 @@
     "id": 10,
     "name": "Blueberry Muffin",
     "description": "Large muffin packed with fresh blueberries",
-    "price": 3.20,
+    "price": 3.2,
     "stock": 40,
     "categoryId": 5,
     "image": "https://platform.ny.eater.com/wp-content/uploads/sites/6/chorus/uploads/chorus_asset/file/24793514/PXL_20230714_145831786.jpg?quality=90&strip=all&crop=0%2C5.5555555555556%2C100%2C88.888888888889&w=2400"
+  },
+  {
+    "id": 1768046690461,
+    "name": "kika",
+    "description": "kika zwina",
+    "price": 5,
+    "stock": 3,
+    "categoryId": 1,
+    "image": "https//jsbvjhs"
+  },
+  {
+    "id": 1768046795595,
+    "name": "kika",
+    "description": "kika zwina",
+    "price": 12,
+    "stock": 24,
+    "categoryId": 2,
+    "image": "https://ghj"
   }
 ]

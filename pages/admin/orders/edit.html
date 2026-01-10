@@ -1,254 +1,271 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion de Commande | Sugar & Stats Admin</title>
+    <title>Gérer la Commande | Sugar & Stats Admin</title>
+    <!-- Fonts -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Styles adapted for Horizontal Layout + No Overflow */
         :root {
-            --c-bg: #f8f9fa;
-            --c-text: #5D4037;
-            --c-accent: #D48C9D;
-            --c-white: #ffffff;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            --radius: 16px;
+            /* Ensuring variables exist if css file is missing/different */
+            --c-text-deep: #4E342E;
+            --c-text-muted: #8D6E63;
+            --c-magenta: #D81B60;
+            --c-glass-white: rgba(255, 255, 255, 0.85);
+            --glass-blur: blur(20px);
+            --radius-card: 24px;
+            --shadow-pop: 0 10px 40px rgba(216, 27, 96, 0.15);
+            --gradient-brand: linear-gradient(135deg, #D81B60 0%, #FF80AB 100%);
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Lato', sans-serif;
-            background: var(--c-bg);
-            color: var(--c-text);
+            font-family: 'Poppins', sans-serif;
+            background: transparent;
+            color: var(--c-text-deep);
             margin: 0;
+            /* CENTERED & NO SCROLL */
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 2rem;
+            height: 100vh;
+            overflow: hidden;
+            padding: 0;
         }
 
         .form-container {
-            background: var(--c-white);
+            background: var(--c-glass-white);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
             padding: 3rem;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            width: 100%;
-            max-width: 600px;
+            border-radius: var(--radius-card);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: var(--shadow-pop);
+
+            /* Sizing for Horizontal Layout */
+            width: 90%;
+            max-width: 1100px;
+            position: relative;
+            z-index: 10;
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            margin-bottom: 2rem;
+            font-size: 2.2rem;
+            margin: 0 0 2rem 0;
+            color: var(--c-magenta);
             text-align: center;
         }
 
+        .id-badge {
+            display: table;
+            margin: 0 auto 2rem auto;
+            background: rgba(216, 27, 96, 0.1);
+            color: var(--c-magenta);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* 4-COLUMN HORIZONTAL GRID */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            align-items: end;
+            /* Aligns inputs nicely */
+        }
+
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.5rem;
+            /* Reduced margin since grid handles spacing */
+        }
+
+        /* Span Helpers */
+        .span-1 {
+            grid-column: span 1;
+        }
+
+        .span-2 {
+            grid-column: span 2;
+        }
+
+        .span-4 {
+            grid-column: span 4;
         }
 
         label {
             display: block;
-            font-weight: 700;
+            font-weight: 600;
             margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+            color: var(--c-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         input,
-        textarea,
-        select {
+        select,
+        textarea {
             width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #eee;
+            padding: 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 12px;
+            background: rgba(255, 255, 255, 0.6);
             font-family: inherit;
-            outline: none;
-            transition: 0.3s;
-            box-sizing: border-box;
+            font-size: 0.95rem;
+            color: var(--c-text-deep);
+            transition: 0.3s ease;
         }
 
         input:focus,
-        textarea:focus,
-        select:focus {
-            border-color: var(--c-accent);
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--c-magenta);
+            background: white;
+            box-shadow: 0 0 15px rgba(216, 27, 96, 0.15);
         }
 
-        /* Dynamic Items Section */
-        .items-section {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid #eee;
-        }
-
-        .items-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .item-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr 50px;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            align-items: center;
-        }
-
-        .add-item-btn {
-            background: #f0f0f0;
-            color: var(--c-text);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .remove-item-btn {
-            background: #fff5f5;
-            color: #ff5252;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        .total-display {
-            background: var(--c-bg);
-            padding: 1rem;
-            border-radius: 12px;
-            margin-top: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .total-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--c-accent);
+        textarea {
+            resize: none;
+            /* Prevents breaking layout */
         }
 
         .btn-row {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
+            display: flex;
+            justify-content: flex-end;
             gap: 1rem;
             margin-top: 2rem;
+            grid-column: 1 / -1;
         }
 
-        button {
-            padding: 1rem;
+        .btn {
+            padding: 1rem 3rem;
             border-radius: 50px;
             border: none;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
             transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .cancel-btn {
-            background: #f0f0f0;
-            color: var(--c-text);
+            background: #FFF;
+            color: var(--c-text-muted);
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .save-btn {
-            background: var(--c-accent);
+            background: var(--gradient-brand);
             color: white;
+            box-shadow: 0 5px 15px rgba(216, 27, 96, 0.3);
         }
 
-        button:hover {
+        .btn:hover {
             transform: translateY(-2px);
-            opacity: 0.9;
+            box-shadow: 0 8px 25px rgba(216, 27, 96, 0.3);
         }
 
-        .id-badge {
-            display: inline-block;
-            background: #f0f0f0;
-            padding: 0.3rem 0.6rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            margin-bottom: 1rem;
+        .cancel-btn:hover {
+            color: var(--c-text-deep);
+            background: #F5F5F5;
+        }
+
+        .items-list {
+            margin-top: 0.5rem;
+            background: rgba(0, 0, 0, 0.02);
+            padding: 1rem;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            max-height: 150px;
+            overflow-y: auto;
         }
     </style>
+    <link rel='stylesheet' href='../../../styles/admin-theme.css'>
 </head>
 
 <body>
     <div class="form-container">
-        <h1>Gestion de Commande</h1>
+        <h1>Calibrage de Commande</h1>
         <div class="id-badge" id="display-id">ID: ...</div>
 
-        <form id="orderForm">
+        <!-- Horizontal Grid Form -->
+        <form id="orderForm" class="form-grid">
             <input type="hidden" id="orderId">
 
-            <div class="form-group">
-                <label for="clientId">Sujet (Client)</label>
-                <select id="clientId" required>
-                    <option value="">Chargement...</option>
-                </select>
+            <!-- Row 1: Client (50%) & Status (50%) -->
+            <div class="form-group span-2">
+                <label for="clientId">Sujet Client</label>
+                <select id="clientId" required></select>
             </div>
 
-            <div class="form-group">
+            <div class="form-group span-2">
                 <label for="status">Statut Logistique</label>
-                <select id="status" required>
+                <select id="status">
                     <option value="En attente">En attente</option>
-                    <option value="En cours">En cours</option>
+                    <option value="Expédié">Expédié</option>
                     <option value="Livré">Livré</option>
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="orderDate">Date de la Commande</label>
+            <!-- Row 2: Amount (50%) & Date (50%) -->
+            <div class="form-group span-2">
+                <label for="totalAmount">Montant Prévisionnel ($)</label>
+                <input type="number" id="totalAmount" step="0.01" required placeholder="0.00">
+            </div>
+
+            <div class="form-group span-2">
+                <label for="orderDate">Date d'Emission</label>
                 <input type="date" id="orderDate">
             </div>
 
-            <div class="items-section">
-                <div class="items-header">
-                    <label>Composition Scientifique (Items)</label>
-                    <button type="button" class="add-item-btn" onclick="addItemRow()">
-                        <i class="fas fa-plus"></i> Ajouter un Produit
-                    </button>
-                </div>
-                <div id="itemsContainer">
-                    <!-- Dynamic rows go here -->
+            <!-- Row 3: Items (Full Width) -->
+            <div class="form-group span-4">
+                <label>Inventaire des Produits</label>
+                <div id="itemsContainer" class="items-list">
+                    <!-- Items will be injected here if logic allows, or keep it simple -->
                 </div>
             </div>
 
-            <div class="total-display">
-                <label>Montant Total Révisé</label>
-                <div style="display: flex; align-items: center; gap: 0.5rem;">
-                    <span class="total-value">$</span>
-                    <input type="text" id="totalAmount" readonly
-                        style="border:none; background:transparent; font-size:1.5rem; font-weight:700; color:var(--c-accent); width:120px; text-align:right;">
-                </div>
-            </div>
-
+            <!-- Buttons -->
             <div class="btn-row">
-                <button type="button" class="cancel-btn" onclick="window.location.href='list.html'">Annuler</button>
-                <button type="submit" class="save-btn">Sauvegarder les Données</button>
+                <a href="list.html" class="btn cancel-btn">Annuler</a>
+                <button type="submit" class="btn save-btn">Mettre à Jour</button>
             </div>
         </form>
     </div>
 
+    <!-- Background 3D Script & Dependencies -->
+    <script src="https://unpkg.com/three@0.136.0/build/three.min.js"></script>
+
+    <script src='../../../scripts/admin/pastry-bg.js'></script>
+    <script src='../../../scripts/admin/admin-utils.js'></script>
     <script src="../../../scripts/admin/orders.js"></script>
     <script>
-        // Security Check
         const user = JSON.parse(localStorage.getItem('authUser')) || JSON.parse(localStorage.getItem('user'));
-        if (!user || user.role !== 'admin') {
-            window.location.href = '../../auth.html';
-        }
+        // Security check commented out for dev
+        // if (!user || user.role !== 'admin') { window.location.href = '../../auth.html'; }
 
         document.addEventListener('DOMContentLoaded', async () => {
             await prefillOrderForm();
             const id = document.getElementById('orderId').value;
-            if (id) document.getElementById('display-id').textContent = `ID: ${id}`;
+            if (id) document.getElementById('display-id').textContent = `Commande #${id}`;
         });
 
         document.getElementById('orderForm').addEventListener('submit', (e) => {

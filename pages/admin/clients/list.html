@@ -1,254 +1,404 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Base Clients | Sugar & Stats Admin</title>
+    <title>Clientèle | Sugar & Stats Admin</title>
+    <!-- Fonts -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --c-bg: #f8f9fa;
-            --c-text: #5D4037;
-            --c-accent: #D48C9D;
-            --c-white: #ffffff;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            --radius: 16px;
+            /* THEME: Vanilla Strawberry Luxury */
+            --c-text-main: #4E342E;
+            --c-text-light: #8D6E63;
+            --c-rose: #D81B60;
+            --c-pop: #FF6D00;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: 1px solid rgba(255, 255, 255, 1.0);
+            --glass-shadow: 0 8px 32px 0 rgba(216, 27, 96, 0.05);
+            --radius-card: 24px;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Lato', sans-serif;
-            background: var(--c-bg);
-            color: var(--c-text);
+            font-family: 'Poppins', sans-serif;
+            background: transparent;
+            color: var(--c-text-main);
             margin: 0;
             display: flex;
+            min-height: 100vh;
         }
 
-        /* Sidebar */
+        /* --- SIDEBAR --- */
         .sidebar {
-            width: 260px;
+            width: 280px;
             height: 100vh;
-            background: var(--c-white);
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.02);
-            padding: 2rem;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.8);
+            padding: 2.5rem 1.5rem;
             position: fixed;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 5px 0 20px rgba(78, 52, 46, 0.05);
         }
 
         .brand {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin-bottom: 3rem;
-            color: var(--c-accent);
+            font-size: 1.8rem;
+            font-weight: 700;
+            font-style: italic;
+            margin-bottom: 3.5rem;
+            color: var(--c-rose);
+            text-align: center;
             text-decoration: none;
             display: block;
+            letter-spacing: -0.5px;
         }
 
         .nav-links {
             list-style: none;
             padding: 0;
+            flex-grow: 1;
         }
 
         .nav-link {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 1rem;
+            gap: 1.2rem;
+            padding: 1rem 1.5rem;
             text-decoration: none;
-            color: var(--c-text);
-            border-radius: 12px;
-            transition: 0.3s;
+            color: var(--c-text-light);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
             margin-bottom: 0.5rem;
         }
 
-        .nav-link:hover,
         .nav-link.active {
-            background: var(--c-accent);
+            background: linear-gradient(135deg, var(--c-rose) 0%, #EC407A 100%);
             color: white;
+            box-shadow: 0 4px 15px rgba(216, 27, 96, 0.3);
         }
 
-        /* Main Content */
+        /* --- MAIN CONTENT --- */
         .main {
-            margin-left: 260px;
-            padding: 3rem;
-            width: calc(100% - 260px);
+            margin-left: 280px;
+            padding: 3rem 4rem;
+            width: 100%;
+            position: relative;
+            z-index: 1;
         }
 
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            padding: 1.5rem 2rem;
+            border-radius: var(--radius-card);
+            border: var(--glass-border);
+            box-shadow: var(--glass-shadow);
         }
 
-        .add-btn {
-            background: var(--c-accent);
-            color: white;
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .controls-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+
+        .search-container {
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            border-radius: 50px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: var(--glass-bg);
+            font-family: inherit;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: var(--c-rose);
+            box-shadow: 0 0 15px rgba(216, 27, 96, 0.1);
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--c-text-light);
+        }
+
+        .btn {
             padding: 0.8rem 1.5rem;
             border-radius: 50px;
             text-decoration: none;
-            font-weight: 700;
+            font-weight: 600;
             transition: 0.3s;
-        }
-
-        .add-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(212, 140, 157, 0.3);
-        }
-
-        /* Client Grid */
-        .clients-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem;
-        }
-
-        .client-card {
-            background: var(--c-white);
-            border-radius: var(--radius);
-            padding: 2.5rem;
-            box-shadow: var(--shadow);
-            display: flex;
-            flex-direction: column;
+            display: inline-flex;
             align-items: center;
-            text-align: center;
-            transition: 0.3s;
+            gap: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
         }
 
-        .client-card:hover {
-            transform: translateY(-5px);
+        .btn-primary {
+            background: var(--c-rose);
+            color: white;
+            box-shadow: 0 4px 15px rgba(216, 27, 96, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--c-text-main);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        /* --- TABLE STYLE --- */
+        .table-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-card);
+            border: var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(216, 27, 96, 0.05);
+            padding: 1.2rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--c-text-light);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        th:hover {
+            background: rgba(216, 27, 96, 0.1);
+            color: var(--c-rose);
+        }
+
+        th i {
+            margin-left: 0.5rem;
+            font-size: 0.7rem;
+            opacity: 0.5;
+        }
+
+        td {
+            padding: 1.2rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-size: 0.95rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(0, 0, 0, 0.01);
         }
 
         .client-avatar {
-            width: 80px;
-            height: 80px;
-            background: var(--c-bg);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--c-rose);
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 1rem;
+        }
+
+        .actions-cell {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .icon-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            cursor: pointer;
+            border: none;
+            font-size: 0.9rem;
+        }
+
+        .btn-view {
+            background: #E3F2FD;
+            color: #1565C0;
+        }
+
+        .btn-edit {
+            background: #F5F5F5;
+            color: #4E342E;
+        }
+
+        .btn-delete {
+            background: #FFEBEE;
+            color: #C62828;
+        }
+
+        /* --- PAGINATION --- */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--c-accent);
-            margin-bottom: 1.5rem;
-        }
-
-        .client-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin: 0 0 0.5rem;
-        }
-
-        .client-email {
-            font-size: 0.9rem;
-            opacity: 0.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .client-info {
-            font-size: 0.85rem;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            opacity: 0.8;
-        }
-
-        .client-actions {
-            margin-top: 2rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            width: 100%;
-        }
-
-        .action-btn {
-            padding: 0.7rem;
-            border-radius: 12px;
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 700;
-            border: none;
+            background: var(--glass-bg);
+            border: var(--glass-border);
             cursor: pointer;
-            transition: 0.2s;
-            text-align: center;
-        }
-
-        .action-btn.edit {
-            background: #f0f0f0;
-            color: var(--c-text);
-        }
-
-        .action-btn.delete {
-            background: #fff5f5;
-            color: #ff5252;
-        }
-
-        .action-btn:hover {
-            opacity: 0.8;
-        }
-
-        .logout-btn {
-            background: transparent;
-            border: 1px solid #ff5252;
-            color: #ff5252;
-            padding: 0.6rem 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 700;
             transition: 0.3s;
+            font-weight: 500;
         }
 
-        .logout-btn:hover {
-            background: #ff5252;
+        .page-btn.active {
+            background: var(--c-rose);
             color: white;
+            border-color: var(--c-rose);
+            box-shadow: 0 4px 10px rgba(216, 27, 96, 0.2);
+        }
+
+        .page-btn:hover:not(.active) {
+            background: white;
+            border-color: var(--c-rose);
+            color: var(--c-rose);
         }
     </style>
+    <link rel='stylesheet' href='../../../styles/admin-theme.css'>
 </head>
 
 <body>
     <div class="sidebar">
         <a href="../index.html" class="brand">Sugar & Stats</a>
         <ul class="nav-links">
-            <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="../products/list.html" class="nav-link"><i class="fas fa-cookie"></i> Products</a></li>
+            <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="../products/list.html" class="nav-link"><i class="fas fa-cookie-bite"></i> Créations</a></li>
             <li><a href="list.html" class="nav-link active"><i class="fas fa-users"></i> Clients</a></li>
-            <li><a href="../categories/list.html" class="nav-link"><i class="fas fa-tags"></i> Categories</a></li>
-            <li><a href="../orders/list.html" class="nav-link"><i class="fas fa-box"></i> Orders</a></li>
+            <li><a href="../categories/list.html" class="nav-link"><i class="fas fa-tag"></i> Segments</a></li>
+            <li><a href="../orders/list.html" class="nav-link"><i class="fas fa-box-open"></i> Commandes</a></li>
+            <li><a href="../employees/list.html" class="nav-link"><i class="fas fa-id-card"></i> Personnel</a></li>
+            <li><a href="../payments/list.html" class="nav-link"><i class="fas fa-wallet"></i> Finances</a></li>
+            <li><a href="../reviews/list.html" class="nav-link"><i class="fas fa-heart"></i> Avis</a></li>
         </ul>
     </div>
 
     <div class="main">
         <div class="header">
             <div>
-                <h1>Base de Données Clients</h1>
-                <p>Gérez les membres de votre laboratoire du goût.</p>
+                <h1>Laboratoire Clientèle</h1>
+                <p>Analyse des profils et comportements des gourmets.</p>
             </div>
-            <div style="display: flex; gap: 1rem; align-items: center;">
-                <a href="add.html" class="add-btn"><i class="fas fa-plus"></i> Nouveau Client</a>
-                <button class="logout-btn" onclick="logout()">Logout</button>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-secondary" onclick="exportClientsCSV()"><i class="fas fa-file-csv"></i> Exporter
+                    CSV</button>
+                <a href="add.html" class="btn btn-primary"><i class="fas fa-user-plus"></i> Nouveau Client</a>
             </div>
         </div>
 
-        <div id="clientsGrid" class="clients-grid">
-            <!-- Loading placeholder -->
-            <p>Calibrating customer data...</p>
+        <div class="controls-row">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" class="search-input"
+                    placeholder="Rechercher par nom, email ou adresse..." oninput="handleSearch()">
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th onclick="handleSort('name')">Sujet Gourmet <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('email')">Email <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('registrationDate')">Inscrit le <i class="fas fa-sort"></i></th>
+                        <th>Adresse</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="clientsTableBody">
+                    <!-- Dynamic Rows -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="pagination" class="pagination">
+            <!-- Pagination items -->
         </div>
     </div>
 
+    <script src="https://unpkg.com/three@0.136.0/build/three.min.js"></script>
+
+    <script src='../../../scripts/admin/pastry-bg.js'></script>
+    <script src='../../../scripts/admin/luxury-ui.js'></script>
+    <script src="../../../scripts/admin/admin-utils.js"></script>
     <script src="../../../scripts/admin/clients.js"></script>
     <script>
-        // Security Check
         const user = JSON.parse(localStorage.getItem('authUser')) || JSON.parse(localStorage.getItem('user'));
-        if (!user || user.role !== 'admin') {
-            window.location.href = '../../auth.html';
-        }
+        if (!user || user.role !== 'admin') { window.location.href = '../../auth.html'; }
 
         document.addEventListener('DOMContentLoaded', () => {
-            loadClientsList();
+            initClientsList();
         });
+
+        async function initClientsList() {
+            await renderClientsTable();
+        }
 
         function logout() {
             localStorage.removeItem('authToken');

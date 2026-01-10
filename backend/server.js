@@ -231,8 +231,9 @@ app.post("/api/reviews", authMiddleware, (req, res) => {
 
 // GET all products (public)
 app.get("/api/products", (req, res) => {
-  res.json(products);
+  res.json(readJSONFile("products.json"));
 });
+
 
 // GET product by ID (public)
 app.get("/api/products/:id", (req, res) => {
@@ -286,8 +287,9 @@ app.delete("/api/products/:id", authMiddleware, adminOnly, (req, res) => {
 
 // GET all categories (public)
 app.get("/api/categories", (req, res) => {
-  res.json(categories);
+  res.json(readJSONFile("categories.json"));
 });
+
 
 // GET category by ID (public)
 app.get("/api/categories/:id", (req, res) => {
@@ -343,8 +345,9 @@ app.delete("/api/categories/:id", authMiddleware, adminOnly, (req, res) => {
 
 // GET all orders (admin)
 app.get("/api/orders", authMiddleware, adminOnly, (req, res) => {
-  res.json(orders);
+  res.json(readJSONFile("orders.json"));
 });
+
 
 // GET order by ID (admin)
 app.get("/api/orders/:id", authMiddleware, adminOnly, (req, res) => {
@@ -402,8 +405,9 @@ app.delete("/api/orders/:id", authMiddleware, adminOnly, (req, res) => {
 // ==================== CLIENTS API (admin only) ====================
 
 app.get("/api/clients", authMiddleware, adminOnly, (req, res) => {
-  res.json(clients);
+  res.json(readJSONFile("clients.json"));
 });
+
 
 app.get("/api/clients/:id", authMiddleware, adminOnly, (req, res) => {
   const id = Number(req.params.id);
@@ -566,6 +570,48 @@ app.delete("/api/payments/:id", authMiddleware, adminOnly, (req, res) => {
   }
   writeJSONFile("payement.json", payments);
   res.json({ message: "Paiement supprimé", id });
+});
+
+// ==================== REVIEWS API ====================
+
+app.get("/api/reviews", (req, res) => {
+  res.json(reviews);
+});
+
+app.get("/api/reviews/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const review = reviews.find((r) => r.id === id);
+  if (!review) {
+    return res.status(404).json({ error: "Avis non trouvé" });
+  }
+  res.json(review);
+});
+
+app.post("/api/reviews", authMiddleware, (req, res) => {
+  const newReview = {
+    id: Date.now(),
+    productId: req.body.productId,
+    clientId: req.user.id,
+    author: req.body.author || req.user.username,
+    rating: req.body.rating,
+    comment: req.body.comment,
+    date: new Date().toISOString(),
+  };
+  reviews.push(newReview);
+  writeJSONFile("reviews.json", reviews);
+  res.status(201).json(newReview);
+});
+
+// Admin can delete any review
+app.delete("/api/reviews/:id", authMiddleware, adminOnly, (req, res) => {
+  const id = Number(req.params.id);
+  const initialLength = reviews.length;
+  reviews = reviews.filter((r) => r.id !== id);
+  if (reviews.length === initialLength) {
+    return res.status(404).json({ error: "Avis non trouvé" });
+  }
+  writeJSONFile("reviews.json", reviews);
+  res.json({ message: "Avis supprimé", id });
 });
 
 // ==================== SERVER START ====================
