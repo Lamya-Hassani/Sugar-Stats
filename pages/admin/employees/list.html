@@ -1,10 +1,10 @@
 ﻿<!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personnel | Sugar & Stats Admin</title>
+    <title>Staff | Sugar & Stats Admin</title>
     <!-- Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
@@ -258,33 +258,33 @@
     <div class="sidebar">
         <a href="../index.html" class="brand">Sugar & Stats</a>
         <ul class="nav-links">
-            <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a></li>
-            <li><a href="../products/list.html" class="nav-link"><i class="fas fa-cookie-bite"></i> Créations</a></li>
+            <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="../products/list.html" class="nav-link"><i class="fas fa-cookie-bite"></i> Creations</a></li>
             <li><a href="../clients/list.html" class="nav-link"><i class="fas fa-users"></i> Clients</a></li>
             <li><a href="../categories/list.html" class="nav-link"><i class="fas fa-tag"></i> Segments</a></li>
-            <li><a href="../orders/list.html" class="nav-link"><i class="fas fa-box-open"></i> Commandes</a></li>
+            <li><a href="../orders/list.html" class="nav-link"><i class="fas fa-box-open"></i> Orders</a></li>
             <li><a href="list.html" class="nav-link active"><i class="fas fa-id-card"></i> Personnel</a></li>
-            <li><a href="../payments/list.html" class="nav-link"><i class="fas fa-wallet"></i> Finances</a></li>
-            <li><a href="../reviews/list.html" class="nav-link"><i class="fas fa-heart"></i> Avis</a></li>
+            <li><a href="../payments/list.html" class="nav-link"><i class="fas fa-wallet"></i> Finance</a></li>
+            <li><a href="../reviews/list.html" class="nav-link"><i class="fas fa-heart"></i> Reviews</a></li>
         </ul>
     </div>
 
     <div class="main">
         <div class="header">
             <div>
-                <h1>Laboratoire Humain</h1>
-                <p>Gestion des chercheurs et artisans pâtissiers.</p>
+                <h1>Human Laboratory</h1>
+                <p>Management of researchers and pastry artisans.</p>
             </div>
             <div style="display: flex; gap: 1rem;">
                 <button class="btn btn-secondary" onclick="exportEmployeesCSV()"><i class="fas fa-file-csv"></i>
-                    Exporter CSV</button>
-                <a href="add.html" class="btn btn-primary"><i class="fas fa-plus"></i> Nouveau Chercheur</a>
+                    Export CSV</button>
+                <a href="add.html" class="btn btn-primary"><i class="fas fa-plus"></i> New Researcher</a>
             </div>
         </div>
 
         <div class="search-container">
             <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" class="search-input" placeholder="Rechercher par nom ou spécialité..."
+            <input type="text" id="searchInput" class="search-input" placeholder="Search by name or specialty..."
                 oninput="handleSearch()">
         </div>
 
@@ -293,9 +293,9 @@
                 <thead>
                     <tr>
                         <th onclick="handleSort('name')">Expert <i class="fas fa-sort"></i></th>
-                        <th onclick="handleSort('position')">Domaine d'Expertise <i class="fas fa-sort"></i></th>
-                        <th onclick="handleSort('salary')">Honoraires ($) <i class="fas fa-sort"></i></th>
-                        <th onclick="handleSort('hireDate')">Date d'Entrée <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('position')">Field of Expertise <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('salary')">Fees ($) <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('hireDate')">Hire Date <i class="fas fa-sort"></i></th>
                         <th>Actions</th>
                     </tr>
                 </thead>

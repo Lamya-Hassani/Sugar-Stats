@@ -1,4 +1,6 @@
-const API_BASE_URL = "http://localhost:3000";
+if (typeof API_BASE_URL === 'undefined') {
+  var API_BASE_URL = "http://localhost:3000";
+}
 
 // ========== HELPERS ==========
 
@@ -30,14 +32,26 @@ function updateAuthUI() {
   const loggedIn = isLoggedIn();
   const user = getUserInfo();
 
-  // Redirect to home if logged in (Optional, but good for UX)
-  if (loggedIn) {
-    console.log("Utilisateur connecté:", user.username);
-    // alert("Vous êtes déjà connecté ! Redirection...");
-    // window.location.href = "../index.html"; 
+  const authBtn = document.getElementById("auth-btn") || document.querySelector(".login-btn");
+  if (authBtn) {
+    if (loggedIn) {
+      authBtn.textContent = "Mon Profil";
+      // Adjust path if needed
+      const currentPath = window.location.pathname;
+      if (currentPath.includes('pages/')) {
+        authBtn.href = "../profile.html";
+      } else {
+        authBtn.href = "profile.html";
+      }
+    } else {
+      authBtn.textContent = "Connexion";
+      if (window.location.pathname.includes('pages/')) {
+        // Already in pages/
+      } else {
+        authBtn.href = "pages/auth.html";
+      }
+    }
   }
-
-  // Note: We removed the status bars, so we don't update them here anymore.
 }
 
 // ========== REGISTER ==========
@@ -48,7 +62,9 @@ async function handleRegister(event) {
   const username = document.getElementById("register-username").value.trim();
   const password = document.getElementById("register-password").value.trim();
   const name = document.getElementById("register-name").value.trim();
-  const email = document.getElementById("register-email").value.trim();
+  const email = document.getElementById("register-email") ? document.getElementById("register-email").value.trim() : ""; // Fallback check
+  const phone = document.getElementById("register-phone").value.trim();
+  const address = document.getElementById("register-address").value.trim();
 
   // HARDCODED CLIENT ROLE
   const role = "client";
@@ -67,6 +83,8 @@ async function handleRegister(event) {
     role,
     name: name || username,
     email: email || "",
+    phone: phone || "",
+    address: address || "",
   };
 
   try {
@@ -147,14 +165,20 @@ async function handleLogin(event) {
       msgEl.textContent = "Connexion réussie !";
     }
 
-    // Redirect based on role after login
+    // Redirect based on role or URL parameter after login
     setTimeout(() => {
-      if (data.user.role === "admin") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirect = urlParams.get('redirect');
+
+      if (redirect) {
+        window.location.href = `../${redirect}`;
+      } else if (data.user.role === "admin") {
         window.location.href = "admin/index.html";
       } else {
-        window.location.href = "client/index.html";
+        window.location.href = "../profile.html";
       }
     }, 1000);
+
 
   } catch (err) {
     console.error(err);

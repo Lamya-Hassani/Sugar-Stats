@@ -117,7 +117,7 @@ async function renderOrdersTable() {
         <td><i class="fas fa-user-circle" style="color:var(--c-text-light); margin-right:0.5rem;"></i> ${getClientName(o.clientId)}</td>
         <td>${new Date(o.orderDate).toLocaleDateString('fr-FR')}</td>
         <td><span style="font-weight:700; color:var(--c-rose);">$${o.totalAmount.toFixed(2)}</span></td>
-        <td><span class="status-pill status-${o.status.toLowerCase().replace(' ', '')}">${o.status}</span></td>
+        <td>${window.getStatusPill(o.status)}</td>
         <td>
             <div class="actions-cell">
                 <a href="edit.html?id=${o.id}" class="icon-btn btn-edit" title="Modifier"><i class="fas fa-edit"></i></a>
@@ -145,7 +145,7 @@ async function showDetails(id) {
         <div class="modal-info">
             <h3 class="modal-title-main">#MIS-${order.id}</h3>
             <div style="text-align:center; margin-top:0.5rem;">
-                <span class="status-pill status-${order.status.toLowerCase().replace(' ', '')}">${order.status}</span>
+                ${window.getStatusPill(order.status)}
             </div>
         </div>
     `;

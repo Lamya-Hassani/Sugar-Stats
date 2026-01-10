@@ -23,5 +23,30 @@
     "id_categorie": 5,
     "libelle": "Muffins",
     "description": "Muffins frais et gourmands"
+  },
+  {
+    "id_categorie": 6,
+    "libelle": "Donuts",
+    "description": "Donuts glacés, fourrés et saupoudrés"
+  },
+  {
+    "id_categorie": 7,
+    "libelle": "Tarte Sucrée",
+    "description": "Tartes aux fruits, tartes à la crème"
+  },
+  {
+    "id_categorie": 8,
+    "libelle": "Cookies",
+    "description": "Cookies au chocolat, avoine, fruits secs"
+  },
+  {
+    "id_categorie": 9,
+    "libelle": "Cake",
+    "description": "Gâteaux variés, cakes aux fruits"
+  },
+  {
+    "id_categorie": 10,
+    "libelle": "Sandwich",
+    "description": "Sandwichs frais et gourmands"
   }
 ]

@@ -19,35 +19,35 @@
     <div class="sidebar">
         <div class="brand">Sugar & Stats</div>
         <ul class="nav-links">
-            <li><a href="#" class="nav-link active"><i class="fas fa-home"></i> Accueil</a></li>
-            <li><a href="products/list.html" class="nav-link"><i class="fas fa-cookie-bite"></i> Créations</a></li>
+            <li><a href="#" class="nav-link active"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="products/list.html" class="nav-link"><i class="fas fa-cookie-bite"></i> Creations</a></li>
             <li><a href="clients/list.html" class="nav-link"><i class="fas fa-users"></i> Clients</a></li>
             <li><a href="categories/list.html" class="nav-link"><i class="fas fa-tag"></i> Segments</a></li>
-            <li><a href="orders/list.html" class="nav-link"><i class="fas fa-box-open"></i> Commandes</a></li>
+            <li><a href="orders/list.html" class="nav-link"><i class="fas fa-box-open"></i> Orders</a></li>
             <li><a href="employees/list.html" class="nav-link"><i class="fas fa-id-card"></i> Personnel</a></li>
-            <li><a href="payments/list.html" class="nav-link"><i class="fas fa-wallet"></i> Finances</a></li>
-            <li><a href="reviews/list.html" class="nav-link"><i class="fas fa-heart"></i> Avis</a></li>
+            <li><a href="payments/list.html" class="nav-link"><i class="fas fa-wallet"></i> Finance</a></li>
+            <li><a href="reviews/list.html" class="nav-link"><i class="fas fa-heart"></i> Reviews</a></li>
         </ul>
     </div>
 
     <!-- Main Content -->
     <div class="main">
         <div class="header">
-            <h1>Bonjour, Admin</h1>
+            <h1>Hello, Admin</h1>
             <div>
                 <button class="logout-btn" onclick="logout()">
-                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                    <i class="fas fa-sign-out-alt"></i> Logout
                 </button>
             </div>
         </div>
 
         <div class="filters-bar">
-            <span><i class="fas fa-filter"></i> Filtre Analytique:</span>
+            <span><i class="fas fa-filter"></i> Analytics Filter:</span>
             <select id="dashboardFilter" class="filter-select" onchange="applyDashboardFilters()">
-                <option value="all">Toutes les périodes</option>
-                <option value="today">Aujourd'hui</option>
-                <option value="week">Cette semaine</option>
-                <option value="month">Ce mois</option>
+                <option value="all">All periods</option>
+                <option value="today">Today</option>
+                <option value="week">This week</option>
+                <option value="month">This month</option>
             </select>
         </div>
 
@@ -55,15 +55,15 @@
         <!-- Stats Overview -->
         <div class="stats-grid">
             <div class="stat-card" id="card-orders">
-                <h3>Total Commandes</h3>
+                <h3>Total Orders</h3>
                 <div class="value">128</div>
             </div>
             <div class="stat-card" id="card-revenue">
-                <h3>Revenu Mensuel</h3>
+                <h3>Monthly Revenue</h3>
                 <div class="value">$2,450</div>
             </div>
             <div class="stat-card" id="card-clients">
-                <h3>Gourmets Actifs</h3>
+                <h3>Active Gourmets</h3>
                 <div class="value">45</div>
             </div>
         </div>
@@ -72,31 +72,31 @@
         <div class="charts-section">
             <div class="chart-container full-width">
                 <div class="chart-header">
-                    <h3 class="chart-title">Aperçu des Revenus</h3>
+                    <h3 class="chart-title">Revenue Overview</h3>
                 </div>
                 <canvas id="revenueChart" height="100"></canvas>
             </div>
             <div class="chart-container">
                 <div class="chart-header">
-                    <h3 class="chart-title">Distribution des Produits</h3>
+                    <h3 class="chart-title">Product Distribution</h3>
                 </div>
                 <canvas id="categoryChart"></canvas>
             </div>
             <div class="chart-container">
                 <div class="chart-header">
-                    <h3 class="chart-title">Tendances des Commandes</h3>
+                    <h3 class="chart-title">Order Trends</h3>
                 </div>
                 <canvas id="trendChart"></canvas>
             </div>
             <div class="chart-container">
                 <div class="chart-header">
-                    <h3 class="chart-title">Corrélations Prix/Ventes</h3>
+                    <h3 class="chart-title">Price/Sales Correlation</h3>
                 </div>
                 <canvas id="scatterChart"></canvas>
             </div>
             <div class="chart-container">
                 <div class="chart-header">
-                    <h3 class="chart-title">Temps de Livraison</h3>
+                    <h3 class="chart-title">Delivery Time</h3>
                 </div>
                 <canvas id="deliveryChart"></canvas>
             </div>
@@ -104,9 +104,9 @@
 
         <div class="recent-orders">
             <div class="chart-header">
-                <h3 class="chart-title">Commandes Récentes</h3>
+                <h3 class="chart-title">Recent Orders</h3>
                 <a href="orders/list.html"
-                    style="text-decoration:none; color:var(--c-rose); font-weight:600; font-size:0.9rem;">Voir Tout</a>
+                    style="text-decoration:none; color:var(--c-rose); font-weight:600; font-size:0.9rem;">View All</a>
             </div>
             <table>
                 <thead>
@@ -115,7 +115,7 @@
                         <th>Client</th>
                         <th>Date</th>
                         <th>Total</th>
-                        <th>Statut</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody id="recentOrdersBody">
@@ -124,39 +124,39 @@
             </table>
         </div>
 
-        <h2>Atelier Actions</h2>
+        <h2>Workshop Actions</h2>
 
 
         <div class="quick-actions">
             <a href="products/add.html" class="action-card">
                 <div class="icon-wrapper"><i class="fas fa-plus action-icon"></i></div>
-                <h3>Nouvelle Création</h3>
-                <p>Ajouter une pièce maîtresse au menu.</p>
+                <h3>New Creation</h3>
+                <p>Add a centerpiece to the menu.</p>
             </a>
             <a href="products/list.html" class="action-card">
                 <div class="icon-wrapper"><i class="fas fa-book-open action-icon"></i></div>
-                <h3>Le Catalogue</h3>
-                <p>Gérer votre collection de douceurs.</p>
+                <h3>The Catalog</h3>
+                <p>Manage your collection of sweets.</p>
             </a>
             <a href="clients/list.html" class="action-card">
                 <div class="icon-wrapper"><i class="fas fa-user-circle action-icon"></i></div>
-                <h3>Clientèle</h3>
-                <p>Gérer vos fidèles gourmets.</p>
+                <h3>Clientele</h3>
+                <p>Manage your loyal gourmets.</p>
             </a>
             <a href="orders/list.html" class="action-card">
                 <div class="icon-wrapper"><i class="fas fa-shopping-bag action-icon"></i></div>
-                <h3>Commandes</h3>
-                <p>Suivre les livraisons et envies.</p>
+                <h3>Orders</h3>
+                <p>Track deliveries and cravings.</p>
             </a>
             <a href="employees/list.html" class="action-card">
                 <div class="icon-wrapper"><i class="fas fa-users action-icon"></i></div>
-                <h3>L'Équipe</h3>
-                <p>Gérer vos pâtissiers et staff.</p>
+                <h3>The Team</h3>
+                <p>Manage your pastry chefs and staff.</p>
             </a>
             <a href="payments/list.html" class="action-card">
                 <div class="icon-wrapper"><i class="fas fa-coins action-icon"></i></div>
-                <h3>Finances</h3>
-                <p>Suivre les revenus et flux.</p>
+                <h3>Finance</h3>
+                <p>Track revenue and flows.</p>
             </a>
         </div>
     </div>

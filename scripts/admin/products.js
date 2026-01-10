@@ -72,7 +72,7 @@ async function saveProduct(event) {
     description: document.getElementById('description').value,
     price: parseFloat(document.getElementById('price').value),
     stock: parseInt(document.getElementById('stock').value),
-    categoryId: parseInt(document.getElementById('categoryId').value),
+    id_categorie: parseInt(document.getElementById('categoryId').value),
     image: document.getElementById('image').value || "https://images.unsplash.com/photo-1550617931-e17a7b70dce2?q=80&w=2670&auto=format&fit=crop"
   };
 
@@ -129,8 +129,8 @@ async function renderProductsTable() {
         <td><span style="color:var(--c-text-light);">${getCategoryName(p.id_categorie)}</span></td>
         <td><span style="font-weight:700; color:var(--c-rose);">$${p.price.toFixed(2)}</span></td>
         <td>
-            <span class="status-pill ${p.stock > 10 ? 'in-stock' : 'out-of-stock'}">
-                ${p.stock} units
+            <span class="status-pill ${p.stock > 10 ? 'status-instock' : (p.stock > 0 ? 'status-lowstock' : 'status-outofstock')}">
+                <i class="fas ${p.stock > 10 ? 'fa-check' : (p.stock > 0 ? 'fa-exclamation' : 'fa-times')}"></i> ${p.stock} units
             </span>
         </td>
         <td>
@@ -184,7 +184,7 @@ window.exportProductsCSV = function () {
   const dataToExport = allProducts.map(p => ({
     ID: p.id,
     Nom: p.name,
-    Categorie: getCategoryName(p.categoryId),
+    Categorie: getCategoryName(p.id_categorie),
     Prix: p.price,
     Stock: p.stock,
     Description: p.description
@@ -217,7 +217,7 @@ async function prefillEditForm() {
     document.getElementById('description').value = product.description;
     document.getElementById('price').value = product.price;
     document.getElementById('stock').value = product.stock;
-    document.getElementById('categoryId').value = product.categoryId;
+    document.getElementById('categoryId').value = product.id_categorie;
     document.getElementById('image').value = product.image;
   }
 }

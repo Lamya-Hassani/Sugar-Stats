@@ -96,5 +96,16 @@
     "phone": "1234",
     "address": "CASA",
     "registrationDate": "2026-01-10T12:23:48.132Z"
+  },
+  {
+    "id": 1768083782884,
+    "username": "hassani",
+    "password": "$2b$10$qZSw7l5BurocC0oZho8jyO83j1O1Ffq6H3k3rB9BLpW3dZnst5k3G",
+    "role": "client",
+    "name": "azer",
+    "email": "hassani@gamil.com",
+    "phone": "1234",
+    "address": "casa o",
+    "registrationDate": "2026-01-10T22:23:02.884Z"
   }
 ]

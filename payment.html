@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paiement Sécurisé | Sugar & Stats</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+
+    <style>
+        body {
+            background: radial-gradient(circle at top, #ffffff 0, #FAFAFA 40%, #FBEFF4 100%);
+        }
+
+        /* HEADER MINI */
+        header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .header-inner {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* LAYOUT */
+
+        .payment-container {
+            max-width: 1000px;
+            margin: 7.5rem auto 4rem;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 2.2rem;
+            padding: 0 2rem;
+            align-items: stretch;
+            /* Ensure columns have same height potential */
+        }
+
+        .payment-header {
+            grid-column: 1 / -1;
+            margin-bottom: 2.5rem;
+        }
+
+        .payment-title {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 0.4rem;
+        }
+
+        .payment-subtitle {
+            font-size: 0.95rem;
+            color: rgba(47, 62, 70, 0.75);
+            margin-bottom: 1.8rem;
+        }
+
+        .payment-card {
+            background: #ffffff;
+            padding: 2.3rem 2.2rem;
+            border-radius: 26px;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f5f5f5;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-card::before {
+            content: "";
+            position: absolute;
+            inset: -30%;
+            background:
+                radial-gradient(circle at top left, rgba(197, 63, 107, 0.06), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(163, 217, 201, 0.06), transparent 55%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .payment-card h3 {
+            margin-bottom: 1.2rem;
+            font-family: 'Playfair Display', serif;
+            color: var(--c-text);
+        }
+
+        /* Left column wrapper */
+        .payment-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .payment-header {
+            margin-bottom: 2rem;
+        }
+
+        /* METHODS */
+
+        .method-option {
+            border: 2px solid #eee;
+            border-radius: 16px;
+            padding: 1.3rem 1.4rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1.4rem;
+            cursor: pointer;
+            transition: 0.25s;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .method-option:hover {
+            border-color: var(--c-accent);
+            background: rgba(197, 63, 107, 0.04);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(197, 63, 107, 0.15);
+        }
+
+        .method-option.active {
+            border-color: var(--c-accent);
+            background: rgba(197, 63, 107, 0.08);
+            box-shadow: 0 14px 35px rgba(197, 63, 107, 0.18);
+        }
+
+        .method-icon {
+            font-size: 2rem;
+            color: var(--c-accent);
+            width: 50px;
+            text-align: center;
+        }
+
+        .method-info h4 {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--c-text);
+        }
+
+        .method-info p {
+            margin: 0.15rem 0 0;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        /* ORDER SUMMARY */
+        aside .payment-card {
+            background: #111827;
+            color: #ffffff;
+            box-shadow: 0 22px 55px rgba(0, 0, 0, 0.35);
+            border-color: transparent;
+        }
+
+        aside .payment-card h3 {
+            color: #ffffff !important;
+            opacity: 1;
+            letter-spacing: 0.5px;
+        }
+
+        #paymentOrderItems {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .order-summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.7rem;
+        }
+
+        .order-summary-item span:first-child {
+            opacity: 0.8;
+        }
+
+        .order-total-row {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-top: 1.2rem;
+        }
+
+        .confirm-btn {
+            width: 100%;
+            margin-top: 1.5rem;
+            padding: 1.1rem;
+            font-size: 1.05rem;
+            border-radius: 999px;
+        }
+
+        .order-note {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .order-note i {
+            color: var(--c-apricot);
+            margin-right: 0.4rem;
+        }
+
+        /* MODAL */
+
+        #confirmModal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(6px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            padding: 2.7rem 2.4rem;
+            border-radius: 26px;
+            text-align: center;
+            max-width: 460px;
+            width: 90%;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.25);
+            animation: modalIn 0.25s ease-out forwards;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+            color: var(--c-text);
+        }
+
+        .modal-content p {
+            font-size: 0.9rem;
+            color: rgba(47, 62, 70, 0.85);
+        }
+
+        /* ANIMATIONS */
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes cardFade {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .payment-card {
+            animation: cardFade 0.45s ease forwards;
+        }
+
+        aside .payment-card {
+            animation-delay: 0.05s;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 768px) {
+            .payment-container {
+                grid-template-columns: 1fr;
+                margin-top: 7rem;
+                align-items: center;
+            }
+
+            .payment-card {
+                padding: 2rem 1.8rem;
+            }
+
+            .payment-header {
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-inner">
+            <a href="index.html" class="navbar-brand">Sugar <span>&</span> Stats</a>
+            <span style="font-size:0.8rem;text-transform:uppercase;letter-spacing:1px;color:rgba(47,62,70,0.7);">
+                Étape 3 · Paiement sécurisé
+            </span>
+        </div>
+    </header>
+
+    <section class="payment-container">
+        <!-- HEADER (Spans full width) -->
+        <div class="payment-header">
+            <h1 class="payment-title">Finaliser la commande</h1>
+            <p class="payment-subtitle">
+                Dernière étape avant que notre laboratoire ne lance la préparation de vos expériences sucrées.
+            </p>
+        </div>
+
+        <!-- LEFT COLUMN: Methods -->
+        <div class="payment-left">
+            <div class="payment-card">
+                <h3>Mode de paiement</h3>
+
+                <div class="method-option active" data-method="paypal">
+                    <div class="method-icon">
+                        <i class="fa-brands fa-paypal"></i>
+                    </div>
+                    <div class="method-info">
+                        <h4>PayPal / Carte bancaire</h4>
+                        <p>Redirection vers le portail sécurisé PayPal, chiffré de bout en bout.</p>
+                    </div>
+                </div>
+
+                <div class="method-option" data-method="cash">
+                    <div class="method-icon">
+                        <i class="fa-solid fa-money-bill-wave"></i>
+                    </div>
+                    <div class="method-info">
+                        <h4>Paiement à la livraison</h4>
+                        <p>Réglez à réception de votre commande, directement à notre messager.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <aside>
+            <div class="payment-card">
+                <h3>Votre commande</h3>
+                <div id="paymentOrderItems">
+                    <!-- Items summary -->
+                </div>
+
+                <hr style="opacity:0.12;margin:1.4rem 0;">
+
+                <div class="order-total-row">
+                    <span>Total</span>
+                    <span id="paymentTotal">0.00 DH</span>
+                </div>
+
+                <button class="btn btn-primary confirm-btn" onclick="confirmPayment()">
+                    Confirmer le paiement
+                </button>
+
+                <p class="order-note">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    Paiement sécurisé. Votre commande sera visible dans votre profil quelques secondes après validation.
+                </p>
+            </div>
+        </aside>
+    </section>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal">
+        <div class="modal-content">
+            <i class="fa-solid fa-check-circle"
+                style="font-size:3.5rem;color:var(--c-accent);margin-bottom:1.3rem;"></i>
+            <h2>Confirmer la commande&nbsp;?</h2>
+            <p>Une fois acceptée, votre préparation commencera immédiatement dans notre laboratoire.</p>
+            <div style="display:flex;gap:1rem;margin-top:2rem;">
+                <button class="btn btn-secondary" style="flex:1" onclick="closeModal()">Annuler</button>
+                <button class="btn btn-primary" style="flex:1" onclick="executeOrder()">Valider</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/payment.js"></script>
+    <script src="scripts/cart-logic.js"></script>
+    <script src="https://unpkg.com/three@0.136.0/build/three.min.js"></script>
+    <script src="scripts/admin/pastry-bg.js"></script>
+    <script src="scripts/authentification.js"></script>
+</body>
+
+</html>

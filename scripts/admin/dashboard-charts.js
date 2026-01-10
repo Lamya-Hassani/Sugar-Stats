@@ -221,7 +221,7 @@ function processCategoryDistribution(orders, products, categories) {
         o.items.forEach(item => {
             const product = products.find(p => p.id === item.productId);
             if (product) {
-                catCounts[product.categoryId] = (catCounts[product.categoryId] || 0) + item.quantity;
+                catCounts[product.id_categorie] = (catCounts[product.id_categorie] || 0) + item.quantity;
             }
         });
     });
@@ -267,7 +267,7 @@ function renderRecentOrders(orders, clients) {
                 <td>${clientName}</td>
                 <td>${new Date(o.orderDate).toLocaleDateString()}</td>
                 <td>$${o.totalAmount.toFixed(2)}</td>
-                <td><span class="status-pill ${statusClass}">${o.status}</span></td>
+                <td>${window.getStatusPill(o.status)}</td>
             </tr>
         `;
     }).join('');

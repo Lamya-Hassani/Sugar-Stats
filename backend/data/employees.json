@@ -1,11 +1,92 @@
 [
   {
     "id": 1767902539790,
-    "name": "re",
-    "position": "chef",
-    "email": "csev@umich.edu",
-    "phone": "1234567",
+    "name": "Reda Bennani",
+    "position": "Chef Pâtissier",
+    "email": "reda.bennani@sugarstats.com",
+    "phone": "0612345678",
     "hireDate": "2002-02-22",
-    "salary": 2333
+    "salary": 4500
+  },
+  {
+    "id": 1767902539791,
+    "name": "Fatima Zahra",
+    "position": "Boulanger",
+    "email": "fatima.zahra@sugarstats.com",
+    "phone": "0623456789",
+    "hireDate": "2015-05-10",
+    "salary": 3800
+  },
+  {
+    "id": 1767902539792,
+    "name": "Ahmed Mansouri",
+    "position": "Commis de Cuisine",
+    "email": "ahmed.mansouri@sugarstats.com",
+    "phone": "0634567890",
+    "hireDate": "2020-08-15",
+    "salary": 2500
+  },
+  {
+    "id": 1767902539793,
+    "name": "Noor Al Hana",
+    "position": "Responsable Ventes",
+    "email": "noor.alhana@sugarstats.com",
+    "phone": "0645678901",
+    "hireDate": "2018-03-20",
+    "salary": 3200
+  },
+  {
+    "id": 1767902539794,
+    "name": "Hassan Al Karim",
+    "position": "Livreur",
+    "email": "hassan.karim@sugarstats.com",
+    "phone": "0656789012",
+    "hireDate": "2021-01-05",
+    "salary": 2200
+  },
+  {
+    "id": 1767902539795,
+    "name": "Layla Bennani",
+    "position": "Chef Pâtissière",
+    "email": "layla.bennani@sugarstats.com",
+    "phone": "0667890123",
+    "hireDate": "2010-07-12",
+    "salary": 4200
+  },
+  {
+    "id": 1767902539796,
+    "name": "Mohamed El Fassi",
+    "position": "Responsable Qualité",
+    "email": "mohamed.elfassi@sugarstats.com",
+    "phone": "0678901234",
+    "hireDate": "2012-11-30",
+    "salary": 3600
+  },
+  {
+    "id": 1767902539797,
+    "name": "Yasmine Benkirane",
+    "position": "Assistante Admin",
+    "email": "yasmine.benkirane@sugarstats.com",
+    "phone": "0689012345",
+    "hireDate": "2019-09-22",
+    "salary": 2400
+  },
+  {
+    "id": 1767902539798,
+    "name": "Karim El Ouazzani",
+    "position": "Responsable Logistique",
+    "email": "karim.ouazzani@sugarstats.com",
+    "phone": "0690123456",
+    "hireDate": "2017-04-08",
+    "salary": 3500
+  },
+  {
+    "id": 1767902539799,
+    "name": "Salma Raoui",
+    "position": "Chef Boulanger",
+    "email": "salma.raoui@sugarstats.com",
+    "phone": "0701234567",
+    "hireDate": "2014-02-17",
+    "salary": 4000
   }
 ]

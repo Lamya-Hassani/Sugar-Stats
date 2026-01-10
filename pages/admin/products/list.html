@@ -1,10 +1,10 @@
 ﻿<!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventaire | Sugar & Stats Admin</title>
+    <title>Inventory | Sugar & Stats Admin</title>
     <!-- Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
@@ -115,7 +115,7 @@
 
         .header h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin: 0;
         }
 
@@ -341,39 +341,39 @@
     <div class="sidebar">
         <a href="../index.html" class="brand">Sugar & Stats</a>
         <ul class="nav-links">
-            <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a></li>
-            <li><a href="list.html" class="nav-link active"><i class="fas fa-cookie-bite"></i> Créations</a></li>
+            <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="list.html" class="nav-link active"><i class="fas fa-cookie-bite"></i> Creations</a></li>
             <li><a href="../clients/list.html" class="nav-link"><i class="fas fa-users"></i> Clients</a></li>
             <li><a href="../categories/list.html" class="nav-link"><i class="fas fa-tag"></i> Segments</a></li>
-            <li><a href="../orders/list.html" class="nav-link"><i class="fas fa-box-open"></i> Commandes</a></li>
+            <li><a href="../orders/list.html" class="nav-link"><i class="fas fa-box-open"></i> Orders</a></li>
             <li><a href="../employees/list.html" class="nav-link"><i class="fas fa-id-card"></i> Personnel</a></li>
-            <li><a href="../payments/list.html" class="nav-link"><i class="fas fa-wallet"></i> Finances</a></li>
-            <li><a href="../reviews/list.html" class="nav-link"><i class="fas fa-heart"></i> Avis</a></li>
+            <li><a href="../payments/list.html" class="nav-link"><i class="fas fa-wallet"></i> Finance</a></li>
+            <li><a href="../reviews/list.html" class="nav-link"><i class="fas fa-heart"></i> Reviews</a></li>
         </ul>
     </div>
 
     <div class="main">
         <div class="header">
             <div>
-                <h1>Inventaire Scientifique</h1>
-                <p>Analyse et gestion des créations pâtissières.</p>
+                <h1>Scientific Inventory</h1>
+                <p>Analysis and management of pastry creations.</p>
             </div>
             <div style="display: flex; gap: 1rem;">
-                <button class="btn btn-secondary" onclick="exportProductsCSV()"><i class="fas fa-file-csv"></i> Exporter
+                <button class="btn btn-secondary" onclick="exportProductsCSV()"><i class="fas fa-file-csv"></i> Export
                     CSV</button>
-                <a href="add.html" class="btn btn-primary"><i class="fas fa-plus"></i> Nouveau Produit</a>
+                <a href="add.html" class="btn btn-primary"><i class="fas fa-plus"></i> New Product</a>
             </div>
         </div>
 
         <div class="controls-row">
             <div class="search-container">
                 <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" class="search-input" placeholder="Rechercher par nom ou segment..."
+                <input type="text" id="searchInput" class="search-input" placeholder="Search by name or segment..."
                     oninput="handleSearch()">
             </div>
             <select id="categoryFilter" class="btn btn-secondary" style="border-radius: 50px; padding-right: 2rem;"
                 onchange="handleSearch()">
-                <option value="">Tous les segments</option>
+                <option value="">All Segments</option>
             </select>
         </div>
 
@@ -381,10 +381,10 @@
             <table>
                 <thead>
                     <tr>
-                        <th onclick="handleSort('name')">Création <i class="fas fa-sort"></i></th>
-                        <th onclick="handleSort('categoryId')">Segment Pâtissier <i class="fas fa-sort"></i></th>
-                        <th onclick="handleSort('price')">Valeur Unitaire <i class="fas fa-sort"></i></th>
-                        <th onclick="handleSort('stock')">Réserve Labo <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('name')">Creation <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('categoryId')">Pastry Segment <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('price')">Unit Value <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('stock')">Lab Reserve <i class="fas fa-sort"></i></th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -422,7 +422,7 @@
         function populateCategoryFilter() {
             const filter = document.getElementById('categoryFilter');
             if (!filter) return;
-            filter.innerHTML = '<option value="">Tous les segments</option>' +
+            filter.innerHTML = '<option value="">All Segments</option>' +
                 allCategories.map(c => `<option value="${c.id_categorie}">${c.libelle}</option>`).join('');
         }
 

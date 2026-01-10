@@ -1,44 +1,301 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sugar & Stats | The Science of Sweetness</title>
+  <title>Sugar & Stats | La Science du Goût</title>
 
   <!-- Fonts -->
   <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
 
   <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- CSS -->
+  <!-- Main CSS (Theme Variables) -->
   <link rel="stylesheet" href="styles/main.css">
 
   <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
-</head>
-<script>
-  // Auth Check
-  document.addEventListener('DOMContentLoaded', () => {
-    // Check both potential keys
-    const user = JSON.parse(localStorage.getItem('user')) || JSON.parse(localStorage.getItem('authUser'));
-    const loginBtn = document.getElementById('auth-btn');
 
-    if (user) {
-      // If user exists, change Login to Profile
-      if (loginBtn) {
-        loginBtn.textContent = 'Profile';
-        loginBtn.href = 'pages/profile.html';
+  <!-- Page Specific Styles (Adapting the CodePen Layout to your Theme) -->
+  <style>
+    /* --- NEW LAYOUT STYLES --- */
+
+    /* Smooth transition between Hero and Content */
+    .content-wrapper {
+      position: relative;
+      z-index: 10;
+      background: var(--c-bg);
+      /* Pale Blush Background */
+      box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Glass Cards (Matching Admin) */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(255, 255, 255, 1.0);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 3rem;
+      box-shadow: 0 10px 40px rgba(216, 27, 96, 0.05);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .glass-panel:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(255, 109, 0, 0.15);
+      /* Orange Pop */
+      border-color: #FFF3E0;
+    }
+
+    /* Philosophy Section Layout */
+    .split-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .text-stroke {
+      -webkit-text-stroke: 1px var(--c-accent);
+      color: transparent;
+      font-style: italic;
+    }
+
+    /* Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .feature-card {
+      background: #FFFFFF;
+      padding: 2.5rem;
+      border-radius: 24px;
+      border: 1px solid rgba(216, 27, 96, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(216, 27, 96, 0.1);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      color: var(--c-accent);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Parallax Quote Section */
+    .parallax-section {
+      background-image: url('https://images.unsplash.com/photo-1556910103-1c02745a30bf?q=80&w=2000&auto=format&fit=crop');
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      padding: 10rem 0;
+      color: white;
+      text-align: center;
+    }
+
+    .parallax-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(78, 52, 46, 0.7);
+      /* Brown overlay */
+    }
+
+    .parallax-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+      margin-top: 3rem;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      color: #FFD54F;
+      /* Gold text */
+      display: block;
+    }
+
+    /* Gallery Grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 300px);
+      gap: 1.5rem;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(78, 52, 46, 0.4);
+      opacity: 0;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+
+    /* Spans */
+    .span-2 {
+      grid-column: span 2;
+    }
+
+    .row-2 {
+      grid-row: span 2;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .split-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-row {
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+
+      .span-2,
+      .row-2 {
+        grid-column: span 1;
+        grid-row: span 1;
+        height: 300px;
       }
     }
-  });
-</script>
+
+    /* COLORFUL SCROLLBAR */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(197, 63, 107, 0.05);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--gradient-brand);
+      border-radius: 10px;
+      border: 2px solid #fff;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--c-accent);
+    }
+
+    /* REVIEWS SECTION */
+    .lab-reports-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .report-card {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 32px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+      border: 1px solid rgba(197, 63, 107, 0.05);
+      position: relative;
+      transition: all 0.4s ease;
+    }
+
+    .report-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 50px rgba(197, 63, 107, 0.1);
+    }
+
+    .report-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 20px;
+      object-fit: cover;
+      margin-bottom: 1.5rem;
+      border: 2px solid var(--c-accent);
+    }
+
+    .report-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .report-status {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: var(--c-accent);
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .report-text {
+      font-size: 0.95rem;
+      color: #6b7280;
+      font-style: italic;
+      line-height: 1.7;
+    }
+
+    .report-quotes {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      font-size: 3rem;
+      color: rgba(197, 63, 107, 0.05);
+      font-family: 'Playfair Display', serif;
+    }
+  </style>
+</head>
 
 <body>
 
@@ -51,22 +308,23 @@
   <!-- Header -->
   <header>
     <div class="header-inner">
-      <a href="#" class="navbar-brand">
+      <a href="index.html" class="navbar-brand">
         Sugar <span>&</span> Stats
       </a>
       <nav>
         <ul>
-          <li><a href="#menu">Menu</a></li>
-          <li><a href="#lab">The Lab</a></li>
-          <li><a href="#story">Our Story</a></li>
-          <li><a href="#locations">Locations</a></li>
+          <li><a href="about.html">Philosophie</a></li>
+          <li><a href="products.html">Le Labo</a></li>
+          <li><a href="#gallery">Galerie</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
       </nav>
 
       <div class="nav-actions">
-        <a href="pages/auth.html" class="login-btn" id="auth-btn">Login</a>
-        <a href="cart.html" id="cart-link" style="font-weight: 700; text-decoration: none; color: var(--c-text);">Cart
-          (<span id="cart-count">0</span>)</a>
+        <a href="pages/auth.html" class="login-btn" id="auth-btn">Connexion</a>
+        <a href="cart.html" id="cart-link" style="font-weight: 700; text-decoration: none; color: var(--c-text);">
+          Panier (<span id="cart-count">0</span>)
+        </a>
         <button class="ham-btn" id="mobile-toggle">
           <i class="fa-solid fa-bars"></i>
         </button>
@@ -74,38 +332,31 @@
     </div>
   </header>
 
-  <!-- Loading Text -->
+  <!-- 3D HERO SECTION (Preserved) -->
   <h1 class="main-txt">Sugar & Stats</h1>
 
-  <!-- Hero Content (Fixed Background + Canvas) -->
   <section class="banner">
     <div class="banner-inner">
-
-      <!-- Top Left -->
       <div class="top-desc">
         <h5>Est. 2024</h5>
-        <h6>Casablanca, Morocco</h6>
+        <h6>Casablanca, Maroc</h6>
         <span></span>
       </div>
-
-      <!-- Bottom Layout -->
       <div class="bottom-desc">
         <div class="left-desc">
           <h1>%</h1>
           <div class="desc-inner">
-            <h5>Precision Baking</h5>
-            <h6>Calculated Sweetness</h6>
+            <h5>Pâtisserie de Précision</h5>
+            <h6>Douceur Calculée</h6>
           </div>
         </div>
-
         <div class="middle-desc">
-          <h2>The Science of<br><i>Pure Delight.</i></h2>
+          <h2>La Science du<br><i>Pur Délice.</i></h2>
         </div>
-
         <div class="right-desc">
           <h1>01</h1>
           <div class="desc-inner">
-            <span>Follow The Lab</span>
+            <span>Suivre Le Labo</span>
             <ul>
               <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
               <li><a href="#"><i class="fa-brands fa-tiktok"></i></a></li>
@@ -116,180 +367,340 @@
     </div>
   </section>
 
-  <!-- Side Text -->
-  <span class="rotated-text">Interact to mix ingredients</span>
-
-  <!-- 3D Canvas (Fixed Position) -->
+  <span class="rotated-text">Interagir pour mélanger</span>
   <canvas class="webgl" id="webgl"></canvas>
+  <!-- END 3D HERO -->
 
-  <!-- === NEW SECTIONS START HERE === -->
-  <!-- Note: Added 'spa-section' class to give background color so 3D icons hide behind them -->
 
-  <!-- Top Sellers -->
-  <section id="menu" class="section-pad spa-section reveal">
-    <div class="container">
-      <div class="section-header">
-        <h2>Scientific Selections</h2>
-        <p>Our most statistically significant flavors.</p>
-      </div>
-      <div class="product-grid">
-        <!-- Item 1 -->
-        <div class="product-card" data-id="1" data-name="Velvet Equation" data-price="4.50"
-          data-image="https://images.unsplash.com/photo-1550617931-e17a7b70dce2?q=80&w=2670&auto=format&fit=crop">
-          <img src="https://images.unsplash.com/photo-1550617931-e17a7b70dce2?q=80&w=2670&auto=format&fit=crop"
-            class="product-img" alt="Cupcake">
-          <div class="product-info">
-            <h4 class="product-title">Velvet Equation</h4>
-            <span class="product-price">$4.50</span>
-            <button class="btn btn-primary add-to-cart">Add to Cart</button>
+  <!-- MAIN CONTENT WRAPPER (White background starts here) -->
+  <div class="content-wrapper">
+
+    <!-- SECTION 2: PHILOSOPHY -->
+
+
+
+    <!-- SECTION 2: PHILOSOPHY -->
+    <section id="about" class="section-pad reveal">
+      <div class="container">
+        <div class="split-layout">
+          <div>
+            <h4 style="color: var(--c-accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">
+              Notre Philosophie</h4>
+            <h2 style="font-size: 3rem; line-height: 1.2; margin-bottom: 2rem; color: var(--c-text);">
+              Une recette n'est pas <br>
+              <span class="text-stroke">de la magie.</span>
+            </h2>
+            <div style="width: 60px; height: 3px; background: var(--c-accent); margin-bottom: 2rem;"></div>
+
+            <p style="font-size: 1.1rem; color: #8a6a64; margin-bottom: 1.5rem;">
+              Chez Sugar & Stats, nous ne faisons pas que cuire, nous calibrons. Chaque gramme de farine, chaque degré
+              de chaleur est mesuré pour garantir une euphorie constante.
+            </p>
+
+            <ul style="list-style: none; margin-top: 2rem;">
+              <li style="margin-bottom: 1rem; display: flex; align-items: center; color: var(--c-text);">
+                <i class="fa-solid fa-check" style="color: var(--c-accent); margin-right: 1rem;"></i> Ingrédients pesés
+                au milligramme
+              </li>
+              <li style="margin-bottom: 1rem; display: flex; align-items: center; color: var(--c-text);">
+                <i class="fa-solid fa-check" style="color: var(--c-accent); margin-right: 1rem;"></i> Températures
+                contrôlées par IA
+              </li>
+              <li style="display: flex; align-items: center; color: var(--c-text);">
+                <i class="fa-solid fa-check" style="color: var(--c-accent); margin-right: 1rem;"></i> Esthétique
+                géométrique parfaite
+              </li>
+            </ul>
+          </div>
+
+          <div class="glass-panel">
+            <h3 style="color: var(--c-rose); margin-bottom: 1rem; font-style: italic;">L'Hypothèse du Goût</h3>
+            <p style="color: var(--c-text); font-size: 0.95rem; line-height: 1.8;">
+              "Si nous appliquons la rigueur scientifique à l'art chaotique de la pâtisserie, nous pouvons reproduire le
+              goût de l'amour, sans l'incertitude."
+            </p>
+            <div style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-weight: 700; color: var(--c-text);">Dr. Amina Benjelloun</span>
+              <span style="font-size: 0.8rem; text-transform: uppercase; color: var(--c-accent);">Fondatrice</span>
+            </div>
           </div>
         </div>
-        <!-- Item 2 -->
-        <div class="product-card" data-id="2" data-name="Perfect Torus" data-price="3.50"
-          data-image="https://images.unsplash.com/photo-1551024601-564d6e67e211?q=80&w=2670&auto=format&fit=crop">
-          <img src="https://images.unsplash.com/photo-1551024601-564d6e67e211?q=80&w=2670&auto=format&fit=crop"
-            class="product-img" alt="Donut">
-          <div class="product-info">
-            <h4 class="product-title">Perfect Torus</h4>
-            <span class="product-price">$3.50</span>
-            <button class="btn btn-primary add-to-cart">Add to Cart</button>
-          </div>
-        </div>
-        <!-- Item 3 -->
-        <div class="product-card" data-id="3" data-name="Sourdough X" data-price="8.00"
-          data-image="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=2672&auto=format&fit=crop">
-          <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=2672&auto=format&fit=crop"
-            class="product-img" alt="Bread">
-          <div class="product-info">
-            <h4 class="product-title">Sourdough X</h4>
-            <span class="product-price">$8.00</span>
-            <button class="btn btn-primary add-to-cart">Add to Cart</button>
-          </div>
-        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- The Lab / About -->
-  <section id="lab" class="section-pad spa-section reveal">
-    <div class="container lab-layout">
-      <div>
-        <img src="https://images.unsplash.com/photo-1556910103-1c02745a30bf?q=80&w=2670&auto=format&fit=crop"
-          class="lab-img" alt="Baker">
-      </div>
-      <div>
-        <h2>The Laboratory</h2>
-        <p style="margin-bottom: 1.5rem; font-size: 1.1rem;">
-          We don't just bake; we calibrate. At Sugar & Stats, every gram of flour and degree of heat is measured to
-          ensure consistent euphoria.
-        </p>
-        <p style="margin-bottom: 2rem; color: #8a6a64;">
-          Our "Stats" aren't just numbers—they are the exact temperatures required to release the oils in rosemary, or
-          the precise hydration needed for the perfect sourdough crumb.
-        </p>
-        <a href="#story" class="btn btn-primary">Read Our Methodology</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Our Story -->
-  <section id="story" class="section-pad spa-section reveal" style="background-color: #fff;">
-    <div class="container" style="text-align: center; max-width: 800px;">
-      <h2>Our Story</h2>
-      <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem;">
-        Founded in 2024 in the heart of Casablanca, Sugar & Stats was born from a simple question:
-        <em>Can science make food taste like love?</em>
-      </p>
-      <p style="color: #8a6a64;">
-        We replaced "a pinch of this" with "0.05 grams of that." The result is a bakery where nostalgia meets precision
-        engineering.
-      </p>
-    </div>
-  </section>
-
-  <!-- Locations -->
-  <section id="locations" class="section-pad spa-section reveal">
-    <div class="container">
-      <div class="section-header">
-        <h2>Visit The Lab</h2>
-      </div>
-      <div class="location-box">
-        <div>
-          <h3 style="margin-bottom: 1rem;">Casablanca HQ</h3>
-          <p style="margin-bottom: 1.5rem;">
-            123 Innovation Blvd, Anfa<br>
-            Casablanca, Morocco
+    <!-- SECTION 3: MODULES / CREATIONS -->
+    <section id="lab" class="section-pad reveal">
+      <div class="container">
+        <div style="text-align: center; max-width: 700px; margin: 0 auto;">
+          <span style="color: var(--c-accent); font-weight: 700; letter-spacing: 1px;">LE MENU</span>
+          <h2 style="font-size: 3rem; margin-top: 0.5rem; color: var(--c-text);">Nos Créations Scientifiques</h2>
+          <p style="color: #8a6a64; margin-top: 1rem;">
+            Des classiques revisités par l'ingénierie culinaire. Choisissez votre catégorie.
           </p>
-          <h5 style="margin-bottom: 0.5rem;">Hours</h5>
-          <p style="margin-bottom: 1.5rem;">
-            Mon-Fri: 7am - 8pm<br>
-            Sat-Sun: 8am - 9pm
-          </p>
-          <a href="#" class="btn btn-primary">Get Directions</a>
         </div>
-        <div>
-          <!-- Google Maps Placeholder -->
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d106376.70295982823!2d-7.669871765802102!3d33.57311025345738!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda7cd4778aa113b%3A0xb122cd70ba9c4d39!2sCasablanca%2C%20Morocco!5e0!3m2!1sen!2sus!4v1709420000000!5m2!1sen!2sus"
-            class="map-frame" allowfullscreen="" loading="lazy"></iframe>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <footer class="reveal">
-    <div class="container footer-grid">
-      <div class="footer-brand">
-        <a href="#" class="navbar-brand">Sugar <span>&</span> Stats</a>
-        <p>Where precision baking meets scientific sweetness. Engineered for euphoria since 2024.</p>
-        <div class="footer-socials">
-          <a href="#"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#"><i class="fa-brands fa-tiktok"></i></a>
-          <a href="#"><i class="fa-brands fa-facebook"></i></a>
+        <div class="features-grid">
+          <!-- Card 1 -->
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fa-solid fa-cake-candles"></i></div>
+            <h3 style="margin-bottom: 1rem; color: var(--c-text);">Gâteaux Signature</h3>
+            <p style="color: #8a6a64; font-size: 0.9rem; margin-bottom: 1.5rem;">
+              Des structures multicouches à l'équilibre moléculaire parfait.
+            </p>
+            <a href="products.html"
+              style="color: var(--c-rose); text-decoration: none; font-weight: 700; font-size: 0.9rem;">
+              Voir le catalogue <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fa-solid fa-bread-slice"></i></div>
+            <h3 style="margin-bottom: 1rem; color: var(--c-text);">Viennoiseries</h3>
+            <p style="color: #8a6a64; font-size: 0.9rem; margin-bottom: 1.5rem;">
+              Un feuilletage algorithmique pour un croustillant optimal à chaque bouchée.
+            </p>
+            <a href="products.html"
+              style="color: var(--c-rose); text-decoration: none; font-weight: 700; font-size: 0.9rem;">
+              Voir le catalogue <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fa-solid fa-mug-hot"></i></div>
+            <h3 style="margin-bottom: 1rem; color: var(--c-text);">Café & Élixirs</h3>
+            <p style="color: #8a6a64; font-size: 0.9rem; margin-bottom: 1.5rem;">
+              Infusions précises et extractions chronométrées pour une énergie pure.
+            </p>
+            <a href="products.html"
+              style="color: var(--c-rose); text-decoration: none; font-weight: 700; font-size: 0.9rem;">
+              Voir le catalogue <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
         </div>
       </div>
-      <div class="footer-links">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="#menu">Menu</a></li>
-          <li><a href="#lab">The Lab</a></li>
-          <li><a href="#story">Our Story</a></li>
-          <li><a href="#locations">Locations</a></li>
-        </ul>
+    </section>
+
+    <!-- SECTION 4: PARALLAX QUOTE & STATS -->
+    <section class="parallax-section reveal">
+      <div class="parallax-overlay"></div>
+      <div class="container parallax-content">
+        <h2 style="font-size: clamp(2rem, 5vw, 4rem); font-style: italic; margin-bottom: 2rem;">
+          “Faire simple. Faire délicieux. Faire précis.”
+        </h2>
+
+        <div class="stats-row">
+          <div>
+            <span class="stat-number">128</span>
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Recettes Validées</span>
+          </div>
+          <div>
+            <span class="stat-number">45</span>
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Sujets Gourmets</span>
+          </div>
+          <div>
+            <span class="stat-number">100%</span>
+            <span style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">Satisfaction</span>
+          </div>
+        </div>
       </div>
-      <div class="footer-links">
-        <h4>Support</h4>
-        <ul>
-          <li><a href="#">Help Center</a></li>
-          <li><a href="#">Contact Us</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms of Service</a></li>
-        </ul>
+    </section>
+
+    <!-- SECTION 4.5: LAB REPORTS (REVIEWS) -->
+    <section id="reviews" class="section-pad">
+      <div class="container">
+        <div style="text-align: center; max-width: 700px; margin: 0 auto 4rem;">
+          <span style="color: var(--c-accent); font-weight: 700; letter-spacing: 1px;">LAB REPORTS</span>
+          <h2 style="font-size: 3rem; margin-top: 0.5rem; color: var(--c-text);">Gourmet Lab Reports</h2>
+          <p style="color: #8a6a64; margin-top: 1rem;">
+            Real-time analysis of sensory satisfaction from our elite experimental subjects.
+          </p>
+        </div>
+
+        <div id="reportsGrid" class="lab-reports-grid">
+          <!-- Dynamically loaded from RandomUser API -->
+          <div style="grid-column: 1/-1; text-align: center; opacity: 0.5;">Analyzing field data...</div>
+        </div>
       </div>
-      <div class="footer-links">
-        <h4>The Science</h4>
-        <ul>
-          <li><a href="#">Methodology</a></li>
-          <li><a href="#">Ingredients</a></li>
-          <li><a href="#">Lab Results</a></li>
-          <li><a href="#">Case Studies</a></li>
-        </ul>
+    </section>
+
+    <!-- SECTION 5: GALLERY -->
+    <section id="gallery" class="section-pad reveal">
+      <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: end; margin-bottom: 3rem;">
+          <div>
+            <span style="color: var(--c-accent); font-weight: 700; letter-spacing: 1px;">PORTFOLIO</span>
+            <h2 style="font-size: 3rem; color: var(--c-text);">Galerie Gourmande</h2>
+          </div>
+          <a href="products.html" class="btn btn-primary">Voir tout le menu</a>
+        </div>
+
+        <div class="gallery-grid">
+          <!-- Item 1 (Big) -->
+          <div class="gallery-item span-2 row-2">
+            <img src="https://images.unsplash.com/photo-1579306194872-64d3b7bac4c2?q=80&w=1200&auto=format&fit=crop"
+              alt="Cake">
+            <div class="gallery-overlay">
+              <div>
+                <h3 style="font-size: 2rem;">Wedding Cake</h3>
+                <p>Architecture Sucrée</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=800&auto=format&fit=crop"
+              alt="Cookies">
+            <div class="gallery-overlay">
+              <h3>Cookies</h3>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1612203985729-70726954388c?q=80&w=800&auto=format&fit=crop"
+              alt="Donuts">
+            <div class="gallery-overlay">
+              <h3>Donuts</h3>
+            </div>
+          </div>
+
+          <!-- Item 4 (Wide) -->
+          <div class="gallery-item span-2">
+            <img src="https://images.unsplash.com/photo-1488477181946-6428a029177b?q=80&w=1200&auto=format&fit=crop"
+              alt="Pie">
+            <div class="gallery-overlay">
+              <div>
+                <h3>Tarte Citron</h3>
+                <p>Acidité Maîtrisée</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="container footer-bottom">
-      <p>&copy; 2024 Sugar & Stats. All Rights Reserved. Engineered in Casablanca, Morocco.</p>
-      <div style="display: flex; gap: 2rem;">
-        <a href="#" style="text-decoration: none; color: var(--c-text); opacity: 0.6; font-size: 0.8rem;">Sitemap</a>
-        <a href="#" style="text-decoration: none; color: var(--c-text); opacity: 0.6; font-size: 0.8rem;">Cookies</a>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="navbar-brand">Sugar <span>&</span> Stats</a>
+          <p style="margin-top: 1rem;">Où la précision de la pâtisserie rencontre la douceur scientifique. Conçu pour
+            l'euphorie depuis 2024.</p>
+          <div class="footer-socials">
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="products.html">Menu</a></li>
+            <li><a href="products.html">Le Labo</a></li>
+            <li><a href="about.html">Notre Histoire</a></li>
+            <li><a href="contact.html">Adresses</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Aide</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Confidentialité</a></li>
+            <li><a href="#">Conditions</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>La Science</h4>
+          <ul>
+            <li><a href="#">Méthodologie</a></li>
+            <li><a href="#">Ingrédients</a></li>
+            <li><a href="#">Résultats Labo</a></li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </footer>
+      <div class="container footer-bottom">
+        <p>&copy; 2024 Sugar & Stats. Tous droits réservés. Ingénierie à Casablanca, Maroc.</p>
+      </div>
+    </footer>
+
+  </div> <!-- End Content Wrapper -->
 
   <!-- Scripts -->
-  <script src="scripts/cart-logic.js"></script>
-  <script src="scripts/mobile-menu.js"></script>
   <script src="scripts/animations.js"></script>
   <script src="scripts/hero-3d.js"></script>
+  <script src="scripts/authentification.js"></script>
+
+  <script>
+    // --- LOAD MOCK LAB REPORTS ---
+    async function loadLabReports() {
+      const grid = document.getElementById('reportsGrid');
+      if (!grid) return;
+
+      const labReviews = [
+        "The molar balance between sugar and acidity in the Signature Cake is masterful. Rare structural precision.",
+        "An algorithmic layering of viennoiserie with a lightness that defies gravity. My prefrontal cortex approves.",
+        "The isotropic distribution of chocolate chips ensures a homogeneous sensory experience in every sample."
+      ];
+      const statuses = ["Verified Subject", "Flavor Specialist", "Senior Alchemist"];
+
+      const fallbacks = [
+        { name: { first: "Marc-Antoine", last: "Robert" }, picture: { large: "https://randomuser.me/api/portraits/men/32.jpg" } },
+        { name: { first: "Sophie", last: "Hadrien" }, picture: { large: "https://randomuser.me/api/portraits/women/44.jpg" } },
+        { name: { first: "Lucien", last: "David" }, picture: { large: "https://randomuser.me/api/portraits/men/65.jpg" } }
+      ];
+
+      try {
+        let subjects = fallbacks;
+        try {
+          const res = await fetch('https://randomuser.me/api/?results=3&nat=fr&seed=sugar');
+          if (res.ok) {
+            const data = await res.json();
+            if (data.results && data.results.length >= 3) {
+              subjects = data.results.slice(0, 3);
+            }
+          }
+        } catch (e) { console.warn("API Offline, using Lab fallbacks"); }
+
+        grid.innerHTML = subjects.map((s, i) => `
+          <div class="report-card review-item" style="opacity:0; transform:translateY(30px);">
+            <div class="report-quotes">“</div>
+            <img src="${s.picture.large}" class="report-avatar" alt="Subject">
+            <h3 class="report-name">${s.name.first} ${s.name.last}</h3>
+            <span class="report-status">${statuses[i]}</span>
+            <p class="report-text">${labReviews[i]}</p>
+          </div>
+        `).join('');
+
+        if (typeof gsap !== 'undefined') {
+          gsap.to(".review-item", {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            stagger: 0.3,
+            ease: "power4.out",
+            scrollTrigger: {
+              trigger: "#reviews",
+              start: "top 75%",
+              once: true
+            }
+          });
+        } else {
+          document.querySelectorAll('.review-item').forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+          });
+        }
+      } catch (err) {
+        console.error("Lab Report Error:", err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadLabReports);
+  </script>
 </body>
 
 </html>

@@ -12,7 +12,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- CSS LOCAL POUR PAYMENTS (même logique que Clients) -->
+    <!-- LOCAL CSS FOR PAYMENTS (same logic as Clients) -->
     <style>
         :root {
             /* THEME: Vanilla Strawberry Luxury pour cette page */
@@ -118,7 +118,7 @@
 
         .header h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin: 0;
         }
 
@@ -366,29 +366,29 @@
     <div class="sidebar">
         <a href="../index.html" class="brand">Sugar & Stats</a>
         <ul class="nav-links">
-            <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a></li>
-            <li><a href="../products/list.html" class="nav-link"><i class="fas fa-cookie-bite"></i> Créations</a></li>
+            <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="../products/list.html" class="nav-link"><i class="fas fa-cookie-bite"></i> Creations</a></li>
             <li><a href="../clients/list.html" class="nav-link"><i class="fas fa-users"></i> Clients</a></li>
             <li><a href="../categories/list.html" class="nav-link"><i class="fas fa-tag"></i> Segments</a></li>
-            <li><a href="../orders/list.html" class="nav-link"><i class="fas fa-box-open"></i> Commandes</a></li>
+            <li><a href="../orders/list.html" class="nav-link"><i class="fas fa-box-open"></i> Orders</a></li>
             <li><a href="../employees/list.html" class="nav-link"><i class="fas fa-id-card"></i> Personnel</a></li>
-            <li><a href="list.html" class="nav-link active"><i class="fas fa-wallet"></i> Finances</a></li>
-            <li><a href="../reviews/list.html" class="nav-link"><i class="fas fa-heart"></i> Avis</a></li>
+            <li><a href="list.html" class="nav-link active"><i class="fas fa-wallet"></i> Finance</a></li>
+            <li><a href="../reviews/list.html" class="nav-link"><i class="fas fa-heart"></i> Reviews</a></li>
         </ul>
     </div>
 
     <div class="main">
         <div class="header">
             <div>
-                <h1>Flux Monétaire</h1>
-                <p>Analyse des transactions et revenus du laboratoire.</p>
+                <h1>Monetary Flow</h1>
+                <p>Analysis of laboratory transactions and revenue.</p>
             </div>
             <div style="display: flex; gap: 1rem;">
                 <button class="btn btn-secondary" onclick="exportPaymentsCSV()">
-                    <i class="fas fa-file-csv"></i> Exporter CSV
+                    <i class="fas fa-file-csv"></i> Export CSV
                 </button>
                 <a href="add.html" class="btn btn-primary">
-                    <i class="fas fa-plus"></i> Nouveau Paiement
+                    <i class="fas fa-plus"></i> New Payment
                 </a>
             </div>
         </div>
@@ -396,14 +396,14 @@
         <div class="controls-row">
             <div class="search-container">
                 <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" class="search-input" placeholder="Rechercher par TXN ou Client..."
+                <input type="text" id="searchInput" class="search-input" placeholder="Search by TXN or Client..."
                     oninput="handleSearch()">
             </div>
             <select id="statusFilter" class="filter-select" onchange="handleSearch()">
-                <option value="">Tous les statuts</option>
-                <option value="Completed">✅ Validé</option>
-                <option value="Pending">⏳ En attente</option>
-                <option value="Failed">❌ Échec</option>
+                <option value="">All Statuses</option>
+                <option value="Completed">✅ Validated</option>
+                <option value="Pending">⏳ Pending</option>
+                <option value="Failed">❌ Failed</option>
             </select>
         </div>
 
@@ -412,10 +412,10 @@
                 <thead>
                     <tr>
                         <th onclick="handleSort('transactionId')">TXN ID <i class="fas fa-sort"></i></th>
-                        <th onclick="handleSort('clientId')">Sujet Gourmet <i class="fas fa-sort"></i></th>
-                        <th onclick="handleSort('amount')">Valeur Market <i class="fas fa-sort"></i></th>
-                        <th onclick="handleSort('paymentDate')">Date Perception <i class="fas fa-sort"></i></th>
-                        <th onclick="handleSort('paymentStatus')">Statut <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('clientId')">Gourmet Subject <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('amount')">Market Value <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('paymentDate')">Receipt Date <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('paymentStatus')">Status <i class="fas fa-sort"></i></th>
                         <th>Actions</th>
                     </tr>
                 </thead>

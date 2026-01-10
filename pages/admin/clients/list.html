@@ -1,10 +1,10 @@
 ﻿<!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clientèle | Sugar & Stats Admin</title>
+    <title>Clientele | Sugar & Stats Admin</title>
     <!-- Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
@@ -115,7 +115,7 @@
 
         .header h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin: 0;
         }
 
@@ -328,27 +328,27 @@
     <div class="sidebar">
         <a href="../index.html" class="brand">Sugar & Stats</a>
         <ul class="nav-links">
-            <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a></li>
-            <li><a href="../products/list.html" class="nav-link"><i class="fas fa-cookie-bite"></i> Créations</a></li>
+            <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="../products/list.html" class="nav-link"><i class="fas fa-cookie-bite"></i> Creations</a></li>
             <li><a href="list.html" class="nav-link active"><i class="fas fa-users"></i> Clients</a></li>
             <li><a href="../categories/list.html" class="nav-link"><i class="fas fa-tag"></i> Segments</a></li>
-            <li><a href="../orders/list.html" class="nav-link"><i class="fas fa-box-open"></i> Commandes</a></li>
+            <li><a href="../orders/list.html" class="nav-link"><i class="fas fa-box-open"></i> Orders</a></li>
             <li><a href="../employees/list.html" class="nav-link"><i class="fas fa-id-card"></i> Personnel</a></li>
-            <li><a href="../payments/list.html" class="nav-link"><i class="fas fa-wallet"></i> Finances</a></li>
-            <li><a href="../reviews/list.html" class="nav-link"><i class="fas fa-heart"></i> Avis</a></li>
+            <li><a href="../payments/list.html" class="nav-link"><i class="fas fa-wallet"></i> Finance</a></li>
+            <li><a href="../reviews/list.html" class="nav-link"><i class="fas fa-heart"></i> Reviews</a></li>
         </ul>
     </div>
 
     <div class="main">
         <div class="header">
             <div>
-                <h1>Laboratoire Clientèle</h1>
-                <p>Analyse des profils et comportements des gourmets.</p>
+                <h1>Clientele Laboratory</h1>
+                <p>Analysis of gourmet profiles and behaviors.</p>
             </div>
             <div style="display: flex; gap: 1rem;">
-                <button class="btn btn-secondary" onclick="exportClientsCSV()"><i class="fas fa-file-csv"></i> Exporter
+                <button class="btn btn-secondary" onclick="exportClientsCSV()"><i class="fas fa-file-csv"></i> Export
                     CSV</button>
-                <a href="add.html" class="btn btn-primary"><i class="fas fa-user-plus"></i> Nouveau Client</a>
+                <a href="add.html" class="btn btn-primary"><i class="fas fa-user-plus"></i> New Client</a>
             </div>
         </div>
 
@@ -356,7 +356,7 @@
             <div class="search-container">
                 <i class="fas fa-search"></i>
                 <input type="text" id="searchInput" class="search-input"
-                    placeholder="Rechercher par nom, email ou adresse..." oninput="handleSearch()">
+                    placeholder="Search by name, email or address..." oninput="handleSearch()">
             </div>
         </div>
 
@@ -364,10 +364,10 @@
             <table>
                 <thead>
                     <tr>
-                        <th onclick="handleSort('name')">Sujet Gourmet <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('name')">Gourmet Subject <i class="fas fa-sort"></i></th>
                         <th onclick="handleSort('email')">Email <i class="fas fa-sort"></i></th>
-                        <th onclick="handleSort('registrationDate')">Inscrit le <i class="fas fa-sort"></i></th>
-                        <th>Adresse</th>
+                        <th onclick="handleSort('registrationDate')">Registered On <i class="fas fa-sort"></i></th>
+                        <th>Address</th>
                         <th>Actions</th>
                     </tr>
                 </thead>

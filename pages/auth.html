@@ -1,34 +1,42 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sugar & Stats | Portal</title>
-  
+
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     /* --- 1. VARIABLES --- */
     :root {
-      --c-bg: #FFF5F7;
-      --c-text: #5D4037;
-      --c-accent: #D48C9D;
-      --c-accent-dark: #B86B77;
+      --c-bg: #FAFAFA;
+      --c-text: #2F3E46;
+      --c-accent: #C53F6B;
+      --c-accent-dark: #A52D54;
       --c-white: #FFFFFF;
-      --c-input: #FCF8F9;
-      --shadow: 0 14px 28px rgba(93, 64, 55, 0.1), 0 10px 10px rgba(93, 64, 55, 0.1);
-      --radius: 20px;
+      --c-input: #FFFFFF;
+      --shadow: 0 14px 28px rgba(0, 0, 0, 0.05), 0 10px 10px rgba(0, 0, 0, 0.05);
+      --radius: 24px;
       --transition: 0.6s ease-in-out;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
-      font-family: 'Lato', sans-serif;
+      font-family: 'Poppins', sans-serif;
       background: var(--c-bg);
-      /* Hero Image Background */
-      background-image: linear-gradient(rgba(255, 245, 247, 0.85), rgba(255, 245, 247, 0.85)), url('https://images.unsplash.com/photo-1567171466295-4afa63d45416?q=80&w=2600&auto=format&fit=crop');
+      /* Using a more neutral overlay for the brand vibe */
+      background-image: linear-gradient(rgba(250, 250, 250, 0.9), rgba(250, 250, 250, 0.9)), url('https://images.unsplash.com/photo-1567171466295-4afa63d45416?q=80&w=2600&auto=format&fit=crop');
       background-size: cover;
       background-position: center;
       display: flex;
@@ -46,6 +54,7 @@
       margin: 0;
       font-size: 2.5rem;
     }
+
     h2 {
       font-family: 'Playfair Display', serif;
       text-align: center;
@@ -53,6 +62,7 @@
       font-size: 2rem;
       color: var(--c-text);
     }
+
     p {
       font-size: 0.9rem;
       font-weight: 400;
@@ -60,7 +70,12 @@
       letter-spacing: 0.5px;
       margin: 20px 0 30px;
     }
-    span { font-size: 0.8rem; margin-top: 10px; display: block; }
+
+    span {
+      font-size: 0.8rem;
+      margin-top: 10px;
+      display: block;
+    }
 
     /* --- 3. MAIN CONTAINER (The Card) --- */
     .container {
@@ -83,14 +98,17 @@
       padding: 0 50px;
       display: flex;
       flex-direction: column;
-      justify-content: center; /* Center Vertically */
+      justify-content: center;
+      /* Center Vertically */
     }
 
     form {
       background-color: var(--c-white);
       display: flex;
-      align-items: center; /* Center Horizontally */
-      justify-content: center; /* Center Vertically */
+      align-items: center;
+      /* Center Horizontally */
+      justify-content: center;
+      /* Center Vertically */
       flex-direction: column;
       height: 100%;
       text-align: center;
@@ -109,6 +127,7 @@
       outline: none;
       transition: 0.3s;
     }
+
     input:focus {
       border-color: var(--c-accent);
       background-color: #fff;
@@ -129,22 +148,33 @@
       cursor: pointer;
       margin-top: 1.5rem;
     }
-    button:active { transform: scale(0.95); }
-    button:focus { outline: none; }
-    button:hover { background-color: var(--c-accent-dark); border-color: var(--c-accent-dark); }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    button:focus {
+      outline: none;
+    }
+
+    button:hover {
+      background-color: var(--c-accent-dark);
+      border-color: var(--c-accent-dark);
+    }
 
     /* Ghost Button (For the Overlay) */
     button.ghost {
       background-color: transparent;
       border-color: #FFFFFF;
     }
+
     button.ghost:hover {
       background-color: #FFFFFF;
       color: var(--c-text);
     }
 
     /* --- 5. ANIMATION LOGIC --- */
-    
+
     .sign-in-container {
       left: 0;
       width: 50%;
@@ -171,8 +201,18 @@
     }
 
     @keyframes show {
-      0%, 49.99% { opacity: 0; z-index: 1; }
-      50%, 100% { opacity: 1; z-index: 5; }
+
+      0%,
+      49.99% {
+        opacity: 0;
+        z-index: 1;
+      }
+
+      50%,
+      100% {
+        opacity: 1;
+        z-index: 5;
+      }
     }
 
     /* --- 6. THE OVERLAY --- */
@@ -225,31 +265,142 @@
       transition: transform var(--transition);
     }
 
-    .overlay-panel h1 { color: white; margin-bottom: 10px; }
-    .overlay-panel p { color: rgba(255,255,255,0.9); }
+    .overlay-panel h1 {
+      color: white;
+      margin-bottom: 10px;
+    }
 
-    .overlay-left { transform: translateX(-20%); }
-    .container.right-panel-active .overlay-left { transform: translateX(0); }
+    .overlay-panel p {
+      color: rgba(255, 255, 255, 0.9);
+    }
 
-    .overlay-right { right: 0; transform: translateX(0); }
-    .container.right-panel-active .overlay-right { transform: translateX(20%); }
+    .overlay-left {
+      transform: translateX(-20%);
+    }
+
+    .container.right-panel-active .overlay-left {
+      transform: translateX(0);
+    }
+
+    .overlay-right {
+      right: 0;
+      transform: translateX(0);
+    }
+
+    .container.right-panel-active .overlay-right {
+      transform: translateX(20%);
+    }
 
     /* Utility */
-    .msg-box { font-size: 0.8rem; margin-top: 15px; color: var(--c-text); font-weight: bold; }
+    .msg-box {
+      font-size: 0.8rem;
+      margin-top: 15px;
+      color: var(--c-text);
+      font-weight: bold;
+    }
 
     /* Mobile */
     @media (max-width: 768px) {
-      .container { width: 100%; min-height: 800px; flex-direction: column; }
-      .form-container { width: 100%; height: 60%; top: 40%; padding: 0 20px;}
-      .sign-up-container { opacity: 1; z-index: 1; top: 40%; }
-      .overlay-container { width: 100%; height: 40%; top: 0; left: 0; }
+      .container {
+        width: 100%;
+        min-height: 800px;
+        flex-direction: column;
+      }
+
+      .form-container {
+        width: 100%;
+        height: 60%;
+        top: 40%;
+        padding: 0 20px;
+      }
+
+      .sign-up-container {
+        opacity: 1;
+        z-index: 1;
+        top: 40%;
+      }
+
+      .overlay-container {
+        width: 100%;
+        height: 40%;
+        top: 0;
+        left: 0;
+      }
+
+      .overlay-panel h1 {
+        font-size: 1.5rem;
+      }
+
+      .overlay-panel p {
+        display: none;
+        /* Hide long text on mobile overlay */
+      }
+
+      .container.right-panel-active .overlay-container {
+        transform: translateY(150%);
+        /* Slide overlay down to show register */
+      }
+
+      .container.right-panel-active .sign-up-container {
+        transform: none;
+        top: 0;
+        height: 100%;
+      }
+    }
+
+    /* ELEGANT BACK LINK */
+    .back-home {
+      position: fixed;
+      top: 2.5rem;
+      left: 2.5rem;
+      color: var(--c-text);
+      text-decoration: none;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      z-index: 1001;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .back-home .icon-circle {
+      width: 45px;
+      height: 45px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+      transition: inherit;
+    }
+
+    .back-home:hover {
+      color: var(--c-accent);
+      transform: translateX(5px);
+    }
+
+    .back-home:hover .icon-circle {
+      background: var(--c-accent);
+      color: white;
+      box-shadow: 0 10px 30px rgba(197, 63, 107, 0.3);
     }
   </style>
 </head>
+
 <body>
+  <a href="../index.html" class="back-home">
+    <div class="icon-circle">
+      <i class="fas fa-arrow-left"></i>
+    </div>
+    <span>Retour au Labo</span>
+  </a>
 
   <div class="container" id="container">
-    
+
     <!-- REGISTER FORM -->
     <div class="form-container sign-up-container">
       <form id="register-form">
@@ -257,8 +408,10 @@
         <input type="text" id="register-username" placeholder="Username" required />
         <input type="email" id="register-email" placeholder="Email" required />
         <input type="text" id="register-name" placeholder="Nom complet" />
+        <input type="text" id="register-phone" placeholder="Téléphone" />
+        <input type="text" id="register-address" placeholder="Adresse de livraison" />
         <input type="password" id="register-password" placeholder="Mot de passe" required />
-        
+
         <button type="submit">S'inscrire</button>
         <div id="register-message" class="msg-box"></div>
       </form>
@@ -280,7 +433,7 @@
     <!-- OVERLAY -->
     <div class="overlay-container">
       <div class="overlay">
-        
+
         <!-- Left Overlay (Visible when Registering) -->
         <div class="overlay-panel overlay-left">
           <h1>Welcome Back!</h1>
@@ -319,4 +472,5 @@
   </script>
 
 </body>
+
 </html>

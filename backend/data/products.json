@@ -5,7 +5,7 @@
     "description": "Classic flaky French croissant made with real butter",
     "price": 3.5,
     "stock": 45,
-    "categoryId": 1,
+    "id_categorie": 1,
     "image": "https://www.weekendbakery.com/wp-content/uploads/IMG_9702-720x480.jpg"
   },
   {
@@ -14,7 +14,7 @@
     "description": "Croissant filled with dark chocolate",
     "price": 4.2,
     "stock": 32,
-    "categoryId": 1,
+    "id_categorie": 1,
     "image": "https://www.shutterstock.com/image-photo/almond-croissant-pastry-on-white-600nw-2486674021.jpg"
   },
   {
@@ -23,7 +23,7 @@
     "description": "Crispy crust, soft inside - fresh daily",
     "price": 2.8,
     "stock": 60,
-    "categoryId": 2,
+    "id_categorie": 2,
     "image": "https://images.getbento.com/accounts/2a9801c410ad54d61bf287bf23e32841/media/images/889370O6A5073.jpg?w=1800&fit=max&auto=compress,format&cs=origin&h=1800"
   },
   {
@@ -32,7 +32,7 @@
     "description": "Rich layered chocolate cake with ganache",
     "price": 35,
     "stock": 8,
-    "categoryId": 3,
+    "id_categorie": 3,
     "image": "https://ilgiardinodeldolce.com/cdn/shop/products/IMG_0383.jpg?v=1588633396"
   },
   {
@@ -41,7 +41,7 @@
     "description": "Assorted flavors: pistachio, raspberry, vanilla",
     "price": 12,
     "stock": 25,
-    "categoryId": 4,
+    "id_categorie": 4,
     "image": "https://thumbs.dreamstime.com/b/stack-colorful-macarons-blue-background-delicious-french-desserts-cakes-delicate-texture-perfect-surface-sweet-snack-385668015.jpg"
   },
   {
@@ -50,7 +50,7 @@
     "description": "Filled with almond cream and topped with flakes.",
     "price": 4.5,
     "stock": 28,
-    "categoryId": 1,
+    "id_categorie": 1,
     "image": "https://static01.nyt.com/images/2021/04/07/dining/06croissantsrex1/merlin_184841898_ccc8fb62-ee41-44e8-9ddf-b95b198b88db-blog480.jpg"
   },
   {
@@ -59,7 +59,7 @@
     "description": "Naturally fermented artisan bread",
     "price": 6.5,
     "stock": 15,
-    "categoryId": 2,
+    "id_categorie": 2,
     "image": "https://www.kroger.com/product/images/xlarge/front/0001111006998"
   },
   {
@@ -68,7 +68,7 @@
     "description": "Fresh strawberries on custard base",
     "price": 28,
     "stock": 12,
-    "categoryId": 3,
+    "id_categorie": 3,
     "image": "https://parisbaguette.com/wp-content/uploads/2024/10/9867560b776f4899b039b120176e7022-3.jpg"
   },
   {
@@ -77,7 +77,7 @@
     "description": "Classic chocolate éclair with cream filling",
     "price": 4.8,
     "stock": 20,
-    "categoryId": 4,
+    "id_categorie": 4,
     "image": "https://media.gettyimages.com/id/2181953975/photo/close-up-to-croissants.jpg?s=612x612&w=gi&k=20&c=79R_PZ9hAnKh_7ZKjgSpkqaYVL0lc8DvBUcN9Xu99d0="
   },
   {
@@ -86,25 +86,52 @@
     "description": "Large muffin packed with fresh blueberries",
     "price": 3.2,
     "stock": 40,
-    "categoryId": 5,
+    "id_categorie": 5,
     "image": "https://platform.ny.eater.com/wp-content/uploads/sites/6/chorus/uploads/chorus_asset/file/24793514/PXL_20230714_145831786.jpg?quality=90&strip=all&crop=0%2C5.5555555555556%2C100%2C88.888888888889&w=2400"
   },
   {
-    "id": 1768046690461,
-    "name": "kika",
-    "description": "kika zwina",
-    "price": 5,
-    "stock": 3,
-    "categoryId": 1,
-    "image": "https//jsbvjhs"
+    "id": 11,
+    "name": "Vanilla Donut",
+    "description": "Light vanilla glazed donut",
+    "price": 2.5,
+    "stock": 55,
+    "id_categorie": 6,
+    "image": "https://images.unsplash.com/photo-1585080876519-0346a3ff95e4?w=500&h=500&fit=crop"
   },
   {
-    "id": 1768046795595,
-    "name": "kika",
-    "description": "kika zwina",
-    "price": 12,
-    "stock": 24,
-    "categoryId": 2,
-    "image": "https://ghj"
+    "id": 12,
+    "name": "Apple Pie",
+    "description": "Homemade apple pie with cinnamon",
+    "price": 18.5,
+    "stock": 10,
+    "id_categorie": 7,
+    "image": "https://images.unsplash.com/photo-1535920527894-b400b62fe660?w=500&h=500&fit=crop"
+  },
+  {
+    "id": 13,
+    "name": "Chocolate Chip Cookie",
+    "description": "Classic cookie with melted chocolate chips",
+    "price": 1.8,
+    "stock": 80,
+    "id_categorie": 8,
+    "image": "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=500&h=500&fit=crop"
+  },
+  {
+    "id": 14,
+    "name": "Lemon Drizzle Cake",
+    "description": "Moist lemon cake with sweet glaze",
+    "price": 22,
+    "stock": 14,
+    "id_categorie": 9,
+    "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500&h=500&fit=crop"
+  },
+  {
+    "id": 15,
+    "name": "Tuna Sandwich",
+    "description": "Fresh tuna with mixed greens and olive oil",
+    "price": 8.5,
+    "stock": 30,
+    "id_categorie": 10,
+    "image": "https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?w=500&h=500&fit=crop"
   }
 ]

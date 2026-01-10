@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notre Philosophie | Sugar & Stats</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        .about-hero {
+            padding: 10rem 0 5rem;
+            text-align: center;
+            background: var(--gradient-brand);
+            color: white;
+            border-radius: 0 0 50px 50px;
+        }
+
+        .about-content {
+            padding: 8rem 0;
+        }
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .text-stroke {
+            -webkit-text-stroke: 1px var(--c-accent);
+            color: transparent;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-inner">
+            <a href="index.html" class="navbar-brand">Sugar <span>&</span> Stats</a>
+            <nav>
+                <ul>
+                    <li><a href="about.html">Philosophie</a></li>
+                    <li><a href="products.html">Le Labo</a></li>
+                    <li><a href="index.html#gallery">Galerie</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="nav-actions">
+                <a href="pages/auth.html" class="login-btn">Connexion</a>
+                <a href="cart.html" style="font-weight: 700; text-decoration: none; color: var(--c-text);">Panier</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="about-hero">
+        <div class="container">
+            <h1 style="font-size: 4rem; margin-bottom: 1rem;">Notre Philosophie</h1>
+            <p style="font-size: 1.2rem; opacity: 0.9;">Où la Précision rencontre le Plaisir</p>
+        </div>
+    </section>
+
+    <section class="about-content">
+        <div class="container">
+            <div class="philosophy-grid">
+                <div>
+                    <h2 style="font-size: 3rem; line-height: 1.2; margin-bottom: 2rem; color: var(--c-text);">
+                        Une recette n'est pas <br>
+                        <span class="text-stroke">de la magie.</span>
+                    </h2>
+                    <p style="font-size: 1.1rem; color: #8a6a64; margin-bottom: 1.5rem;">
+                        Chez Sugar & Stats, nous ne faisons pas que cuire, nous calibrons. Chaque gramme de farine,
+                        chaque degré de chaleur est mesuré pour garantir une euphorie constante.
+                    </p>
+                    <p style="font-size: 1.1rem; color: #8a6a64;">
+                        Notre approche est née d'une collaboration entre pâtissiers de renom et analystes de données,
+                        cherchant à définir l'équation parfaite du goût.
+                    </p>
+                </div>
+                <div
+                    style="background: white; padding: 3rem; border-radius: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.05); border: 1px solid rgba(197, 63, 107, 0.1);">
+                    <h3 style="color: var(--c-accent); margin-bottom: 1rem; font-style: italic;">L'Hypothèse du Goût
+                    </h3>
+                    <p style="color: var(--c-text); font-size: 1.1rem; line-height: 1.8;">
+                        "Si nous appliquons la rigueur scientifique à l'art chaotique de la pâtisserie, nous pouvons
+                        reproduire le goût de l'amour, sans l'incertitude."
+                    </p>
+                    <div style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+                        <p style="font-weight: 700; color: var(--c-text); margin: 0;">Dr. Amina Benjelloun</p>
+                        <p style="font-size: 0.8rem; text-transform: uppercase; color: var(--c-accent); margin: 0;">
+                            Fondatrice</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="background: var(--c-bg); padding: 5rem 0 2rem; border-top: 1px solid #eee;">
+        <div class="container" style="text-align: center;">
+            <a href="index.html" class="navbar-brand">Sugar <span>&</span> Stats</a>
+            <p style="margin-top: 1rem; color: #8a6a64;">© 2024 Sugar & Stats. Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

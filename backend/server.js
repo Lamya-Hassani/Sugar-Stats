@@ -38,7 +38,7 @@ let orders = readJSONFile("orders.json");
 let clients = readJSONFile("clients.json");
 let employees = readJSONFile("employees.json");
 let payments = readJSONFile("payement.json");
-let reviews = readJSONFile("reviews.json") || [];
+// Reviews are now sourced from public APIs directly
 
 // ==================== AUTH & ROLE MIDDLEWARES ====================
 
@@ -158,73 +158,66 @@ app.post("/api/auth/login", async (req, res) => {
   });
 });
 
-// ==================== REVIEWS / COMMENTS API ====================
+// ==================== REVIEWS API (MOCKED VIA PUBLIC API) ====================
 
-// GET reviews for a product (public)
+// GET reviews for a product (public - returns mock data)
 app.get("/api/products/:id/reviews", async (req, res) => {
-  const productId = Number(req.params.id);
+  try {
+    const response = await fetch("https://randomuser.me/api/?results=3&nat=fr");
+    const data = await response.json();
+    const productId = req.params.id;
 
-  let realReviews = reviews.filter((r) => r.productId === productId);
-  let displayedReviews = [...realReviews];
+    const labReviews = [
+      "The molar balance between glucose and acidity in the lemon curd is masterful. Rare structural precision.",
+      "An algorithmic layering of pastry with a lightness that defies gravity. My prefrontal cortex approves.",
+      "The isotropic distribution of chocolate chips ensures a homogeneous sensory experience in every sample."
+    ];
 
-  if (realReviews.length < 4) {
-    try {
-      const response = await fetch("https://randomuser.me/api/?results=6&nat=fr");
-      const data = await response.json();
-      const fakeComments = [
-        "Incroyable ! Le meilleur croissant que j’ai mangé !",
-        "Très bon, mais un peu cher pour la quantité",
-        "Parfait pour le petit-déjeuner, je recommande",
-        "Livraison rapide et produit encore chaud !",
-        "Délicieux, fondant, une tuerie !",
-        "J’adore cette boulangerie, toujours au top",
-      ];
-      const fakeRatings = [5, 4, 5, 3, 5, 4];
+    const mockReviews = data.results.map((person, i) => ({
+      id: `mock_${i}`,
+      productId,
+      username: `${person.name.first} ${person.name.last}`,
+      avatar: person.picture.medium,
+      comment: labReviews[i],
+      rating: 5,
+      date: new Date().toISOString(),
+      status: "Verified Subject"
+    }));
 
-      const fakeReviews = data.results.slice(0, 6).map((person, i) => ({
-        id: "fake_" + i,
-        productId,
-        username: `${person.name.first} ${person.name.last}`,
-        comment: fakeComments[i],
-        rating: fakeRatings[i],
-        date: new Date(
-          Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        isFake: true,
-      }));
-
-      const needed = 5 - realReviews.length;
-      displayedReviews = [...realReviews, ...fakeReviews.slice(0, needed)];
-    } catch (err) {
-      console.error("Erreur API randomuser:", err);
-    }
+    res.json(mockReviews);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch mock reviews" });
   }
-
-  res.json(displayedReviews);
 });
 
-// POST add a real review (client connecté ou admin)
-app.post("/api/reviews", authMiddleware, (req, res) => {
-  const { productId, comment, rating } = req.body;
+// GET all reviews (returns top mock reviews)
+app.get("/api/reviews", async (req, res) => {
+  try {
+    const response = await fetch("https://randomuser.me/api/?results=6&nat=fr");
+    const data = await response.json();
 
-  if (!productId || !comment || !rating) {
-    return res.status(400).json({ error: "Tous les champs sont obligatoires" });
+    const comments = [
+      "Exceptional density-to-flavor ratio.",
+      "Thermodynamic perfection in the crust.",
+      "Symmetry optimized for maximum crunch.",
+      "Molecular composition is perfectly stable.",
+      "Refined textures, peak engineering.",
+      "Elite performance in flavor trials."
+    ];
+
+    const mockReviews = data.results.map((person, i) => ({
+      id: `global_${i}`,
+      username: `${person.name.first} ${person.name.last}`,
+      avatar: person.picture.medium,
+      comment: comments[i],
+      rating: 5,
+      status: "Gourmet Specialist"
+    }));
+
+    res.json(mockReviews);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch mock reviews" });
   }
-
-  const newReview = {
-    id: Date.now(),
-    productId: Number(productId),
-    username: req.user.username,
-    comment,
-    rating: Number(rating),
-    date: new Date().toISOString(),
-    isFake: false,
-  };
-
-  reviews.push(newReview);
-  writeJSONFile("reviews.json", reviews);
-
-  res.status(201).json(newReview);
 });
 
 // ==================== PRODUCTS API ====================
@@ -251,7 +244,7 @@ app.post("/api/products", authMiddleware, adminOnly, (req, res) => {
     description: req.body.description,
     price: req.body.price,
     stock: req.body.stock,
-    categoryId: req.body.categoryId,
+    id_categorie: req.body.id_categorie,
     image: req.body.image,
   };
   products.push(newProduct);
@@ -349,6 +342,12 @@ app.get("/api/orders", authMiddleware, adminOnly, (req, res) => {
 });
 
 
+// GET my orders (logged-in client)
+app.get("/api/orders/my", authMiddleware, (req, res) => {
+  const myOrders = readJSONFile("orders.json").filter(o => o.clientId == req.user.id);
+  res.json(myOrders);
+});
+
 // GET order by ID (admin)
 app.get("/api/orders/:id", authMiddleware, adminOnly, (req, res) => {
   const id = Number(req.params.id);
@@ -433,19 +432,31 @@ app.post("/api/clients", authMiddleware, adminOnly, (req, res) => {
   res.status(201).json(newClient);
 });
 
-app.put("/api/clients/:id", authMiddleware, adminOnly, (req, res) => {
+app.put("/api/clients/:id", authMiddleware, (req, res) => {
   const id = Number(req.params.id);
+
+  // Allow if requested ID matches current user ID OR if user is admin
+  if (req.user.id !== id && req.user.role !== "admin") {
+    return res.status(403).json({ error: "Vous n'avez pas la permission de modifier ce profil" });
+  }
+
   const index = clients.findIndex((c) => c.id === id);
   if (index === -1) {
     return res.status(404).json({ error: "Client non trouvé" });
   }
-  clients[index] = {
+
+  // Preserve existing password if not provided in update
+  const updatedClient = {
     ...clients[index],
     ...req.body,
-    id,
+    id, // Ensure ID remains consistent
   };
+
+  clients[index] = updatedClient;
   writeJSONFile("clients.json", clients);
-  res.json(clients[index]);
+
+  const { password: _, ...clientWithoutPassword } = updatedClient;
+  res.json(clientWithoutPassword);
 });
 
 app.delete("/api/clients/:id", authMiddleware, adminOnly, (req, res) => {
@@ -530,11 +541,11 @@ app.get("/api/payments/:id", authMiddleware, adminOnly, (req, res) => {
   res.json(payment);
 });
 
-app.post("/api/payments", authMiddleware, adminOnly, (req, res) => {
+app.post("/api/payments", authMiddleware, (req, res) => {
   const newPayment = {
     id: Date.now(),
     orderId: req.body.orderId,
-    clientId: req.body.clientId,
+    clientId: req.user.id,
     amount: req.body.amount,
     paymentMethod: req.body.paymentMethod,
     paymentStatus: req.body.paymentStatus || "En attente",
@@ -545,6 +556,7 @@ app.post("/api/payments", authMiddleware, adminOnly, (req, res) => {
   writeJSONFile("payement.json", payments);
   res.status(201).json(newPayment);
 });
+
 
 app.put("/api/payments/:id", authMiddleware, adminOnly, (req, res) => {
   const id = Number(req.params.id);
@@ -570,48 +582,6 @@ app.delete("/api/payments/:id", authMiddleware, adminOnly, (req, res) => {
   }
   writeJSONFile("payement.json", payments);
   res.json({ message: "Paiement supprimé", id });
-});
-
-// ==================== REVIEWS API ====================
-
-app.get("/api/reviews", (req, res) => {
-  res.json(reviews);
-});
-
-app.get("/api/reviews/:id", (req, res) => {
-  const id = Number(req.params.id);
-  const review = reviews.find((r) => r.id === id);
-  if (!review) {
-    return res.status(404).json({ error: "Avis non trouvé" });
-  }
-  res.json(review);
-});
-
-app.post("/api/reviews", authMiddleware, (req, res) => {
-  const newReview = {
-    id: Date.now(),
-    productId: req.body.productId,
-    clientId: req.user.id,
-    author: req.body.author || req.user.username,
-    rating: req.body.rating,
-    comment: req.body.comment,
-    date: new Date().toISOString(),
-  };
-  reviews.push(newReview);
-  writeJSONFile("reviews.json", reviews);
-  res.status(201).json(newReview);
-});
-
-// Admin can delete any review
-app.delete("/api/reviews/:id", authMiddleware, adminOnly, (req, res) => {
-  const id = Number(req.params.id);
-  const initialLength = reviews.length;
-  reviews = reviews.filter((r) => r.id !== id);
-  if (reviews.length === initialLength) {
-    return res.status(404).json({ error: "Avis non trouvé" });
-  }
-  writeJSONFile("reviews.json", reviews);
-  res.json({ message: "Avis supprimé", id });
 });
 
 // ==================== SERVER START ====================

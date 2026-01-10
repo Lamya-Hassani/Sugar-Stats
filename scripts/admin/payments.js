@@ -114,7 +114,7 @@ async function renderPaymentsTable() {
         <td><span style="font-weight:700; color:var(--c-rose);">$${(p.amount || 0).toFixed(2)}</span></td>
         <td><i class="fas fa-money-check-alt" style="margin-right:0.5rem; color:var(--c-text-light);"></i> ${p.paymentMethod || 'N/A'}</td>
         <td>${p.paymentDate ? new Date(p.paymentDate).toLocaleDateString('fr-FR') : 'N/A'}</td>
-        <td><span class="status-pill status-${(p.paymentStatus || 'pending').toLowerCase()}">${p.paymentStatus || 'Pending'}</span></td>
+        <td>${window.getStatusPill(p.paymentStatus)}</td>
         <td>
             <div class="actions-cell">
                 <a href="edit.html?id=${p.id}" class="icon-btn btn-edit" title="Modifier"><i class="fas fa-edit"></i></a>
@@ -197,7 +197,7 @@ async function showDetails(id) {
         <div class="modal-info">
             <h3 class="modal-title-main" style="color:var(--c-rose); font-weight:700;">$${(pay.amount || 0).toFixed(2)}</h3>
             <div style="text-align:center; margin-top:0.5rem;">
-                <span class="status-pill status-${(pay.paymentStatus || 'pending').toLowerCase()}">${pay.paymentStatus || 'Pending'}</span>
+                ${window.getStatusPill(pay.paymentStatus)}
             </div>
         </div>
     `;

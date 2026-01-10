@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -243,32 +243,32 @@
     <div class="sidebar">
         <a href="../index.html" class="brand">Sugar & Stats</a>
         <ul class="nav-links">
-            <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a></li>
-            <li><a href="../products/list.html" class="nav-link"><i class="fas fa-cookie-bite"></i> Créations</a></li>
+            <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="../products/list.html" class="nav-link"><i class="fas fa-cookie-bite"></i> Creations</a></li>
             <li><a href="../clients/list.html" class="nav-link"><i class="fas fa-users"></i> Clients</a></li>
             <li><a href="../categories/list.html" class="nav-link"><i class="fas fa-tag"></i> Segments</a></li>
-            <li><a href="../orders/list.html" class="nav-link"><i class="fas fa-box-open"></i> Commandes</a></li>
+            <li><a href="../orders/list.html" class="nav-link"><i class="fas fa-box-open"></i> Orders</a></li>
             <li><a href="../employees/list.html" class="nav-link"><i class="fas fa-id-card"></i> Personnel</a></li>
-            <li><a href="../payments/list.html" class="nav-link"><i class="fas fa-wallet"></i> Finances</a></li>
-            <li><a href="list.html" class="nav-link active"><i class="fas fa-heart"></i> Avis</a></li>
+            <li><a href="../payments/list.html" class="nav-link"><i class="fas fa-wallet"></i> Finance</a></li>
+            <li><a href="list.html" class="nav-link active"><i class="fas fa-heart"></i> Reviews</a></li>
         </ul>
     </div>
 
     <div class="main">
         <div class="header">
             <div>
-                <h1>Laboratoire d'Opinion</h1>
-                <p>Analyse sensorielle et feedback des gourmets.</p>
+                <h1>Opinion Laboratory</h1>
+                <p>Sensory analysis and gourmet feedback.</p>
             </div>
             <div style="display: flex; gap: 1rem;">
                 <button class="btn btn-secondary" onclick="exportReviewsCSV()"><i class="fas fa-file-csv"></i>
-                    Exporter CSV</button>
+                    Export CSV</button>
             </div>
         </div>
 
         <div class="search-container">
             <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" class="search-input" placeholder="Rechercher dans les commentaires..."
+            <input type="text" id="searchInput" class="search-input" placeholder="Search in comments..."
                 oninput="handleSearch()">
         </div>
 
@@ -276,11 +276,11 @@
             <table>
                 <thead>
                     <tr>
-                        <th onclick="handleSort('productId')">Chef-d'œuvre <i class="fas fa-sort"></i></th>
-                        <th onclick="handleSort('clientId')">Sujet Gourmet <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('productId')">Masterpiece <i class="fas fa-sort"></i></th>
+                        <th onclick="handleSort('clientId')">Gourmet Subject <i class="fas fa-sort"></i></th>
                         <th onclick="handleSort('rating')">Score <i class="fas fa-sort"></i></th>
-                        <th>Avis & Ressenti</th>
-                        <th onclick="handleSort('date')">Date de Dégustation <i class="fas fa-sort"></i></th>
+                        <th>Feedback & Feeling</th>
+                        <th onclick="handleSort('date')">Tasting Date <i class="fas fa-sort"></i></th>
                         <th>Actions</th>
                     </tr>
                 </thead>

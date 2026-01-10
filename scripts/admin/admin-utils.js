@@ -392,3 +392,81 @@ window.renderPagination = function (totalPages) {
     }
     container.innerHTML = html;
 };
+// ==================== MOBILE NAVIGATION ====================
+
+window.initMobileSidebar = function () {
+    const header = document.querySelector('.header');
+    if (!header) return;
+
+    // Inject hamburger if not present
+    if (!document.querySelector('.menu-toggle')) {
+        const toggle = document.createElement('button');
+        toggle.className = 'menu-toggle';
+        toggle.innerHTML = '<i class="fas fa-bars"></i>';
+        header.prepend(toggle);
+
+        const sidebar = document.querySelector('.sidebar');
+        toggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sidebar.classList.toggle('mobile-active');
+            toggle.innerHTML = sidebar.classList.contains('mobile-active')
+                ? '<i class="fas fa-times"></i>'
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // Close when clicking outside
+        document.addEventListener('click', (e) => {
+            if (sidebar.classList.contains('mobile-active') && !sidebar.contains(e.target) && !toggle.contains(e.target)) {
+                sidebar.classList.remove('mobile-active');
+                toggle.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+    }
+};
+
+// ==================== STATUS PILL HELPER ====================
+
+/**
+ * Maps a status string (French or English) to a color-coded HTML pill.
+ * @param {String} status 
+ * @returns {String} HTML string
+ */
+window.getStatusPill = function (status) {
+    if (!status) return `<span class="status-pill status-pending"><i class="fas fa-clock"></i> N/A</span>`;
+
+    const s = status.toLowerCase().trim();
+    let label = status;
+    let icon = 'fa-info-circle';
+    let className = s.replace(/\s+/g, '').replace(/[éèàê]/g, (m) => ({ 'é': 'e', 'è': 'e', 'à': 'a', 'ê': 'e' }[m]));
+
+    // Translation & Icon Mapping
+    if (s === 'validé' || s === 'completed' || s === 'validated' || s === 'paid') {
+        label = 'Paid';
+        icon = 'fa-check-circle';
+    } else if (s === 'en attente' || s === 'pending') {
+        label = 'Pending';
+        icon = 'fa-hourglass-start';
+    } else if (s === 'échec' || s === 'failed' || s === 'cancelled') {
+        label = 'Failed';
+        icon = 'fa-times-circle';
+    } else if (s === 'expédié' || s === 'shipped') {
+        label = 'Shipped';
+        icon = 'fa-shipping-fast';
+    } else if (s === 'livré' || s === 'delivered') {
+        label = 'Delivered';
+        icon = 'fa-box-check';
+    } else if (s === 'à la livraison' || s === 'at delivery') {
+        label = 'On Delivery';
+        icon = 'fa-hand-holding-usd';
+    } else if (s === 'en cours' || s === 'processing') {
+        label = 'Processing';
+        icon = 'fa-spinner fa-spin';
+    }
+
+    return `<span class="status-pill status-${className}"><i class="fas ${icon}"></i> ${label}</span>`;
+};
+
+// Auto-init on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+    window.initMobileSidebar();
+});
