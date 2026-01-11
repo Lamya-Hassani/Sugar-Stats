@@ -193,5 +193,16 @@
     "phone": "123",
     "address": "casa",
     "registrationDate": "2026-01-11T20:51:46.054Z"
+  },
+  {
+    "id": 1768166694633,
+    "username": "deems",
+    "password": "$2b$10$KL0Xgo85FHRmty2DN.TVHe.P6eDXhaK8f0y.U330g8vcYNWjW6kd2",
+    "role": "client",
+    "name": "Dilara",
+    "email": "dilara@gmail.com",
+    "phone": "0616431700",
+    "address": "LONDON",
+    "registrationDate": "2026-01-11T21:24:54.633Z"
   }
 ]
