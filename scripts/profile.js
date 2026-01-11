@@ -3,8 +3,9 @@ if (typeof API_BASE_URL === 'undefined') {
 }
 
 let currentUserOrders = [];
+let allProducts = [];
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const user = JSON.parse(localStorage.getItem('authUser')) || JSON.parse(localStorage.getItem('user'));
   const token = localStorage.getItem('authToken');
 
@@ -13,9 +14,19 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
+  await fetchAllProducts();
   renderProfile(user);
   fetchOrderHistory(user.id, token);
 });
+
+async function fetchAllProducts() {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/products`);
+    allProducts = await res.json();
+  } catch (err) {
+    console.error("Error fetching products:", err);
+  }
+}
 
 function renderProfile(user) {
   const displayName = user.name || user.username;
@@ -138,7 +149,16 @@ function renderOrders(orders) {
     totalSpent += Number(order.totalAmount);
     const date = new Date(order.orderDate).toLocaleDateString('fr-FR');
     const statusClass = order.status === 'Payé' ? 'status-paye' : 'status-attente';
-    const itemsList = order.items.map(i => `${i.quantity}x ${i.name}`).join(', ');
+
+    // Resolve product names
+    const itemsList = order.items.map(i => {
+      let name = i.name;
+      if (!name && i.productId) {
+        const p = allProducts.find(prod => prod.id === Number(i.productId));
+        name = p ? p.name : 'Produit inconnu';
+      }
+      return `${i.quantity}x ${name || 'Article'}`;
+    }).join(', ');
 
     html += `
       <div class="order-row">
@@ -190,6 +210,35 @@ function updateLoyalty(totalSpent) {
   loyaltyLevel.textContent = `Niveau actuel : ${level} • ${Math.round(progress)} % vers une expérimentation offerte`;
 }
 
+// ==================== CSV EXPORT HELPER ====================
+function exportToCSV(data, filename = 'export.csv') {
+  if (!data || !data.length) return;
+
+  const headers = Object.keys(data[0]);
+  const csvContent = [
+    headers.join(','),
+    ...data.map(row => headers.map(header => {
+      let val = row[header] === null || row[header] === undefined ? '' : row[header];
+      // Escape quotes and commas
+      val = val.toString().replace(/"/g, '""');
+      if (val.search(/("|,|\n)/g) >= 0) val = '"' + val + '"';
+      return val;
+    }).join(','))
+  ].join('\n');
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement("a");
+  if (link.download !== undefined) {
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", filename);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+}
+
 window.exportHistory = function () {
   if (currentUserOrders.length === 0) {
     showToast("Aucun échantillon de données à exporter.", "error");
@@ -197,48 +246,36 @@ window.exportHistory = function () {
   }
 
   try {
-    // Transform order data into Excel-friendly format
-    const excelData = currentUserOrders.map(order => {
+    // Transform order data for CSV
+    const csvData = currentUserOrders.map(order => {
+      // Parse items safely with name resolution
+      let itemsList = '';
+      if (Array.isArray(order.items)) {
+        itemsList = order.items.map(i => {
+          let name = i.name;
+          if (!name && i.productId) {
+            const p = allProducts.find(prod => prod.id === Number(i.productId));
+            name = p ? p.name : 'Produit inconnu';
+          }
+          return `${i.quantity}x ${name || 'Article'}`;
+        }).join('; ');
+      }
+
       return {
         'ID Commande': `#${order.id.toString().slice(-6)}`,
         'Date': new Date(order.orderDate).toLocaleDateString('fr-FR'),
-        'Articles': order.items.map(i => `${i.quantity}x ${i.name}`).join(', '),
+        'Articles': itemsList,
         'Montant Total (DH)': Number(order.totalAmount).toFixed(2),
-        'Statut': order.status,
-        'ID Client': order.clientId
+        'Statut': order.status
       };
     });
 
-    // Create a new workbook
-    const wb = XLSX.utils.book_new();
+    exportToCSV(csvData, `Historique_Commandes_SugarStats_${new Date().toISOString().slice(0, 10)}.csv`);
+    showToast("Export CSV réussi !", "success");
 
-    // Convert data to worksheet
-    const ws = XLSX.utils.json_to_sheet(excelData);
-
-    // Set column widths for better readability
-    ws['!cols'] = [
-      { wch: 15 },  // ID Commande
-      { wch: 12 },  // Date
-      { wch: 40 },  // Articles
-      { wch: 18 },  // Montant Total
-      { wch: 12 },  // Statut
-      { wch: 12 }   // ID Client
-    ];
-
-    // Add worksheet to workbook
-    XLSX.utils.book_append_sheet(wb, ws, "Historique des Commandes");
-
-    // Generate Excel file with proper options to avoid protected mode warning
-    XLSX.writeFile(wb, "rapport_labo_sugar_stats.xlsx", {
-      bookType: 'xlsx',
-      type: 'binary',
-      compression: true
-    });
-
-    showToast("Export Excel réussi !", "success");
   } catch (error) {
     console.error("Export error:", error);
-    showToast("Erreur lors de l'export Excel.", "error");
+    showToast("Erreur lors de l'export CSV.", "error");
   }
 };
 

@@ -278,4 +278,16 @@ window.removeAdmin = removeAdmin;
 window.showAdminDetails = showAdminDetails;
 window.editAdmin = editAdmin;
 window.initEditAdmin = initEditAdmin;
+window.exportAdminsCSV = function () {
+    const dataToExport = allAdmins.map(a => ({
+        ID: a.id,
+        Username: a.username,
+        Email: a.email,
+        Nom: a.name || '',
+        Role: a.role,
+        DateCreation: new Date(a.registrationDate).toLocaleDateString()
+    }));
+    window.exportToCSV(dataToExport, 'SugarStats_Admins.csv');
+};
+
 window.updateAdmin = updateAdmin;

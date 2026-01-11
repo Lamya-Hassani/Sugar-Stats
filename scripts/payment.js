@@ -71,7 +71,10 @@ async function executeOrder() {
 
     const orderData = {
         clientId: user.id,
-        items: cart,
+        items: cart.map(item => ({
+            productId: Number(item.id),
+            quantity: item.quantity
+        })),
         totalAmount: totalAmount,
         status: method === 'paypal' ? 'Payé' : 'En attente',
         orderDate: new Date().toISOString()

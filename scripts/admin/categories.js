@@ -36,6 +36,7 @@ async function deleteCategory(id) {
 
         if (res.ok) {
             window.showToast("Segment supprimé.", "success");
+            await fetchCategories(); // Refresh data
             renderCategoriesTable();
         } else {
             const data = await res.json();
@@ -45,6 +46,18 @@ async function deleteCategory(id) {
         console.error("Error deleting category:", err);
     }
 }
+
+// ... existing saveCategory ...
+
+window.exportCategoriesCSV = function () {
+    const dataToExport = allCategories.map(c => ({
+        ID: c.id_categorie,
+        Libelle: c.libelle,
+        Description: c.description
+    }));
+    window.exportToCSV(dataToExport, 'SugarStats_Categories.csv');
+};
+
 
 async function saveCategory(event) {
     event.preventDefault();
@@ -161,16 +174,47 @@ async function showDetails(id) {
 function exportToPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
-    const name = document.querySelector('h2').innerText;
+
+    // Get content from the modal
+    const openModal = document.querySelector('.custom-modal-overlay.active .custom-modal') || document.querySelector('.details-modal-overlay.active .details-modal');
+    if (!openModal) {
+        window.showToast("Ouvrez d'abord une fiche.", "info");
+        return;
+    }
+
+    const name = openModal.querySelector('.modal-title-main')?.innerText || "Segment";
+    const subtitle = openModal.querySelector('.modal-subtitle-main')?.innerText || "";
+
     doc.setFontSize(22);
     doc.setTextColor(216, 27, 96);
     doc.text('Sugar & Stats - Segment Pâtissier', 20, 20);
+
     doc.setFontSize(16);
     doc.setTextColor(78, 52, 46);
     doc.text(name, 20, 35);
     doc.setFontSize(12);
-    doc.text(document.querySelector('.description').innerText, 20, 50, { maxWidth: 170 });
-    doc.save(`SugarStats_Category_${name.replace(/\s+/g, '_')}.pdf`);
+    doc.text(subtitle, 20, 42);
+
+    let y = 55;
+    const rows = openModal.querySelectorAll('.modal-row');
+    rows.forEach(row => {
+        const label = row.querySelector('.modal-label')?.innerText || "";
+        const value = row.querySelector('.modal-value')?.innerText || "";
+
+        doc.setFontSize(11);
+        doc.setTextColor(141, 110, 99);
+        doc.text(label, 20, y);
+
+        doc.setFontSize(12);
+        doc.setTextColor(78, 52, 46);
+        // Handle long descriptions
+        const splitValue = doc.splitTextToSize(value, 150);
+        doc.text(splitValue, 20, y + 6);
+
+        y += 12 + (splitValue.length * 5);
+    });
+
+    doc.save(`SugarStats_Category_${name.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`);
 }
 
 window.goToPage = function (page) {

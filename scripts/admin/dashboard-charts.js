@@ -277,6 +277,9 @@ async function applyDashboardFilters() {
     const filterValue = document.getElementById('dashboardFilter').value;
     const token = localStorage.getItem("authToken");
 
+    document.body.style.cursor = 'wait';
+    console.log("Applying dashboard filter:", filterValue);
+
     try {
         const [ordersRes, clientsRes, productsRes, categoriesRes] = await Promise.all([
             fetch(`${API_BASE_URL}/api/orders`, { headers: { "Authorization": `Bearer ${token}` } }),
@@ -292,6 +295,7 @@ async function applyDashboardFilters() {
 
         // Apply date filter
         orders = filterOrdersByPeriod(orders, filterValue);
+        console.log(`Filter '${filterValue}' matches ${orders.length} orders.`);
 
         if (Array.isArray(orders) && Array.isArray(clients)) {
             updateDashboardStats(orders, clients);
@@ -308,6 +312,9 @@ async function applyDashboardFilters() {
         }
     } catch (err) {
         console.error("Error applying dashboard filters:", err);
+        window.showToast("Erreur lors du filtrage.", "error");
+    } finally {
+        document.body.style.cursor = 'default';
     }
 }
 

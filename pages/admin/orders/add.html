@@ -256,8 +256,8 @@
         // Actually orders.js likely has "loadClients()" separate. 
         // I will trust the JS structure is consistent.
         document.addEventListener('DOMContentLoaded', () => {
-            // Try to load clients.
-            if (typeof loadClients === 'function') loadClients();
+            // Load clients for the dropdown
+            if (window.populateDropdowns) window.populateDropdowns();
         });
 
         document.getElementById('orderForm').addEventListener('submit', (e) => {

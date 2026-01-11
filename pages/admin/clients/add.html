@@ -187,13 +187,19 @@
         <form id="clientForm" class="form-grid">
             <input type="hidden" id="clientId">
 
-            <!-- Row 1: Username (50%) & Name (50%) -->
+            <!-- Row 1: Username & Password -->
             <div class="form-group span-2">
                 <label for="username">Nom d'utilisateur</label>
-                <input type="text" id="username" required placeholder="Display Name">
+                <input type="text" id="username" required placeholder="Login">
             </div>
 
             <div class="form-group span-2">
+                <label for="password">Mot de passe</label>
+                <input type="text" id="password" required placeholder="Mot de passe initial">
+            </div>
+
+            <!-- Row 1b: Name (Full Width) -->
+            <div class="form-group span-4">
                 <label for="name">Nom Complet</label>
                 <input type="text" id="name" required placeholder="Ex: Jean Dupont">
             </div>

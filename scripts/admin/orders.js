@@ -47,6 +47,7 @@ async function deleteOrder(id) {
 
         if (res.ok) {
             window.showToast("Mission logistique annulée.", "success");
+            await fetchOrders(); // Refresh data
             renderOrdersTable();
         } else {
             window.showToast("Échec de l'annulation.", "error");
@@ -55,6 +56,20 @@ async function deleteOrder(id) {
         console.error("Error deleting order:", err);
     }
 }
+
+// ... existing functions ...
+
+window.exportOrdersCSV = function () {
+    const dataToExport = allOrders.map(o => ({
+        ID: o.id,
+        Client: getClientName(o.clientId),
+        Date: new Date(o.orderDate).toLocaleDateString(),
+        Total: o.totalAmount,
+        Status: o.status
+    }));
+    window.exportToCSV(dataToExport, 'SugarStats_Orders.csv');
+};
+
 
 async function saveOrder(event) {
     event.preventDefault();
@@ -196,26 +211,46 @@ async function showDetails(id) {
 function exportToPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
-    const idRef = document.querySelector('.receipt-header p').innerText;
+
+    // Get content from the modal
+    const openModal = document.querySelector('.custom-modal-overlay.active .custom-modal') || document.querySelector('.details-modal-overlay.active .details-modal');
+    if (!openModal) {
+        window.showToast("Ouvrez d'abord une fiche.", "info");
+        return;
+    }
+
+    const title = openModal.querySelector('.modal-title-main')?.innerText || "Document";
+    const subtitle = openModal.querySelector('.modal-subtitle-main')?.innerText || "";
 
     doc.setFontSize(22);
     doc.setTextColor(216, 27, 96);
-    doc.text('Sugar & Stats - Facture Logistique', 20, 20);
+    doc.text('Sugar & Stats - Document Logistique', 20, 20);
 
     doc.setFontSize(14);
     doc.setTextColor(78, 52, 46);
-    doc.text(idRef, 20, 35);
+    doc.text(title, 20, 35);
+    doc.setFontSize(12);
+    doc.text(subtitle, 20, 42);
 
-    let y = 50;
-    const rows = document.querySelectorAll('.receipt-row, .receipt-total');
+    let y = 55;
+    const rows = openModal.querySelectorAll('.modal-row');
     rows.forEach(row => {
-        const label = row.querySelector('span').innerText;
-        const value = row.querySelector('strong').innerText;
-        doc.text(`${label}: ${value}`, 20, y);
-        y += 10;
+        const label = row.querySelector('.modal-label')?.innerText || "";
+        const value = row.querySelector('.modal-value')?.innerText || "";
+
+        doc.setFontSize(11);
+        doc.setTextColor(141, 110, 99);
+        doc.text(label, 20, y);
+
+        doc.setFontSize(12);
+        doc.setTextColor(78, 52, 46);
+        const splitValue = doc.splitTextToSize(value, 150);
+        doc.text(splitValue, 20, y + 6);
+
+        y += 12 + (splitValue.length * 5);
     });
 
-    doc.save(`SugarStats_Invoice_${idRef.replace('#', '')}.pdf`);
+    doc.save(`SugarStats_Order_${title.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`);
 }
 
 window.goToPage = function (page) {

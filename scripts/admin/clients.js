@@ -41,6 +41,7 @@ async function deleteClient(id) {
 
     if (res.ok) {
       window.showToast("Sujet extrait avec succès.", "success");
+      await fetchClients(); // Force data refresh
       renderClientsTable();
     } else {
       const data = await res.json();
@@ -57,6 +58,7 @@ async function saveClient(event) {
   const isEdit = !!id;
 
   const clientData = {
+    username: document.getElementById('username')?.value,
     name: document.getElementById('name').value,
     email: document.getElementById('email').value,
     phone: document.getElementById('phone').value,
@@ -203,29 +205,61 @@ async function showDetails(id) {
   });
 }
 
-function exportToPDF() {
+window.exportToPDF = function () {
+  // 1. Capture content from the currently open modal
+  const openModal = document.querySelector('.custom-modal-overlay.active .custom-modal') || document.querySelector('.details-modal-overlay.active .details-modal');
+  if (!openModal) {
+    window.showToast("Ouvrez d'abord une fiche client.", "info");
+    return;
+  }
+
+  const name = openModal.querySelector('.modal-title-main')?.innerText || "Client";
+  const rows = openModal.querySelectorAll('.modal-row');
+
+  // 2. Setup PDF
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
-  const name = document.querySelector('.receipt-body strong').innerText;
 
   doc.setFontSize(22);
-  doc.setTextColor(216, 27, 96);
+  doc.setTextColor(216, 27, 96); // Rose
   doc.text('Sugar & Stats - Profil Client', 20, 20);
 
-  doc.setFontSize(14);
-  doc.setTextColor(78, 52, 46);
+  doc.setFontSize(16);
+  doc.setTextColor(78, 52, 46); // Brown
+  doc.text(name, 20, 35);
 
-  let y = 40;
-  const rows = document.querySelectorAll('.receipt-row');
+  // 3. Loop rows
+  let y = 50;
   rows.forEach(row => {
-    const label = row.querySelector('span').innerText;
-    const value = row.querySelector('strong').innerText;
-    doc.text(`${label}: ${value}`, 20, y);
-    y += 10;
+    const label = row.querySelector('.modal-label')?.innerText || "";
+    const value = row.querySelector('.modal-value')?.innerText || "";
+
+    doc.setFontSize(10);
+    doc.setTextColor(141, 110, 99);
+    doc.text(label, 20, y);
+
+    doc.setFontSize(12);
+    doc.setTextColor(78, 52, 46);
+    doc.text(value, 20, y + 6);
+
+    y += 15;
   });
 
   doc.save(`SugarStats_Client_${name.replace(/\s+/g, '_')}.pdf`);
-}
+};
+
+window.exportClientsCSV = function () {
+  const dataToExport = allClients.map(c => ({
+    ID: c.id,
+    Nom: c.name || c.username,
+    Email: c.email || 'N/A',
+    Phone: c.phone || 'N/A',
+    Address: c.address || 'N/A',
+    Role: c.role,
+    "Date Inscription": new Date(c.registrationDate).toLocaleDateString()
+  }));
+  window.exportToCSV(dataToExport, 'SugarStats_Clients.csv');
+};
 
 window.goToPage = function (page) {
   currentPage = page;
@@ -266,3 +300,4 @@ window.prefillClientForm = prefillClientForm;
 window.saveClient = saveClient;
 window.showDetails = showDetails;
 window.exportToPDF = exportToPDF;
+window.exportClientsCSV = exportClientsCSV;

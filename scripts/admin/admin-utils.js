@@ -500,4 +500,16 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.warn("Admin Sidebar Debug: 'Admins' nav link not found.");
     }
+
+    // NEW: Hide Reviews link for Admins and Superadmins (as requested)
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        if (link.textContent.includes('Reviews') || link.href.includes('reviews/list.html')) {
+            // Hide if user is admin or superadmin (which is everyone who accesses this)
+            // The request said "remove... for admins and super admins"
+            if (user && (user.role === 'admin' || user.role === 'superadmin')) {
+                link.style.display = 'none';
+            }
+        }
+    });
 });

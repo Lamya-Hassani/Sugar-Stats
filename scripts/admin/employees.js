@@ -38,6 +38,7 @@ async function deleteEmployee(id) {
 
         if (res.ok) {
             window.showToast("Contrat terminé.", "success");
+            await fetchEmployees();
             renderEmployeesTable();
         } else {
             window.showToast("Erreur RH.", "error");
@@ -46,6 +47,22 @@ async function deleteEmployee(id) {
         console.error("Error deleting employee:", err);
     }
 }
+
+// ... existing functions ...
+
+window.exportEmployeesCSV = function () {
+    const dataToExport = allEmployees.map(e => ({
+        ID: e.id,
+        Nom: e.name,
+        Poste: e.position,
+        Salaire: e.salary,
+        Embauche: new Date(e.hireDate).toLocaleDateString(),
+        Email: e.email,
+        Tel: e.phone
+    }));
+    window.exportToCSV(dataToExport, 'SugarStats_Employees.csv');
+};
+
 
 async function saveEmployee(event) {
     event.preventDefault();
@@ -179,7 +196,15 @@ async function showDetails(id) {
 function exportToPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
-    const name = document.querySelector('.receipt-body strong').innerText;
+
+    const openModal = document.querySelector('.custom-modal-overlay.active .custom-modal') || document.querySelector('.details-modal-overlay.active .details-modal');
+    if (!openModal) {
+        window.showToast("Ouvrez d'abord une fiche.", "info");
+        return;
+    }
+
+    const name = openModal.querySelector('.modal-title-main')?.innerText || "Employe";
+    const position = openModal.querySelector('.modal-subtitle-main')?.innerText || "";
 
     doc.setFontSize(22);
     doc.setTextColor(216, 27, 96);
@@ -187,14 +212,22 @@ function exportToPDF() {
 
     doc.setFontSize(14);
     doc.setTextColor(78, 52, 46);
+    doc.text(name, 20, 35);
+    doc.text(position, 20, 42);
 
-    let y = 40;
-    const rows = document.querySelectorAll('.receipt-row');
+    let y = 55;
+    const rows = openModal.querySelectorAll('.modal-row');
     rows.forEach(row => {
-        const label = row.querySelector('span').innerText;
-        const value = row.querySelector('strong').innerText;
-        doc.text(`${label}: ${value}`, 20, y);
-        y += 10;
+        const label = row.querySelector('.modal-label')?.innerText || "";
+        const value = row.querySelector('.modal-value')?.innerText || "";
+        doc.setFontSize(11);
+        doc.setTextColor(141, 110, 99);
+        doc.text(label, 20, y);
+
+        doc.setFontSize(12);
+        doc.setTextColor(78, 52, 46);
+        doc.text(value, 20, y + 6);
+        y += 16;
     });
 
     doc.save(`SugarStats_Employee_${name.replace(/\s+/g, '_')}.pdf`);

@@ -46,6 +46,7 @@ async function deletePayment(id) {
         });
         if (res.ok) {
             window.showToast("Flux monétaire invalidé.", "success");
+            await fetchPayments(); // Force refresh
             renderPaymentsTable();
         } else {
             window.showToast("Erreur financière.", "error");
@@ -157,13 +158,34 @@ window.exportPaymentsCSV = function () {
     window.exportToCSV(data, 'SugarStats_Finance.csv');
 };
 
+async function fetchOrders() {
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/orders`, {
+            headers: { 'Authorization': `Bearer ${localStorage.getItem("authToken")}` }
+        });
+        return await res.json();
+    } catch (err) {
+        console.error("Error fetching orders:", err);
+        return [];
+    }
+}
+
 async function populateDropdowns() {
     await fetchClients();
     const clientSelect = document.getElementById('clientId');
-    if (!clientSelect) return;
-    clientSelect.innerHTML = '<option value="">Choisir un sujet</option>' +
-        allClients.map(c => `<option value="${c.id}">${c.name || c.username}</option>`).join('');
+    if (clientSelect) {
+        clientSelect.innerHTML = '<option value="">Choisir un sujet</option>' +
+            allClients.map(c => `<option value="${c.id}">${c.name || c.username}</option>`).join('');
+    }
+
+    const orders = await fetchOrders();
+    const orderSelect = document.getElementById('orderId');
+    if (orderSelect) {
+        orderSelect.innerHTML = '<option value="">Choisir une commande</option>' +
+            orders.map(o => `<option value="${o.id}">Commande #${o.id} - ${new Date(o.orderDate).toLocaleDateString()} ($${o.totalAmount})</option>`).join('');
+    }
 }
+
 
 async function prefillPaymentForm() {
     const urlParams = new URLSearchParams(window.location.search);

@@ -52,6 +52,7 @@ async function deleteProduct(id) {
 
     if (res.ok) {
       window.showToast("Succès au laboratoire : Produit désintégré.", "success");
+      await fetchProducts(); // Force refresh
       renderProductsTable(); // Re-render table
     } else {
       const data = await res.json();
@@ -283,34 +284,50 @@ async function showDetails(id) {
   });
 }
 
-function exportToPDF() {
+window.exportToPDF = function () {
+  // 1. Capture content from the currently open modal
+  const openModal = document.querySelector('.custom-modal-overlay.active .custom-modal') || document.querySelector('.details-modal-overlay.active .details-modal');
+  if (!openModal) {
+    window.showToast("Ouvrez d'abord une fiche produit.", "info");
+    return;
+  }
+
+  const name = openModal.querySelector('.modal-title-main')?.innerText || "Produit";
+  const rows = openModal.querySelectorAll('.modal-row');
+
+  // 2. Setup PDF
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
-  const name = document.querySelector('.detail-info h3').innerText;
-  const rows = document.querySelectorAll('.detail-row');
 
   doc.setFontSize(22);
-  doc.setTextColor(216, 27, 96);
-  doc.text('Sugar & Stats - Dossier Produit', 20, 20);
+  doc.setTextColor(216, 27, 96); // Rose
+  doc.text('Sugar & Stats - Fiche Produit', 20, 20);
 
   doc.setFontSize(16);
-  doc.setTextColor(78, 52, 46);
+  doc.setTextColor(78, 52, 46); // Brown
   doc.text(name, 20, 35);
 
+  // 3. Loop rows
   let y = 50;
   rows.forEach(row => {
-    const label = row.querySelector('.detail-label').innerText;
-    const value = row.querySelector('.detail-value').innerText;
-    doc.setFontSize(12);
+    const label = row.querySelector('.modal-label')?.innerText || "";
+    const value = row.querySelector('.modal-value')?.innerText || "";
+
+    doc.setFontSize(10);
     doc.setTextColor(141, 110, 99);
-    doc.text(`${label}:`, 20, y);
+    doc.text(label, 20, y);
+
+    doc.setFontSize(12);
     doc.setTextColor(78, 52, 46);
-    doc.text(value.substring(0, 100), 60, y); // Simple wrap avoidance
-    y += 10;
+    // basic word wrap
+    const splitTitle = doc.splitTextToSize(value, 150);
+    doc.text(splitTitle, 20, y + 6);
+
+    y += 10 + (splitTitle.length * 5);
   });
 
-  doc.save(`SugarStats_${name.replace(/\s+/g, '_')}.pdf`);
-}
+  doc.save(`SugarStats_Product_${name.replace(/\s+/g, '_')}.pdf`);
+};
 
 // Exports
 window.deleteProduct = deleteProduct;
