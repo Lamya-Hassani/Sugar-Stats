@@ -1,22 +1,5 @@
 [
   {
-    "id": 1001,
-    "clientId": 2,
-    "items": [
-      {
-        "productId": 1,
-        "quantity": 2
-      },
-      {
-        "productId": 4,
-        "quantity": 1
-      }
-    ],
-    "totalAmount": 42,
-    "status": "Livré",
-    "orderDate": "2026-01-01T14:30:00.000Z"
-  },
-  {
     "id": 1002,
     "clientId": 3,
     "items": [
@@ -240,35 +223,53 @@
     "status": "Payé"
   },
   {
-    "id": 1768086906388,
+    "id": 1768087420896,
+    "clientId": 1768083782884,
+    "items": [],
+    "totalAmount": 26.5,
+    "orderDate": "2026-01-10",
+    "status": "Expédié"
+  },
+  {
+    "id": 1768163879407,
+    "clientId": 3,
+    "items": [],
+    "totalAmount": 123,
+    "orderDate": "0101-01-01",
+    "status": "Livré"
+  },
+  {
+    "id": 1768164456720,
     "clientId": 1768083782884,
     "items": [
       {
-        "id": "5",
-        "name": "Colorful Macarons (Box of 6)",
-        "price": 12,
-        "image": "https://thumbs.dreamstime.com/b/stack-colorful-macarons-blue-background-delicious-french-desserts-cakes-delicate-texture-perfect-surface-sweet-snack-385668015.jpg",
+        "productId": 2,
+        "quantity": 1
+      },
+      {
+        "productId": 6,
         "quantity": 1
       }
     ],
-    "totalAmount": 32,
-    "orderDate": "2026-01-10T23:15:06.370Z",
+    "totalAmount": 28.7,
+    "orderDate": "2026-01-11T20:47:36.705Z",
     "status": "Payé"
   },
   {
-    "id": 1768087420896,
-    "clientId": 1768083782884,
+    "id": 1768164739303,
+    "clientId": 1768164706054,
     "items": [
       {
-        "id": "7",
-        "name": "Sourdough Loaf",
-        "price": 6.5,
-        "image": "https://www.kroger.com/product/images/xlarge/front/0001111006998",
+        "productId": 6,
+        "quantity": 1
+      },
+      {
+        "productId": 19,
         "quantity": 1
       }
     ],
-    "totalAmount": 26.5,
-    "orderDate": "2026-01-10T23:23:40.887Z",
-    "status": "En attente"
+    "totalAmount": 28.3,
+    "orderDate": "2026-01-11T20:52:19.283Z",
+    "status": "Payé"
   }
 ]

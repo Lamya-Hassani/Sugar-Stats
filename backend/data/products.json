@@ -13,7 +13,7 @@
     "name": "Pain au Chocolat",
     "description": "Croissant filled with dark chocolate",
     "price": 4.2,
-    "stock": 32,
+    "stock": 31,
     "id_categorie": 1,
     "image": "https://www.shutterstock.com/image-photo/glossy-goldenbrown-pain-au-chocolat-260nw-2627953359.jpg"
   },
@@ -22,7 +22,7 @@
     "name": "Almond Croissant",
     "description": "Filled with almond cream and topped with flakes",
     "price": 4.5,
-    "stock": 28,
+    "stock": 26,
     "id_categorie": 1,
     "image": "https://emilylaurae.com/wp-content/uploads/2024/10/almond-croissants-thumbnail-500x375.jpg"
   },
@@ -31,7 +31,7 @@
     "name": "Plain Brioche",
     "description": "Soft, golden, and fluffy brioche bun – perfect for breakfast",
     "price": 3.8,
-    "stock": 35,
+    "stock": 34,
     "id_categorie": 1,
     "image": "https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3740866071877340889"
   },

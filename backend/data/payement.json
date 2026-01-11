@@ -164,9 +164,29 @@
     "orderId": 1768087420896,
     "clientId": 1768083782884,
     "amount": 26.5,
-    "paymentMethod": "Espèces",
-    "paymentStatus": "À la livraison",
-    "paymentDate": "2026-01-10T23:23:40.909Z",
+    "paymentMethod": "",
+    "paymentStatus": "",
+    "paymentDate": "2026-01-10",
     "transactionId": "TXN1768087420909"
+  },
+  {
+    "id": 1768164456746,
+    "orderId": 1768164456720,
+    "clientId": 1768083782884,
+    "amount": 28.7,
+    "paymentMethod": "PayPal",
+    "paymentStatus": "Validé",
+    "paymentDate": "2026-01-11T20:47:36.746Z",
+    "transactionId": "TXN1768164456746"
+  },
+  {
+    "id": 1768164739327,
+    "orderId": 1768164739303,
+    "clientId": 1768164706054,
+    "amount": 28.3,
+    "paymentMethod": "PayPal",
+    "paymentStatus": "Validé",
+    "paymentDate": "2026-01-11T20:52:19.327Z",
+    "transactionId": "TXN1768164739327"
   }
 ]
