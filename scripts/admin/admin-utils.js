@@ -467,6 +467,37 @@ window.getStatusPill = function (status) {
 };
 
 // Auto-init on DOMContentLoaded
+// Auto-init on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
     window.initMobileSidebar();
+
+    // Check for superadmin link visibility
+    const user = JSON.parse(localStorage.getItem('authUser')) || JSON.parse(localStorage.getItem('user'));
+    const adminLink = document.getElementById('nav-admins');
+
+    // Also check for links with class 'nav-link' that contain 'Admins' text if ID not present
+    let foundLink = adminLink;
+    if (!foundLink) {
+        const links = document.querySelectorAll('.nav-link');
+        links.forEach(l => {
+            if (l.textContent.includes('Admins')) foundLink = l;
+        });
+    }
+
+    if (foundLink) {
+        console.log("Admin Sidebar Debug:", {
+            foundLink: true,
+            userRole: user ? user.role : 'none',
+            localUser: user
+        });
+
+        if (user && user.role === 'superadmin') {
+            foundLink.style.display = 'flex'; // Ensure it's visible
+        } else {
+            foundLink.style.display = 'none'; // Hide for normal admins
+            console.log("Hiding Admins link because role is not superadmin.");
+        }
+    } else {
+        console.warn("Admin Sidebar Debug: 'Admins' nav link not found.");
+    }
 });

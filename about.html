@@ -52,7 +52,10 @@
             </nav>
             <div class="nav-actions">
                 <a href="pages/auth.html" class="login-btn">Connexion</a>
-                <a href="cart.html" style="font-weight: 700; text-decoration: none; color: var(--c-text);">Panier</a>
+                <a href="cart.html" id="cart-link"
+                    style="font-weight: 700; text-decoration: none; color: var(--c-text);">
+                    Panier (<span id="cart-count">0</span>)
+                </a>
             </div>
         </div>
     </header>
@@ -105,6 +108,9 @@
             <p style="margin-top: 1rem; color: #8a6a64;">© 2024 Sugar & Stats. Tous droits réservés.</p>
         </div>
     </footer>
+
+    <script src="scripts/cart-logic.js"></script>
+    <script src="scripts/authentification.js"></script>
 </body>
 
 </html>

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,21 +7,22 @@
 
   <!-- Fonts -->
   <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    /* --- 1. VARIABLES --- */
+    /* --- 1. PALETTE & VARIABLES --- */
     :root {
       --c-bg: #FAFAFA;
+      --c-bg-gradient: radial-gradient(circle at top, #ffffff 0, #FAFAFA 40%, #FBEFF4 100%);
       --c-text: #2F3E46;
       --c-accent: #C53F6B;
       --c-accent-dark: #A52D54;
       --c-white: #FFFFFF;
       --c-input: #FFFFFF;
-      --shadow: 0 14px 28px rgba(0, 0, 0, 0.05), 0 10px 10px rgba(0, 0, 0, 0.05);
-      --radius: 24px;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.10);
+      --radius: 26px;
       --transition: 0.6s ease-in-out;
     }
 
@@ -34,50 +34,45 @@
 
     body {
       font-family: 'Poppins', sans-serif;
-      background: var(--c-bg);
-      /* Using a more neutral overlay for the brand vibe */
-      background-image: linear-gradient(rgba(250, 250, 250, 0.9), rgba(250, 250, 250, 0.9)), url('https://images.unsplash.com/photo-1567171466295-4afa63d45416?q=80&w=2600&auto=format&fit=crop');
-      background-size: cover;
-      background-position: center;
+      background: var(--c-bg-gradient);
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      height: 100vh;
       color: var(--c-text);
+      padding: 2rem 1rem;
     }
 
-    /* --- 2. TYPOGRAPHY --- */
-    h1 {
+    /* --- 2. TYPOGRAPHIE --- */
+    h1, h2 {
       font-family: 'Playfair Display', serif;
       font-weight: 700;
       margin: 0;
-      font-size: 2.5rem;
+      color: var(--c-text);
     }
 
     h2 {
-      font-family: 'Playfair Display', serif;
       text-align: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
       font-size: 2rem;
-      color: var(--c-text);
     }
 
     p {
       font-size: 0.9rem;
       font-weight: 400;
       line-height: 1.5;
-      letter-spacing: 0.5px;
-      margin: 20px 0 30px;
+      letter-spacing: 0.3px;
+      margin: 16px 0 24px;
     }
 
     span {
       font-size: 0.8rem;
-      margin-top: 10px;
+      margin-top: 8px;
       display: block;
     }
 
-    /* --- 3. MAIN CONTAINER (The Card) --- */
+    /* --- 3. CARD PRINCIPALE --- */
     .container {
       background-color: var(--c-white);
       border-radius: var(--radius);
@@ -89,7 +84,7 @@
       min-height: 600px;
     }
 
-    /* --- 4. FORM LAYOUTS --- */
+    /* --- 4. FORMES --- */
     .form-container {
       position: absolute;
       top: 0;
@@ -99,58 +94,56 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      /* Center Vertically */
     }
 
     form {
       background-color: var(--c-white);
       display: flex;
       align-items: center;
-      /* Center Horizontally */
       justify-content: center;
-      /* Center Vertically */
       flex-direction: column;
       height: 100%;
       text-align: center;
       width: 100%;
     }
 
-    /* Inputs */
     input {
       background-color: var(--c-input);
-      border: 1px solid #eee;
+      border: 1px solid #E5E7EB;
       padding: 12px 15px;
       margin: 8px 0;
       width: 100%;
-      border-radius: 8px;
-      font-family: 'Lato', sans-serif;
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
       outline: none;
-      transition: 0.3s;
+      transition: 0.25s;
     }
 
     input:focus {
       border-color: var(--c-accent);
       background-color: #fff;
+      box-shadow: 0 0 0 1px rgba(197,63,107,0.12);
     }
 
-    /* Buttons */
+    /* --- 5. BOUTONS --- */
     button {
-      border-radius: 20px;
+      border-radius: 999px;
       border: 1px solid var(--c-accent);
-      background-color: var(--c-accent);
+      background: linear-gradient(135deg, var(--c-accent), var(--c-accent-dark));
       color: #FFFFFF;
-      font-size: 12px;
-      font-weight: bold;
+      font-size: 0.75rem;
+      font-weight: 600;
       padding: 12px 45px;
       letter-spacing: 1px;
       text-transform: uppercase;
-      transition: transform 80ms ease-in, background 0.3s;
+      transition: transform 80ms ease-in, background 0.3s, box-shadow 0.3s;
       cursor: pointer;
-      margin-top: 1.5rem;
+      margin-top: 1.4rem;
     }
 
     button:active {
-      transform: scale(0.95);
+      transform: scale(0.97);
     }
 
     button:focus {
@@ -158,23 +151,22 @@
     }
 
     button:hover {
-      background-color: var(--c-accent-dark);
-      border-color: var(--c-accent-dark);
+      box-shadow: 0 12px 30px rgba(197,63,107,0.45);
     }
 
-    /* Ghost Button (For the Overlay) */
     button.ghost {
-      background-color: transparent;
+      background: transparent;
       border-color: #FFFFFF;
+      box-shadow: none;
     }
 
     button.ghost:hover {
-      background-color: #FFFFFF;
+      background: #FFFFFF;
       color: var(--c-text);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.18);
     }
 
-    /* --- 5. ANIMATION LOGIC --- */
-
+    /* --- 6. ANIMATION PANNEAUX --- */
     .sign-in-container {
       left: 0;
       width: 50%;
@@ -188,7 +180,6 @@
       z-index: 1;
     }
 
-    /* ACTIVE STATE */
     .container.right-panel-active .sign-in-container {
       transform: translateX(100%);
     }
@@ -201,21 +192,17 @@
     }
 
     @keyframes show {
-
-      0%,
-      49.99% {
+      0%, 49.99% {
         opacity: 0;
         z-index: 1;
       }
-
-      50%,
-      100% {
+      50%, 100% {
         opacity: 1;
         z-index: 5;
       }
     }
 
-    /* --- 6. THE OVERLAY --- */
+    /* --- 7. OVERLAY --- */
     .overlay-container {
       position: absolute;
       top: 0;
@@ -232,8 +219,7 @@
     }
 
     .overlay {
-      background: var(--c-text);
-      background: linear-gradient(to right, var(--c-text), var(--c-accent));
+      background: linear-gradient(135deg, #C53F6B, #FDB462);
       background-repeat: no-repeat;
       background-size: cover;
       background-position: 0 0;
@@ -266,12 +252,13 @@
     }
 
     .overlay-panel h1 {
-      color: white;
+      color: #FFFFFF;
       margin-bottom: 10px;
     }
 
     .overlay-panel p {
-      color: rgba(255, 255, 255, 0.9);
+      color: rgba(255, 255, 255, 0.92);
+      margin: 12px 0 0;
     }
 
     .overlay-left {
@@ -291,68 +278,20 @@
       transform: translateX(20%);
     }
 
-    /* Utility */
+    /* --- 8. MESSAGES --- */
     .msg-box {
       font-size: 0.8rem;
       margin-top: 15px;
       color: var(--c-text);
-      font-weight: bold;
+      font-weight: 500;
+      min-height: 1em;
     }
 
-    /* Mobile */
-    @media (max-width: 768px) {
-      .container {
-        width: 100%;
-        min-height: 800px;
-        flex-direction: column;
-      }
-
-      .form-container {
-        width: 100%;
-        height: 60%;
-        top: 40%;
-        padding: 0 20px;
-      }
-
-      .sign-up-container {
-        opacity: 1;
-        z-index: 1;
-        top: 40%;
-      }
-
-      .overlay-container {
-        width: 100%;
-        height: 40%;
-        top: 0;
-        left: 0;
-      }
-
-      .overlay-panel h1 {
-        font-size: 1.5rem;
-      }
-
-      .overlay-panel p {
-        display: none;
-        /* Hide long text on mobile overlay */
-      }
-
-      .container.right-panel-active .overlay-container {
-        transform: translateY(150%);
-        /* Slide overlay down to show register */
-      }
-
-      .container.right-panel-active .sign-up-container {
-        transform: none;
-        top: 0;
-        height: 100%;
-      }
-    }
-
-    /* ELEGANT BACK LINK */
+    /* --- 9. LIEN RETOUR --- */
     .back-home {
       position: fixed;
-      top: 2.5rem;
-      left: 2.5rem;
+      top: 2.2rem;
+      left: 2.2rem;
       color: var(--c-text);
       text-decoration: none;
       font-weight: 600;
@@ -369,7 +308,7 @@
     .back-home .icon-circle {
       width: 45px;
       height: 45px;
-      background: white;
+      background: #FFFFFF;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -380,13 +319,64 @@
 
     .back-home:hover {
       color: var(--c-accent);
-      transform: translateX(5px);
+      transform: translateX(4px);
     }
 
     .back-home:hover .icon-circle {
       background: var(--c-accent);
       color: white;
-      box-shadow: 0 10px 30px rgba(197, 63, 107, 0.3);
+      box-shadow: 0 10px 30px rgba(197, 63, 107, 0.35);
+    }
+
+    /* --- 10. MOBILE --- */
+    @media (max-width: 768px) {
+      .container {
+        width: 100%;
+        min-height: 780px;
+      }
+
+      .form-container {
+        width: 100%;
+        height: 60%;
+        top: 40%;
+        padding: 0 24px;
+      }
+
+      .sign-up-container {
+        opacity: 1;
+        z-index: 1;
+        top: 40%;
+      }
+
+      .overlay-container {
+        width: 100%;
+        height: 40%;
+        top: 0;
+        left: 0;
+      }
+
+      .overlay-panel h1 {
+        font-size: 1.6rem;
+      }
+
+      .overlay-panel p {
+        display: none;
+      }
+
+      .container.right-panel-active .overlay-container {
+        transform: translateY(150%);
+      }
+
+      .container.right-panel-active .sign-up-container {
+        transform: none;
+        top: 0;
+        height: 100%;
+      }
+
+      .back-home {
+        top: 1.5rem;
+        left: 1.4rem;
+      }
     }
   </style>
 </head>
@@ -400,18 +390,16 @@
   </a>
 
   <div class="container" id="container">
-
     <!-- REGISTER FORM -->
     <div class="form-container sign-up-container">
       <form id="register-form">
         <h2>Créer un compte</h2>
-        <input type="text" id="register-username" placeholder="Username" required />
+        <input type="text" id="register-username" placeholder="Nom d’utilisateur" required />
         <input type="email" id="register-email" placeholder="Email" required />
         <input type="text" id="register-name" placeholder="Nom complet" />
         <input type="text" id="register-phone" placeholder="Téléphone" />
         <input type="text" id="register-address" placeholder="Adresse de livraison" />
         <input type="password" id="register-password" placeholder="Mot de passe" required />
-
         <button type="submit">S'inscrire</button>
         <div id="register-message" class="msg-box"></div>
       </form>
@@ -421,11 +409,11 @@
     <div class="form-container sign-in-container">
       <form id="login-form">
         <h2>Se connecter</h2>
-        <span>Utilisez votre compte</span>
-        <input type="text" id="login-username" placeholder="Username" required />
+        <span>Utilisez votre compte Sugar &amp; Stats</span>
+        <input type="text" id="login-username" placeholder="Nom d’utilisateur" required />
         <input type="password" id="login-password" placeholder="Mot de passe" required />
-        <a href="#" style="font-size:0.8rem; margin:10px 0; color:#888;">Mot de passe oublié ?</a>
-        <button type="submit">Access The Lab</button>
+        <a href="#" style="font-size:0.8rem; margin:10px 0; color:#8D9AA2;">Mot de passe oublié ?</a>
+        <button type="submit">Accéder au labo</button>
         <div id="login-message" class="msg-box"></div>
       </form>
     </div>
@@ -433,24 +421,21 @@
     <!-- OVERLAY -->
     <div class="overlay-container">
       <div class="overlay">
-
         <!-- Left Overlay (Visible when Registering) -->
         <div class="overlay-panel overlay-left">
-          <h1>Welcome Back!</h1>
-          <p>Pour rester connecté avec nous, veuillez vous connecter avec vos informations.</p>
+          <h1>Ravi de vous revoir</h1>
+          <p>Connectez‑vous pour reprendre vos expériences sucrées là où vous les avez laissées.</p>
           <button class="ghost" id="signIn">Se connecter</button>
         </div>
 
         <!-- Right Overlay (Visible when Logging In) -->
         <div class="overlay-panel overlay-right">
-          <h1>Sugar & Stats</h1>
-          <p>Entrez vos informations personnelles et commencez votre voyage avec nous.</p>
+          <h1>Sugar &amp; Stats</h1>
+          <p>Créez votre compte et commencez à lier desserts, données et délicieuses corrélations.</p>
           <button class="ghost" id="signUp">Rejoindre</button>
         </div>
-
       </div>
     </div>
-
   </div>
 
   <!-- Scripts -->
@@ -470,7 +455,5 @@
       container.classList.remove("right-panel-active");
     });
   </script>
-
 </body>
-
 </html>

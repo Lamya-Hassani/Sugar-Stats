@@ -1,16 +1,5 @@
 [
   {
-    "id": 1,
-    "username": "admin",
-    "password": "$2a$10$W5fT2QO9I2Wv1ZbU7XbZ8eQ5i8vJd43n5Qf9YlZlZxJ7a6lYz6T1a",
-    "role": "admin",
-    "name": "Admin User",
-    "email": "admin@sugarstats.com",
-    "phone": "0600000000",
-    "address": "Casablanca OULFA",
-    "registrationDate": "2025-01-01T10:00:00.000Z"
-  },
-  {
     "id": 2,
     "username": "client1",
     "password": "$2a$10$W5fT2QO9I2Wv1ZbU7XbZ8eQ5i8vJd43n5Qf9YlZlZxJ7a6lYz6T1a",
@@ -25,7 +14,7 @@
     "id": 1767531084486,
     "username": "lamya",
     "password": "$2b$10$UQ/ZW4Ikr3Jy1kEuxc6n7exmCQdhioNjvuW0quBn7cdqIu6s0JWvK",
-    "role": "admin",
+    "role": "superadmin",
     "name": "lamya",
     "email": "lamya@gmail.com",
     "phone": "",
@@ -107,5 +96,38 @@
     "phone": "1234",
     "address": "casa o",
     "registrationDate": "2026-01-10T22:23:02.884Z"
+  },
+  {
+    "id": 1768136706705,
+    "username": "cloch",
+    "password": "$2b$10$YYqgbeVGEGVfdhAL4L.ORuF1wC97IyKqbJP3CmBCgWBBzDSb0tImi",
+    "role": "client",
+    "name": "zez",
+    "email": "azze@g",
+    "phone": "123",
+    "address": "casa",
+    "registrationDate": "2026-01-11T13:05:06.705Z"
+  },
+  {
+    "id": 1768138019984,
+    "username": "toast",
+    "password": "$2b$10$u9T5v9IuMtuX7xbrD4DuN.VmOd0yyshrj.bi0jw6bO4O3BY8GT3xC",
+    "role": "admin",
+    "name": "toast",
+    "email": "toas@gmail.com",
+    "phone": "",
+    "address": "",
+    "registrationDate": "2026-01-11T13:26:59.984Z"
+  },
+  {
+    "id": 1768138735280,
+    "username": "void_loop",
+    "password": "$2b$10$nvrBXvvPqoA4jlsn3TiX.eYDp97MyzCa/yGC4rAsaONxY2VoeAqga",
+    "role": "admin",
+    "name": "Sugar & Stats",
+    "email": "ahmed.benali@campusflow.com",
+    "phone": "",
+    "address": "",
+    "registrationDate": "2026-01-11T13:38:55.280Z"
   }
 ]

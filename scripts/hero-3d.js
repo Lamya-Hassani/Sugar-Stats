@@ -12,7 +12,6 @@ const renderer = new THREE.WebGLRenderer({
     alpha: true
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setClearColor(0x000000, 0); // Ensure transparency
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -38,8 +37,8 @@ const positions = [
 
 // --- MATERIAL (Updated for Bakery Colors) ---
 const material = new THREE.MeshLambertMaterial({
-    color: "#E05E87", // Lighter Magenta
-    emissive: "#2F3E46", // Deep Text
+    color: "#D48C9D", // Dusty Rose (Pink)
+    emissive: "#5D4037", // Truffle Brown hint
     emissiveIntensity: 0.1
 });
 
@@ -86,21 +85,66 @@ const revolutionDuration = 2;
 const breathingAmplitude = 0.1;
 const breathingSpeed = 0.002;
 
-// Set spheres to final positions immediately
+// Init spheres below screen
 spheres.forEach((sphere, i) => {
-    sphere.position.copy(sphere.userData.originalPosition);
+    sphere.position.y = initY;
 });
 
-let loadingComplete = true; // Set to true immediately
+function initLoadingAnimation() {
+    spheres.forEach((sphere, i) => {
+        const delay = i * 0.02;
+
+        gsap.timeline()
+            .to(sphere.position, {
+                duration: revolutionDuration / 2,
+                y: revolutionRadius,
+                ease: "power1.out",
+                onUpdate: function () {
+                    const progress = this.progress();
+                    sphere.position.z = sphere.userData.originalPosition.z + Math.sin(progress * Math.PI) * revolutionRadius;
+                },
+                delay: delay
+            })
+            .to(sphere.position, {
+                duration: revolutionDuration / 2,
+                y: initY / 5,
+                ease: "power1.out",
+                onUpdate: function () {
+                    const progress = this.progress();
+                    sphere.position.z = sphere.userData.originalPosition.z - Math.sin(progress * Math.PI) * revolutionRadius;
+                }
+            })
+            .to(sphere.position, {
+                duration: 0.6,
+                x: sphere.userData.originalPosition.x,
+                y: sphere.userData.originalPosition.y,
+                z: sphere.userData.originalPosition.z,
+                ease: "power1.out"
+            });
+    });
+}
+
+window.addEventListener("load", initLoadingAnimation);
+
 const uiElements = document.querySelectorAll('header, .banner, .rotated-text');
 const main_txt = document.querySelector(".main-txt");
 const mouse_effect = document.querySelector(".mouse-effect");
 
 uiElements.forEach((el) => {
-    el.style.opacity = "1";
-    el.style.pointerEvents = "auto";
+    el.style.opacity = "0";
+    el.style.pointerEvents = "none";
 });
-if (main_txt) main_txt.style.opacity = "0";
+
+let loadingComplete = false;
+setTimeout(() => {
+    loadingComplete = true;
+    uiElements.forEach((el) => {
+        el.style.opacity = "1";
+        el.style.pointerEvents = "auto";
+    });
+    // Keep the main text visible in the center
+    main_txt.style.opacity = "1";
+}, (revolutionDuration + 1) * 1000);
 
 // --- MOUSE ANIMATION ---
 gsap.set(".circle", { xPercent: -50, yPercent: -50 });

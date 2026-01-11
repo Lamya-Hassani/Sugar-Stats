@@ -273,11 +273,70 @@ function renderRecentOrders(orders, clients) {
     }).join('');
 }
 
-function applyDashboardFilters() {
+async function applyDashboardFilters() {
+    const filterValue = document.getElementById('dashboardFilter').value;
+    const token = localStorage.getItem("authToken");
 
-    // This could re-fetch data with query params or just filter the local array
-    // For now, let's just re-init to simulate refresh
-    initDashboard();
+    try {
+        const [ordersRes, clientsRes, productsRes, categoriesRes] = await Promise.all([
+            fetch(`${API_BASE_URL}/api/orders`, { headers: { "Authorization": `Bearer ${token}` } }),
+            fetch(`${API_BASE_URL}/api/clients`, { headers: { "Authorization": `Bearer ${token}` } }),
+            fetch(`${API_BASE_URL}/api/products`),
+            fetch(`${API_BASE_URL}/api/categories`)
+        ]);
+
+        let orders = await ordersRes.json();
+        const clients = await clientsRes.json();
+        const products = await productsRes.json();
+        const categories = await categoriesRes.json();
+
+        // Apply date filter
+        orders = filterOrdersByPeriod(orders, filterValue);
+
+        if (Array.isArray(orders) && Array.isArray(clients)) {
+            updateDashboardStats(orders, clients);
+
+            // Destroy existing charts before recreating
+            if (charts.revenue) charts.revenue.destroy();
+            if (charts.category) charts.category.destroy();
+            if (charts.trend) charts.trend.destroy();
+            if (charts.scatter) charts.scatter.destroy();
+            if (charts.radar) charts.radar.destroy();
+
+            initDashboardCharts(orders, products, categories);
+            renderRecentOrders(orders, clients);
+        }
+    } catch (err) {
+        console.error("Error applying dashboard filters:", err);
+    }
+}
+
+function filterOrdersByPeriod(orders, period) {
+    if (period === 'all') return orders;
+
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    return orders.filter(order => {
+        const orderDate = new Date(order.orderDate);
+
+        switch (period) {
+            case 'today':
+                return orderDate >= today;
+
+            case 'week':
+                const weekAgo = new Date(today);
+                weekAgo.setDate(today.getDate() - 7);
+                return orderDate >= weekAgo;
+
+            case 'month':
+                return orderDate.getMonth() === now.getMonth() &&
+                    orderDate.getFullYear() === now.getFullYear();
+
+            default:
+                return true;
+        }
+    });
 }
 
 // Global exposure

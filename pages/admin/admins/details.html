@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Détails de l’Administrateur | Sugar & Stats Admin</title>
+
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      /* THEME: Vanilla Strawberry Luxury */
+      --c-text-main: #4E342E;
+      --c-text-light: #8D6E63;
+      --c-rose: #D81B60;
+      --c-pop: #FF6D00;
+      --glass-bg: rgba(255, 255, 255, 0.80);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.9);
+      --glass-shadow: 0 18px 45px rgba(216, 27, 96, 0.18);
+      --radius-card: 26px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: transparent;
+      color: var(--c-text-main);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .details-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(26px);
+      -webkit-backdrop-filter: blur(26px);
+      padding: 2.5rem 2.75rem;
+      border-radius: var(--radius-card);
+      border: var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      width: 100%;
+      max-width: 980px;
+      position: relative;
+      z-index: 10;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem;
+      margin: 0 0 1.4rem 0;
+      color: var(--c-rose);
+      border-bottom: 1px solid rgba(216, 27, 96, 0.22);
+      padding-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .details-card-inner {
+      width: 100%;
+      display: flex;
+      gap: 2.5rem;
+      align-items: flex-start;
+    }
+
+    .details-left {
+      flex: 0 0 260px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      border-right: 1px solid rgba(141, 110, 99, 0.25);
+      padding-right: 2rem;
+    }
+
+    .details-right {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 2rem;
+      row-gap: 1rem;
+    }
+
+    .admin-avatar {
+      width: 110px;
+      height: 110px;
+      background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.95), var(--glass-bg));
+      border: 2px solid var(--c-rose);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      color: var(--c-rose);
+      box-shadow: 0 10px 30px rgba(216, 27, 96, 0.35);
+    }
+
+    .detail-info h3 {
+      font-size: 1.7rem;
+      color: var(--c-text-main);
+      margin: 0.3rem 0 0.25rem;
+      text-align: center;
+    }
+
+    .detail-subtitle {
+      font-size: 0.9rem;
+      color: var(--c-text-light);
+      text-align: center;
+      margin: 0;
+    }
+
+    .detail-row {
+      border-bottom: 1px dashed rgba(141, 110, 99, 0.2);
+      padding-bottom: 0.45rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .detail-label {
+      color: var(--c-text-light);
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+    }
+
+    .detail-value {
+      font-size: 0.96rem;
+      color: var(--c-text-main);
+      word-break: break-word;
+    }
+
+    .btn {
+      padding: 0.8rem 2rem;
+      border-radius: 999px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.25s;
+      font-family: 'Poppins', sans-serif;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--c-text-main) 0%, #3E2723 100%);
+      color: white;
+      box-shadow: 0 6px 18px rgba(78, 52, 46, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 9px 26px rgba(78, 52, 46, 0.5);
+    }
+
+    .btn-secondary {
+      background: var(--c-rose);
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(216, 27, 96, 0.3);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 9px 26px rgba(216, 27, 96, 0.45);
+    }
+
+    @media (max-width: 900px) {
+      .details-card {
+        max-width: 95%;
+        padding: 2rem 1.5rem;
+      }
+
+      .details-card-inner {
+        flex-direction: column;
+      }
+
+      .details-left {
+        border-right: none;
+        border-bottom: 1px solid rgba(141, 110, 99, 0.25);
+        padding-right: 0;
+        padding-bottom: 1.75rem;
+        width: 100%;
+      }
+
+      .details-right {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <link rel="stylesheet" href="../../../styles/admin-theme.css">
+</head>
+
+<body>
+  <div class="details-card">
+    <h2><i class="fas fa-user-shield"></i> Fiche Administrateur</h2>
+    <div class="details-card-inner">
+      <div class="details-left">
+        <div class="admin-avatar" id="adminAvatar"><i class="fas fa-user-shield"></i></div>
+        <div class="detail-info">
+          <h3 id="adminName">Nom Admin</h3>
+          <p class="detail-subtitle" id="adminUsername">@username • Rôle admin</p>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:0.8rem;width:100%;margin-top:1.5rem;">
+          <a href="list.html" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Retour à la liste
+          </a>
+          <a href="#" id="editAdminBtn" class="btn btn-primary">
+            <i class="fas fa-edit"></i> Modifier l’admin
+          </a>
+        </div>
+      </div>
+
+      <div class="details-right" id="adminDetailsContent">
+        <p style="text-align:center;">Chargement...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background + logic -->
+  <script src="https://unpkg.com/three@0.136.0/build/three.min.js"></script>
+  <script src="../../../scripts/admin/pastry-bg.js"></script>
+  <script src="../../../scripts/admin/admins.js"></script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+    if (id) {
+      showAdminDetails(id);
+    }
+  </script>
+</body>
+</html>

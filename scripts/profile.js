@@ -196,13 +196,50 @@ window.exportHistory = function () {
     return;
   }
 
-  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentUserOrders, null, 2));
-  const downloadAnchorNode = document.createElement('a');
-  downloadAnchorNode.setAttribute("href", dataStr);
-  downloadAnchorNode.setAttribute("download", "rapport_labo_sugar_stats.json");
-  document.body.appendChild(downloadAnchorNode);
-  downloadAnchorNode.click();
-  downloadAnchorNode.remove();
+  try {
+    // Transform order data into Excel-friendly format
+    const excelData = currentUserOrders.map(order => {
+      return {
+        'ID Commande': `#${order.id.toString().slice(-6)}`,
+        'Date': new Date(order.orderDate).toLocaleDateString('fr-FR'),
+        'Articles': order.items.map(i => `${i.quantity}x ${i.name}`).join(', '),
+        'Montant Total (DH)': Number(order.totalAmount).toFixed(2),
+        'Statut': order.status,
+        'ID Client': order.clientId
+      };
+    });
+
+    // Create a new workbook
+    const wb = XLSX.utils.book_new();
+
+    // Convert data to worksheet
+    const ws = XLSX.utils.json_to_sheet(excelData);
+
+    // Set column widths for better readability
+    ws['!cols'] = [
+      { wch: 15 },  // ID Commande
+      { wch: 12 },  // Date
+      { wch: 40 },  // Articles
+      { wch: 18 },  // Montant Total
+      { wch: 12 },  // Statut
+      { wch: 12 }   // ID Client
+    ];
+
+    // Add worksheet to workbook
+    XLSX.utils.book_append_sheet(wb, ws, "Historique des Commandes");
+
+    // Generate Excel file with proper options to avoid protected mode warning
+    XLSX.writeFile(wb, "rapport_labo_sugar_stats.xlsx", {
+      bookType: 'xlsx',
+      type: 'binary',
+      compression: true
+    });
+
+    showToast("Export Excel réussi !", "success");
+  } catch (error) {
+    console.error("Export error:", error);
+    showToast("Erreur lors de l'export Excel.", "error");
+  }
 };
 
 window.generateGlobalInvoice = function () {

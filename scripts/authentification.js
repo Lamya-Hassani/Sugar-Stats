@@ -138,6 +138,11 @@ async function handleLogin(event) {
   }
 
   try {
+    // Clear any existing session data before attempting new login
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("authUser");
+    localStorage.removeItem("user");
+
     const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
       method: "POST",
       headers: {
@@ -157,6 +162,7 @@ async function handleLogin(event) {
     }
 
     // Sauvegarde token + user
+    console.log("LOGIN RESPONSE USER:", data.user);
     localStorage.setItem("authToken", data.token);
     localStorage.setItem("authUser", JSON.stringify(data.user));
 
@@ -172,7 +178,7 @@ async function handleLogin(event) {
 
       if (redirect) {
         window.location.href = `../${redirect}`;
-      } else if (data.user.role === "admin") {
+      } else if (data.user.role === "admin" || data.user.role === "superadmin") {
         window.location.href = "admin/index.html";
       } else {
         window.location.href = "../profile.html";
@@ -202,4 +208,33 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   updateAuthUI();
+
+  // Real-time Username Check
+  const regUser = document.getElementById("register-username");
+  if (regUser) {
+    regUser.addEventListener('blur', async () => {
+      const val = regUser.value.trim();
+      const msg = document.getElementById("register-message");
+      if (!val) return;
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/auth/check-username`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: val })
+        });
+        const data = await res.json();
+        if (data.exists) {
+          regUser.style.borderColor = "red";
+          if (msg) {
+            msg.style.color = "red";
+            msg.textContent = "Ce nom d'utilisateur est déjà pris.";
+          }
+        } else {
+          regUser.style.borderColor = "green";
+          if (msg) msg.textContent = "";
+        }
+      } catch (e) { console.error(e); }
+    });
+  }
 });

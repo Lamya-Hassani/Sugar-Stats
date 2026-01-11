@@ -322,8 +322,9 @@
 
       <div class="nav-actions">
         <a href="pages/auth.html" class="login-btn" id="auth-btn">Connexion</a>
-        <a href="cart.html" id="cart-link" style="font-weight: 700; text-decoration: none; color: var(--c-text);">
-          Panier (<span id="cart-count">0</span>)
+        <a href="cart.html" id="cart-link">
+          <i class="fa-solid fa-basket-shopping"></i> <span>Panier</span>
+          <span id="cart-count">0</span>
         </a>
         <button class="ham-btn" id="mobile-toggle">
           <i class="fa-solid fa-bars"></i>
@@ -632,6 +633,7 @@
   <!-- Scripts -->
   <script src="scripts/animations.js"></script>
   <script src="scripts/hero-3d.js"></script>
+  <script src="scripts/cart-logic.js"></script>
   <script src="scripts/authentification.js"></script>
 
   <script>

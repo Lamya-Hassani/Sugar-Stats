@@ -1,18 +1,21 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feedback | Sugar & Stats Admin</title>
+    <title>Admins | Sugar & Stats Admin</title>
+
     <!-- Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- LOCAL THEME (same mood as categories) -->
     <style>
         :root {
-            /* THEME: Vanilla Strawberry Luxury */
+            /* THEME: Vanilla Strawberry Luxury pour cette page */
             --c-text-main: #4E342E;
             --c-text-light: #8D6E63;
             --c-rose: #D81B60;
@@ -42,6 +45,7 @@
             height: 100vh;
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-right: 1px solid rgba(255, 255, 255, 0.8);
             padding: 2.5rem 1.5rem;
             position: fixed;
@@ -61,6 +65,7 @@
             text-align: center;
             text-decoration: none;
             display: block;
+            letter-spacing: -0.5px;
         }
 
         .nav-links {
@@ -77,8 +82,10 @@
             text-decoration: none;
             color: var(--c-text-light);
             border-radius: 20px;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             font-weight: 500;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
         }
 
         .nav-link.active {
@@ -87,6 +94,7 @@
             box-shadow: 0 4px 15px rgba(216, 27, 96, 0.3);
         }
 
+        /* --- MAIN CONTENT --- */
         .main {
             margin-left: 280px;
             padding: 3rem 4rem;
@@ -108,27 +116,28 @@
             box-shadow: var(--glass-shadow);
         }
 
-        .btn {
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.3s;
-            display: inline-flex;
-            gap: 0.5rem;
-            border: none;
-            cursor: pointer;
-            font-family: inherit;
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin: 0;
         }
 
-        .btn-secondary {
-            background: white;
-            color: var(--c-text-main);
-            border: 1px solid rgba(0, 0, 0, 0.1);
+        .header p {
+            margin: 0.25rem 0 0 0;
+            color: var(--c-text-light);
+            font-size: 0.95rem;
+        }
+
+        .controls-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
         }
 
         .search-container {
-            margin-bottom: 2rem;
+            flex-grow: 1;
             position: relative;
         }
 
@@ -138,7 +147,14 @@
             border-radius: 50px;
             border: 1px solid rgba(0, 0, 0, 0.1);
             background: var(--glass-bg);
+            font-family: inherit;
             outline: none;
+            transition: 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: var(--c-rose);
+            box-shadow: 0 0 15px rgba(216, 27, 96, 0.1);
         }
 
         .search-container i {
@@ -149,6 +165,38 @@
             color: var(--c-text-light);
         }
 
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--c-rose);
+            color: white;
+            box-shadow: 0 4px 15px rgba(216, 27, 96, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--c-text-main);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        /* --- TABLE STYLE --- */
         .table-container {
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
@@ -157,12 +205,17 @@
             box-shadow: var(--glass-shadow);
             overflow: hidden;
             margin-bottom: 2rem;
+            width: 100%;
+            /* ensure full width of main */
         }
 
         table {
             width: 100%;
+            /* fill the table-container */
             border-collapse: collapse;
             text-align: left;
+            table-layout: fixed;
+            /* spread columns evenly */
         }
 
         th {
@@ -170,24 +223,62 @@
             padding: 1.2rem;
             font-size: 0.85rem;
             text-transform: uppercase;
+            letter-spacing: 1px;
             color: var(--c-text-light);
             cursor: pointer;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+
+        th:hover {
+            background: rgba(216, 27, 96, 0.1);
+            color: var(--c-rose);
+        }
+
+        th i {
+            margin-left: 0.5rem;
+            font-size: 0.7rem;
+            opacity: 0.5;
         }
 
         td {
             padding: 1.2rem;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            vertical-align: middle;
         }
 
-        .star-rating {
-            color: #FFD600;
-            font-size: 0.8rem;
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(0, 0, 0, 0.01);
+        }
+
+        .admin-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .admin-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #FFCC80, #FFB74D);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #6D4C41;
         }
 
         .actions-cell {
             display: flex;
             gap: 0.5rem;
+            justify-content: flex-start;
         }
 
         .icon-btn {
@@ -197,14 +288,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: 0.2s;
             cursor: pointer;
             border: none;
             font-size: 0.9rem;
         }
 
-        .btn-view {
-            background: #E3F2FD;
-            color: #1565C0;
+        .btn-edit {
+            background: #FFF3E0;
+            color: #FB8C00;
         }
 
         .btn-delete {
@@ -212,9 +304,16 @@
             color: #C62828;
         }
 
+        .icon-btn:hover {
+            transform: translateY(-1px);
+            opacity: 0.9;
+        }
+
+        /* --- PAGINATION --- */
         .pagination {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 0.5rem;
         }
 
@@ -229,14 +328,31 @@
             border: var(--glass-border);
             cursor: pointer;
             transition: 0.3s;
+            font-weight: 500;
         }
 
         .page-btn.active {
-            background: var(--c-rose) !important;
-            color: white !important;
+            background: var(--c-rose);
+            color: white;
+            border-color: var(--c-rose);
+            box-shadow: 0 4px 10px rgba(216, 27, 96, 0.2);
+        }
+
+        .page-btn:hover:not(.active) {
+            background: white;
+            border-color: var(--c-rose);
+            color: var(--c-rose);
+        }
+
+        @media (max-width: 900px) {
+            .main {
+                padding: 2.5rem 1.5rem;
+            }
         }
     </style>
-    <link rel='stylesheet' href='../../../styles/admin-theme.css'>
+
+    <!-- GLOBAL ADMIN THEME -->
+    <link rel="stylesheet" href="../../../styles/admin-theme.css">
 </head>
 
 <body>
@@ -246,58 +362,82 @@
             <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
             <li><a href="../products/list.html" class="nav-link"><i class="fas fa-cookie-bite"></i> Creations</a></li>
             <li><a href="../clients/list.html" class="nav-link"><i class="fas fa-users"></i> Clients</a></li>
+            <li><a href="list.html" class="nav-link active" id="nav-admins"><i class="fas fa-user-shield"></i>
+                    Admins</a></li>
             <li><a href="../categories/list.html" class="nav-link"><i class="fas fa-tag"></i> Segments</a></li>
             <li><a href="../orders/list.html" class="nav-link"><i class="fas fa-box-open"></i> Orders</a></li>
             <li><a href="../employees/list.html" class="nav-link"><i class="fas fa-id-card"></i> Personnel</a></li>
             <li><a href="../payments/list.html" class="nav-link"><i class="fas fa-wallet"></i> Finance</a></li>
-            <li><a href="list.html" class="nav-link active"><i class="fas fa-heart"></i> Reviews</a></li>
+            <li><a href="../reviews/list.html" class="nav-link"><i class="fas fa-heart"></i> Reviews</a></li>
         </ul>
     </div>
 
     <div class="main">
         <div class="header">
             <div>
-                <h1>Opinion Laboratory</h1>
-                <p>Sensory analysis and gourmet feedback.</p>
+                <h1>Admin Console</h1>
+                <p>Gestion des comptes administrateurs du laboratoire.</p>
             </div>
-            <div style="display: flex; gap: 1rem;">
-                <button class="btn btn-secondary" onclick="exportReviewsCSV()"><i class="fas fa-file-csv"></i>
-                    Export CSV</button>
+            <div style="display:flex;gap:1rem;">
+                <button class="btn btn-secondary" onclick="exportAdminsCSV()">
+                    <i class="fas fa-file-csv"></i> Export CSV
+                </button>
+                <a href="add.html" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Nouvel Admin
+                </a>
             </div>
         </div>
 
-        <div class="search-container">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" class="search-input" placeholder="Search in comments..."
-                oninput="handleSearch()">
+        <div class="controls-row">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="Rechercher un administrateur..."
+                    oninput="handleAdminSearch()">
+            </div>
         </div>
 
         <div class="table-container">
             <table>
                 <thead>
                     <tr>
-                        <th onclick="handleSort('productId')">Masterpiece <i class="fas fa-sort"></i></th>
-                        <th onclick="handleSort('clientId')">Gourmet Subject <i class="fas fa-sort"></i></th>
-                        <th onclick="handleSort('rating')">Score <i class="fas fa-sort"></i></th>
-                        <th>Feedback & Feeling</th>
-                        <th onclick="handleSort('date')">Tasting Date <i class="fas fa-sort"></i></th>
+                        <th onclick="handleAdminSort('username')">Admin <i class="fas fa-sort"></i></th>
+                        <th onclick="handleAdminSort('email')">Email <i class="fas fa-sort"></i></th>
+                        <th onclick="handleAdminSort('registrationDate')">Date création <i class="fas fa-sort"></i></th>
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody id="reviewsTableBody"></tbody>
+                <tbody id="adminsTableBody">
+                    <!-- JS will populate rows here -->
+                </tbody>
             </table>
         </div>
+
         <div id="pagination" class="pagination"></div>
     </div>
 
+    <!-- Scripts -->
     <script src="https://unpkg.com/three@0.136.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.136.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="../../../scripts/admin/pastry-bg.js"></script>
 
-    <script src='../../../scripts/admin/pastry-bg.js'></script>
-    <script src='../../../scripts/admin/luxury-ui.js'></script>
     <script src="../../../scripts/admin/admin-utils.js"></script>
-    <script src="../../../scripts/admin/reviews.js"></script>
+    <script src="../../../scripts/admin/admins.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => { renderReviewsTable(); });
+        const user = JSON.parse(localStorage.getItem('authUser')) || JSON.parse(localStorage.getItem('user'));
+        if (!user || (user.role !== 'admin' && user.role !== 'superadmin')) {
+            window.location.href = '../../auth.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAdminsTable();
+        });
+
+        function logout() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('authUser');
+            localStorage.removeItem('user');
+            window.location.href = '../../auth.html';
+        }
     </script>
 </body>
 

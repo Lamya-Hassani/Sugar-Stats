@@ -14,33 +14,98 @@
       background: radial-gradient(circle at top, #ffffff 0, #FAFAFA 40%, #FBEFF4 100%);
     }
 
+    /* HEADER */
+
+    header {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.7);
+    }
+
+    .header-inner {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-inner nav ul li a {
+      font-size: 0.9rem;
+    }
+
     /* HERO */
 
     .page-header {
-      padding: 8.5rem 0 3.5rem;
-      background: linear-gradient(135deg, rgba(197,63,107,0.95), rgba(253,180,98,0.9));
+      padding: 8.2rem 0 3.7rem;
+      background: linear-gradient(135deg, rgba(197,63,107,0.97), rgba(253,180,98,0.92));
       color: #fff;
       border-radius: 0 0 40px 40px;
       text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 10% 0, rgba(255,255,255,0.26), transparent 55%),
+        radial-gradient(circle at 80% 90%, rgba(255,255,255,0.15), transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
     }
 
     .page-header .container {
       max-width: var(--container);
       margin: 0 auto;
       padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 2rem;
     }
 
     .page-header h1 {
-      font-size: clamp(2.4rem, 4vw, 3.2rem);
-      margin-bottom: 0.4rem;
+      font-size: clamp(2.5rem, 4vw, 3.3rem);
+      margin-bottom: 0.5rem;
     }
 
     .page-header p {
+      opacity: 0.95;
+      max-width: 430px;
+      font-size: 0.98rem;
+    }
+
+    .page-header-badge {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      opacity: 0.85;
+      margin-bottom: 0.6rem;
+    }
+
+    .page-header-mini {
+      text-align: right;
+      font-size: 0.85rem;
       opacity: 0.9;
-      max-width: 420px;
+    }
+
+    .page-header-mini span {
+      display: block;
     }
 
     /* LAYOUT */
+
+    .container {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
 
     .cart-layout {
       display: grid;
@@ -71,9 +136,23 @@
     }
 
     .cart-items-container h2 {
-      margin-bottom: 1.5rem;
+      margin-bottom: 0.4rem;
       color: var(--c-text);
       font-family: 'Playfair Display', serif;
+    }
+
+    .cart-subtitle {
+      font-size: 0.9rem;
+      color: rgba(47,62,70,0.75);
+      margin-bottom: 1.6rem;
+    }
+
+    .cart-meta {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: rgba(47,62,70,0.55);
+      margin-bottom: 0.4rem;
     }
 
     .cart-item {
@@ -132,14 +211,23 @@
       color: var(--c-accent);
     }
 
+    .cart-row-actions .qty {
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+
     .cart-row-actions button {
       background: none;
       border: none;
-      color: #aaa;
+      color: #b7a7b0;
       cursor: pointer;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       text-decoration: underline;
       text-underline-offset: 2px;
+    }
+
+    .cart-row-actions button:hover {
+      color: var(--c-accent);
     }
 
     /* SUMMARY CARD */
@@ -178,6 +266,10 @@
       font-size: 0.95rem;
     }
 
+    .summary-row span:first-child {
+      color: rgba(249,250,251,0.85);
+    }
+
     .total-row {
       border-top: 1px solid rgba(255,255,255,0.25);
       padding-top: 1rem;
@@ -191,17 +283,32 @@
       width: 100%;
       margin-top: 1.9rem;
       border-radius: 999px;
+      letter-spacing: 0.5px;
     }
 
     .summary-note {
       margin-top: 1.1rem;
       font-size: 0.8rem;
-      opacity: 0.75;
+      opacity: 0.78;
+      line-height: 1.5;
     }
 
     .summary-note i {
       color: var(--c-apricot);
       margin-right: 0.4rem;
+    }
+
+    .summary-secondary-link {
+      display: block;
+      text-align: center;
+      margin-top: 1.4rem;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+
+    .summary-secondary-link:hover {
+      color: rgba(255,255,255,0.95);
     }
 
     /* EMPTY CART */
@@ -213,8 +320,18 @@
 
     #emptyCart i {
       font-size: 4rem;
-      color: #eee;
+      color: #f1d7df;
       margin-bottom: 2rem;
+    }
+
+    #emptyCart h2 {
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 0.4rem;
+      color: var(--c-text);
+    }
+
+    #emptyCart p {
+      color: rgba(47,62,70,0.7);
     }
 
     /* ENTRY ANIMATION */
@@ -230,11 +347,29 @@
     }
     .summary-card { animation-delay: 0.06s; }
 
+    /* FOOTER */
+
+    footer {
+      padding: 4rem 0;
+      text-align: center;
+      color: #8a6a64;
+      font-size: 0.85rem;
+    }
+
     /* MOBILE */
 
     @media (max-width: 900px) {
       .page-header {
-        padding: 7.5rem 0 3rem;
+        padding: 7.4rem 0 3.1rem;
+      }
+
+      .page-header .container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .page-header-mini {
+        text-align: left;
       }
 
       .cart-layout {
@@ -297,8 +432,15 @@
 
   <section class="page-header">
     <div class="container">
-      <h1>Votre Panier</h1>
-      <p>Chaque article ici est une expérience gourmande en attente de validation.</p>
+      <div>
+        <div class="page-header-badge">Étape 2 · Panier laboratoire</div>
+        <h1>Votre panier d’expériences</h1>
+        <p>Affinez vos doses, ajustez vos essais sucrés puis validez pour lancer la prochaine série de tests.</p>
+      </div>
+      <div class="page-header-mini">
+        <span><i class="fa-solid fa-flask-vial"></i> Données prêtes à être analysées</span>
+        <span>Prochaine étape : Paiement sécurisé</span>
+      </div>
     </div>
   </section>
 
@@ -314,12 +456,18 @@
     <!-- Cart with items -->
     <div id="cartWithItems" class="cart-layout" style="display:none;">
       <div class="cart-items-container">
+        <div class="cart-meta">Sélection actuelle</div>
         <h2>Articles sélectionnés</h2>
+        <p class="cart-subtitle">
+          Ajustez les quantités ou retirez des créations avant d’envoyer la commande en laboratoire.
+        </p>
+
         <div id="cartItemsList">
           <!-- JS injects .cart-item here -->
         </div>
+
         <button onclick="clearCart()"
-                style="background:none;border:none;color:#aaa;cursor:pointer;margin-top:1.5rem;font-size:0.85rem;">
+                style="background:none;border:none;color:#b7a7b0;cursor:pointer;margin-top:1.7rem;font-size:0.85rem;text-decoration:underline;text-underline-offset:2px;">
           Vider le panier
         </button>
       </div>
@@ -327,7 +475,7 @@
       <aside class="summary-card">
         <h3>Résumé de l’expérience</h3>
         <p class="summary-sub">
-          Vérifiez vos doses de sucre avant de lancer la cuisson statistique.
+          Vérifiez vos dosages avant de lancer la cuisson statistique dans notre labo.
         </p>
 
         <div class="summary-rows">
@@ -350,20 +498,19 @@
         </button>
 
         <p class="summary-note">
-          <i class="fa-solid fa-flask-vial"></i>
-          Chaque commande est enregistrée dans votre profil pour affiner vos futures recommandations.
+          <i class="fa-solid fa-shield-heart"></i>
+          Votre panier est sauvegardé et sera synchronisé avec votre profil pour affiner vos futures recommandations.
         </p>
 
-        <a href="products.html"
-           style="display:block;text-align:center;margin-top:1.4rem;color:rgba(255,255,255,0.65);font-size:0.9rem;text-decoration:none;">
-          Continuer mes achats
+        <a href="products.html" class="summary-secondary-link">
+          Continuer mes explorations sucrées
         </a>
       </aside>
     </div>
   </div>
 
-  <footer style="padding:4rem 0;text-align:center;color:#8a6a64;">
-    <p>© 2024 Sugar &amp; Stats. Cuisson validée.</p>
+  <footer>
+    <p>© 2024 Sugar &amp; Stats. Données et desserts soigneusement équilibrés.</p>
   </footer>
 
   <script src="scripts/cart-logic.js"></script>

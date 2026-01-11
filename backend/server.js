@@ -62,7 +62,7 @@ function authMiddleware(req, res, next) {
 }
 
 function adminOnly(req, res, next) {
-  if (!req.user || req.user.role !== "admin") {
+  if (!req.user || (req.user.role !== "admin" && req.user.role !== "superadmin")) {
     return res
       .status(403)
       .json({ error: "Accès réservé aux administrateurs" });
@@ -70,23 +70,43 @@ function adminOnly(req, res, next) {
   next();
 }
 
+function superAdminOnly(req, res, next) {
+  if (!req.user || req.user.role !== "superadmin") {
+    return res.status(403).json({ error: "Accès réservé au Super Admin" });
+  }
+  next();
+}
+
 // ==================== AUTHENTIFICATION API ====================
+
+// POST /api/auth/check-username (Public for validation)
+app.post("/api/auth/check-username", (req, res) => {
+  const { username } = req.body;
+  if (!username) return res.status(400).json({ error: "Username required" });
+
+  const exists = clients.some(c => c.username.toLowerCase() === username.toLowerCase());
+  res.json({ exists });
+});
 
 // POST /api/auth/register
 app.post("/api/auth/register", async (req, res) => {
-  const { username, password, role, adminSecret } = req.body;
+  const { username, password, adminSecret } = req.body;
+  let { role } = req.body;
 
-  if (!username || !password || !role) {
+  if (!username || !password) {
     return res.status(400).json({
-      error: "Tous les champs sont obligatoires (username, password, role)",
+      error: "Tous les champs sont obligatoires (username, password)",
     });
   }
 
-  if (role !== "admin" && role !== "client") {
-    return res.status(400).json({ error: "Le rôle doit être 'admin' ou 'client'" });
+  // Default role to client
+  if (!role) role = "client";
+
+  if (role !== "admin" && role !== "client" && role !== "superadmin") {
+    return res.status(400).json({ error: "Le rôle doit être 'admin', 'superadmin' ou 'client'" });
   }
 
-  if (role === "admin" && adminSecret !== ADMIN_SECRET) {
+  if ((role === "admin" || role === "superadmin") && adminSecret !== ADMIN_SECRET) {
     return res
       .status(403)
       .json({ error: "Code secret requis pour créer un administrateur" });
@@ -105,7 +125,7 @@ app.post("/api/auth/register", async (req, res) => {
     id: Date.now(),
     username,
     password: hashedPassword,
-    role, // "admin" ou "client"
+    role, // "superadmin", "admin" ou "client"
     name: req.body.name || username,
     email: req.body.email || "",
     phone: req.body.phone || "",
@@ -132,6 +152,9 @@ app.post("/api/auth/login", async (req, res) => {
       .status(400)
       .json({ error: "Username et password obligatoires" });
   }
+
+  // Force reload of clients to ensure fresh data (dev convenience)
+  clients = readJSONFile("clients.json");
 
   const user = clients.find((c) => c.username === username);
   if (!user) {
@@ -435,8 +458,8 @@ app.post("/api/clients", authMiddleware, adminOnly, (req, res) => {
 app.put("/api/clients/:id", authMiddleware, (req, res) => {
   const id = Number(req.params.id);
 
-  // Allow if requested ID matches current user ID OR if user is admin
-  if (req.user.id !== id && req.user.role !== "admin") {
+  // Allow if requested ID matches current user ID OR if user is admin or superadmin
+  if (req.user.id !== id && req.user.role !== "admin" && req.user.role !== "superadmin") {
     return res.status(403).json({ error: "Vous n'avez pas la permission de modifier ce profil" });
   }
 

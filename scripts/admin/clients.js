@@ -63,6 +63,12 @@ async function saveClient(event) {
     address: document.getElementById('address').value
   };
 
+  // Add password only if field exists and is not empty
+  const passField = document.getElementById('password');
+  if (passField && passField.value) {
+    clientData.password = passField.value;
+  }
+
   const token = localStorage.getItem("authToken");
 
   try {
@@ -91,6 +97,9 @@ async function renderClientsTable() {
 
   // 1. Filter
   let filtered = allClients.filter(c => {
+    // STRICT FILTER: Only show clients
+    if (c.role !== 'client') return false;
+
     const name = (c.name || c.username || "").toLowerCase();
     const email = (c.email || "").toLowerCase();
     const address = (c.address || "").toLowerCase();

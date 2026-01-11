@@ -344,6 +344,8 @@
             <li><a href="../index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
             <li><a href="list.html" class="nav-link active"><i class="fas fa-cookie-bite"></i> Creations</a></li>
             <li><a href="../clients/list.html" class="nav-link"><i class="fas fa-users"></i> Clients</a></li>
+            <li><a href="../admins/list.html" class="nav-link" id="nav-admins"><i class="fas fa-user-shield"></i>
+                    Admins</a></li>
             <li><a href="../categories/list.html" class="nav-link"><i class="fas fa-tag"></i> Segments</a></li>
             <li><a href="../orders/list.html" class="nav-link"><i class="fas fa-box-open"></i> Orders</a></li>
             <li><a href="../employees/list.html" class="nav-link"><i class="fas fa-id-card"></i> Personnel</a></li>
@@ -407,7 +409,7 @@
     <script src="../../../scripts/admin/products.js"></script>
     <script>
         const user = JSON.parse(localStorage.getItem('authUser')) || JSON.parse(localStorage.getItem('user'));
-        if (!user || user.role !== 'admin') { window.location.href = '../../auth.html'; }
+        if (!user || (user.role !== 'admin' && user.role !== 'superadmin')) { window.location.href = '../../auth.html'; }
 
         document.addEventListener('DOMContentLoaded', () => {
             initProductsList();

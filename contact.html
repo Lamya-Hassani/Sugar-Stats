@@ -2,138 +2,394 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contactez-nous | Sugar & Stats</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles/main.css">
-    <style>
-        .contact-hero {
-            padding: 10rem 0 5rem;
-            text-align: center;
-            background: var(--gradient-brand);
-            color: white;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contactez-nous | Sugar & Stats</title>
 
-        .contact-panel {
-            margin-top: -3rem;
-            background: white;
-            padding: 4rem;
-            border-radius: 40px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-        }
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles/main.css">
 
-        .contact-info i {
-            color: var(--c-accent);
-            width: 40px;
-            font-size: 1.5rem;
-        }
+  <style>
+    body {
+      background: radial-gradient(circle at top, #ffffff 0, #FAFAFA 40%, #FBEFF4 100%);
+    }
 
-        .contact-form input,
-        .contact-form textarea {
-            width: 100%;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 12px;
-            border: 1px solid #eee;
-            background: #fafafa;
-            font-family: inherit;
-        }
+    header {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+    }
 
-        .contact-form label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--c-text);
-        }
-    </style>
+    .header-inner {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* HERO */
+
+    .contact-hero {
+      padding: 8.5rem 0 3.8rem;
+      text-align: center;
+      background: var(--gradient-brand);
+      color: white;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-hero::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 10% 0, rgba(255, 255, 255, 0.3), transparent 55%),
+        radial-gradient(circle at 80% 90%, rgba(255, 255, 255, 0.18), transparent 55%);
+      pointer-events: none;
+      opacity: 0.9;
+    }
+
+    .contact-hero .container {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-badge {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      opacity: 0.9;
+      margin-bottom: 0.7rem;
+    }
+
+    .contact-hero h1 {
+      font-size: clamp(2.4rem, 4vw, 3.3rem);
+      margin-bottom: 0.4rem;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .contact-hero p {
+      opacity: 0.96;
+      max-width: 520px;
+      margin: 0 auto;
+      font-size: 0.98rem;
+    }
+
+    /* PANEL */
+
+    .container {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .contact-panel {
+      margin-top: -3rem;
+      background: #ffffff;
+      padding: 3.2rem 3.4rem;
+      border-radius: 36px;
+      box-shadow: 0 26px 60px rgba(0, 0, 0, 0.12);
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 3.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact-info-title {
+      font-size: 2.1rem;
+      margin-bottom: 1.2rem;
+      color: var(--c-text);
+      font-family: 'Playfair Display', serif;
+    }
+
+    .contact-intro {
+      font-size: 0.95rem;
+      color: rgba(47, 62, 70, 0.75);
+      margin-bottom: 2.1rem;
+    }
+
+    .contact-info-row {
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+    }
+
+    .contact-info i {
+      color: var(--c-accent);
+      width: 40px;
+      font-size: 1.4rem;
+      margin-top: 0.15rem;
+    }
+
+    .contact-info-label {
+      font-weight: 700;
+      margin: 0;
+      color: var(--c-text);
+      font-size: 0.9rem;
+    }
+
+    .contact-info-value {
+      color: #666;
+      margin: 0.1rem 0 0;
+      font-size: 0.9rem;
+    }
+
+    .contact-social-title {
+      margin-top: 2.5rem;
+      margin-bottom: 0.8rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--c-text);
+    }
+
+    .contact-social {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .contact-social a {
+      font-size: 1.5rem;
+      color: var(--c-text);
+      transition: 0.25s;
+    }
+
+    .contact-social a:hover {
+      color: var(--c-accent);
+      transform: translateY(-2px);
+    }
+
+    /* FORM */
+
+    .contact-form {
+      background: #fdf7fa;
+      border-radius: 28px;
+      padding: 2.2rem 2.3rem;
+      border: 1px solid #f6dde6;
+    }
+
+    .contact-form form {
+      margin: 0;
+    }
+
+    .contact-form label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--c-text);
+      font-size: 0.88rem;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 0.95rem 1rem;
+      margin-bottom: 1.1rem;
+      border-radius: 12px;
+      border: 1px solid #eee;
+      background: #fafafa;
+      font-family: inherit;
+      font-size: 0.9rem;
+      transition: 0.25s;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      border-color: var(--c-accent);
+      background: #ffffff;
+      box-shadow: 0 0 0 1px rgba(197, 63, 107, 0.12);
+    }
+
+    .contact-form textarea {
+      resize: vertical;
+      min-height: 140px;
+    }
+
+    .contact-form .helper-text {
+      font-size: 0.78rem;
+      color: rgba(47, 62, 70, 0.7);
+      margin-top: -0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-form button {
+      width: 100%;
+      border-radius: 999px;
+      margin-top: 0.5rem;
+      letter-spacing: 0.4px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      padding: 5rem 0 3rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #a18d8a;
+    }
+
+    /* RESPONSIVE */
+
+    @keyframes cardFade {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .contact-panel {
+      animation: cardFade 0.45s ease forwards;
+    }
+
+    @media (max-width: 900px) {
+      .contact-panel {
+        grid-template-columns: 1fr;
+        padding: 2.6rem 2rem;
+        gap: 2.4rem;
+        margin-top: -2.4rem;
+      }
+
+      .contact-form {
+        padding: 1.8rem 1.7rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .header-inner {
+        padding-inline: 1.4rem;
+      }
+
+      .contact-hero .container {
+        padding-inline: 1.4rem;
+      }
+
+      .contact-hero {
+        padding: 7.5rem 0 3.2rem;
+      }
+
+      .contact-panel {
+        padding: 2.2rem 1.6rem;
+        border-radius: 30px;
+      }
+    }
+  </style>
 </head>
 
-<body style="background: #fdfdfd;">
-    <header>
-        <div class="header-inner">
-            <a href="index.html" class="navbar-brand">Sugar <span>&</span> Stats</a>
-            <nav>
-                <ul>
-                    <li><a href="about.html">Philosophie</a></li>
-                    <li><a href="products.html">Le Labo</a></li>
-                    <li><a href="index.html#gallery">Galerie</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
-            <div class="nav-actions">
-                <a href="pages/auth.html" class="login-btn">Connexion</a>
-                <a href="cart.html" style="font-weight: 700; text-decoration: none; color: var(--c-text);">Panier</a>
-            </div>
-        </div>
-    </header>
-
-    <section class="contact-hero">
-        <div class="container">
-            <h1 style="font-size: 4rem;">Des questions ?</h1>
-            <p style="opacity: 0.9;">Nous aimons parler pâtisserie et données.</p>
-        </div>
-    </section>
-
-    <div class="container">
-        <div class="contact-panel">
-            <div class="contact-info">
-                <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--c-text);">Le Labo Social</h2>
-                <div style="margin-bottom: 1.5rem; display: flex; align-items: start;">
-                    <i class="fa-solid fa-location-dot"></i>
-                    <div>
-                        <p style="font-weight: 700; margin: 0;">Emplacement</p>
-                        <p style="color: #666;">EMSI CFC, Casablanca, Maroc</p>
-                    </div>
-                </div>
-                <div style="margin-bottom: 1.5rem; display: flex; align-items: start;">
-                    <i class="fa-solid fa-envelope"></i>
-                    <div>
-                        <p style="font-weight: 700; margin: 0;">Email</p>
-                        <p style="color: #666;">labo@sugarstats.com</p>
-                    </div>
-                </div>
-                <div style="margin-bottom: 1.5rem; display: flex; align-items: start;">
-                    <i class="fa-solid fa-phone"></i>
-                    <div>
-                        <p style="font-weight: 700; margin: 0;">Téléphone</p>
-                        <p style="color: #666;">+212 522-123-456</p>
-                    </div>
-                </div>
-                <div style="margin-top: 3rem;">
-                    <h4 style="margin-bottom: 1rem;">Suivez l'extraction :</h4>
-                    <div style="display: flex; gap: 1rem;">
-                        <a href="#" style="font-size: 1.5rem; color: var(--c-text);"><i
-                                class="fa-brands fa-instagram"></i></a>
-                        <a href="#" style="font-size: 1.5rem; color: var(--c-text);"><i
-                                class="fa-brands fa-tiktok"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="contact-form">
-                <form>
-                    <label>Votre Nom</label>
-                    <input type="text" placeholder="Dr. Gourmet">
-                    <label>Email</label>
-                    <input type="email" placeholder="votre@email.com">
-                    <label>Message</label>
-                    <textarea rows="5" placeholder="Parlez-nous de vos envies..."></textarea>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">Envoyer la requête</button>
-                </form>
-            </div>
-        </div>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="navbar-brand">Sugar <span>&</span> Stats</a>
+      <nav>
+        <ul>
+          <li><a href="about.html">Philosophie</a></li>
+          <li><a href="products.html">Le Labo</a></li>
+          <li><a href="index.html#gallery">Galerie</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <a href="pages/auth.html" class="login-btn">Connexion</a>
+        <a href="cart.html" id="cart-link" style="font-weight:700;text-decoration:none;color:var(--c-text);">
+          Panier (<span id="cart-count">0</span>)
+        </a>
+      </div>
     </div>
+  </header>
 
-    <footer style="padding: 6rem 0 3rem; text-align: center;">
-        <p style="color: #aaa;">© 2024 Sugar & Stats. Tous droits réservés.</p>
-    </footer>
+  <section class="contact-hero">
+    <div class="container">
+      <div class="contact-badge">Parlons sucre & données</div>
+      <h1>Une question, une idée, une envie&nbsp;?</h1>
+      <p>Écrivez‑nous pour parler collaborations, commandes spéciales ou expériences à imaginer dans notre laboratoire
+        pâtissier.</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="contact-panel">
+      <div class="contact-info">
+        <h2 class="contact-info-title">Le Labo Social</h2>
+        <p class="contact-intro">
+          Que vous soyez curieux, gourmand ou déjà cobaye officiel, notre équipe répond à vos messages avec autant de
+          soin que pour nos recettes.
+        </p>
+
+        <div class="contact-info-row">
+          <i class="fa-solid fa-location-dot"></i>
+          <div>
+            <p class="contact-info-label">Emplacement</p>
+            <p class="contact-info-value">EMSI CFC, Casablanca, Maroc</p>
+          </div>
+        </div>
+
+        <div class="contact-info-row">
+          <i class="fa-solid fa-envelope"></i>
+          <div>
+            <p class="contact-info-label">Email</p>
+            <p class="contact-info-value">labo@sugarstats.com</p>
+          </div>
+        </div>
+
+        <div class="contact-info-row">
+          <i class="fa-solid fa-phone"></i>
+          <div>
+            <p class="contact-info-label">Téléphone</p>
+            <p class="contact-info-value">+212 522-123-456</p>
+          </div>
+        </div>
+
+        <h4 class="contact-social-title">Suivez l’extraction en temps réel :</h4>
+        <div class="contact-social">
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <form>
+          <label for="name">Votre nom</label>
+          <input id="name" type="text" placeholder="Dr. Gourmet" required>
+
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="vous@email.com" required>
+
+          <label for="message">Message</label>
+          <textarea id="message" rows="5" placeholder="Dites‑nous ce que vous aimeriez tester, goûter ou améliorer..."
+            required></textarea>
+
+          <p class="helper-text">
+            En envoyant ce message, vous acceptez que nous utilisions ces informations pour vous répondre. Aucune donnée
+            n’est partagée avec des tiers.
+          </p>
+
+          <button type="submit" class="btn btn-primary">Envoyer la requête</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2024 Sugar &amp; Stats. Tous droits réservés.</p>
+  </footer>
+
+  <script src="scripts/cart-logic.js"></script>
+  <script src="scripts/authentification.js"></script>
 </body>
 
 </html>
