@@ -6,7 +6,7 @@
     "price": 3.5,
     "stock": 45,
     "id_categorie": 1,
-    "image": "https://www.weekendbakery.com/wp-content/uploads/IMG_9702-720x480.jpg"
+    "image": "https://thumbs.dreamstime.com/b/close-up-freshly-baked-croissant-highlighting-its-flaky-layers-rich-golden-crust-creating-inviting-delicious-412905138.jpg"
   },
   {
     "id": 2,
@@ -15,7 +15,25 @@
     "price": 4.2,
     "stock": 32,
     "id_categorie": 1,
-    "image": "https://www.shutterstock.com/image-photo/almond-croissant-pastry-on-white-600nw-2486674021.jpg"
+    "image": "https://www.shutterstock.com/image-photo/glossy-goldenbrown-pain-au-chocolat-260nw-2627953359.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Almond Croissant",
+    "description": "Filled with almond cream and topped with flakes",
+    "price": 4.5,
+    "stock": 28,
+    "id_categorie": 1,
+    "image": "https://emilylaurae.com/wp-content/uploads/2024/10/almond-croissants-thumbnail-500x375.jpg"
+  },
+  {
+    "id": 19,
+    "name": "Plain Brioche",
+    "description": "Soft, golden, and fluffy brioche bun – perfect for breakfast",
+    "price": 3.8,
+    "stock": 35,
+    "id_categorie": 1,
+    "image": "https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3740866071877340889"
   },
   {
     "id": 3,
@@ -24,34 +42,7 @@
     "price": 2.8,
     "stock": 60,
     "id_categorie": 2,
-    "image": "https://images.getbento.com/accounts/2a9801c410ad54d61bf287bf23e32841/media/images/889370O6A5073.jpg?w=1800&fit=max&auto=compress,format&cs=origin&h=1800"
-  },
-  {
-    "id": 4,
-    "name": "Chocolate Fudge Cake",
-    "description": "Rich layered chocolate cake with ganache",
-    "price": 35,
-    "stock": 8,
-    "id_categorie": 3,
-    "image": "https://ilgiardinodeldolce.com/cdn/shop/products/IMG_0383.jpg?v=1588633396"
-  },
-  {
-    "id": 5,
-    "name": "Colorful Macarons (Box of 6)",
-    "description": "Assorted flavors: pistachio, raspberry, vanilla",
-    "price": 12,
-    "stock": 25,
-    "id_categorie": 4,
-    "image": "https://thumbs.dreamstime.com/b/stack-colorful-macarons-blue-background-delicious-french-desserts-cakes-delicate-texture-perfect-surface-sweet-snack-385668015.jpg"
-  },
-  {
-    "id": 6,
-    "name": "Almond Croissant",
-    "description": "Filled with almond cream and topped with flakes.",
-    "price": 4.5,
-    "stock": 28,
-    "id_categorie": 1,
-    "image": "https://static01.nyt.com/images/2021/04/07/dining/06croissantsrex1/merlin_184841898_ccc8fb62-ee41-44e8-9ddf-b95b198b88db-blog480.jpg"
+    "image": "https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/sites/174853/images/XmY3WaUkQxKvJXru6hk8_baguettes.jpg"
   },
   {
     "id": 7,
@@ -60,7 +51,43 @@
     "price": 6.5,
     "stock": 15,
     "id_categorie": 2,
-    "image": "https://www.kroger.com/product/images/xlarge/front/0001111006998"
+    "image": "https://graceinmyspace.com/wp-content/uploads/2024/05/sourdough-bread-loaf-1024x768.jpg"
+  },
+  {
+    "id": 20,
+    "name": "Multigrain Loaf",
+    "description": "Healthy whole grain bread packed with seeds",
+    "price": 5.9,
+    "stock": 18,
+    "id_categorie": 2,
+    "image": "https://www.marthastewart.com/thmb/2FZHmXJbBN71S3zkns9Nxo94Dl8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/RM-MSL-340230-multigrain-bread-hero-0213-fec5de4bf6134832b9a2216303e7a94c.jpg"
+  },
+  {
+    "id": 21,
+    "name": "Ciabatta",
+    "description": "Italian-style bread with open crumb and crispy crust",
+    "price": 4.2,
+    "stock": 22,
+    "id_categorie": 2,
+    "image": "https://images.squarespace-cdn.com/content/v1/5bc319cfa09a7e06a471700a/2195c8fa-a747-46ae-b5e9-57f9f8d8f744/new+ciabiatta+hero.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Chocolate Fudge Cake",
+    "description": "Rich layered chocolate cake with ganache",
+    "price": 35,
+    "stock": 8,
+    "id_categorie": 3,
+    "image": "https://thumbs.dreamstime.com/b/close-up-rich-multi-layered-chocolate-fudge-cake-slice-beautifully-presented-white-plate-delicate-gold-rim-thick-410387397.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Éclair au Chocolat",
+    "description": "Classic chocolate éclair with cream filling",
+    "price": 4.8,
+    "stock": 20,
+    "id_categorie": 3,
+    "image": "https://www.seriouseats.com/thmb/f3kx43qc--aS4-okr8VNpnSAZZQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__2020__12__20201210-choux-eclairs-vicky-wasik-16-acf615b81c2f4217857bbf80d60c28c1.jpg"
   },
   {
     "id": 8,
@@ -69,16 +96,16 @@
     "price": 28,
     "stock": 12,
     "id_categorie": 3,
-    "image": "https://parisbaguette.com/wp-content/uploads/2024/10/9867560b776f4899b039b120176e7022-3.jpg"
+    "image": "https://www.yourhomebasedmom.com/wp-content/uploads/2020/06/strawberry-tart-13.jpg"
   },
   {
-    "id": 9,
-    "name": "Éclair au Chocolat",
-    "description": "Classic chocolate éclair with cream filling",
-    "price": 4.8,
-    "stock": 20,
-    "id_categorie": 4,
-    "image": "https://media.gettyimages.com/id/2181953975/photo/close-up-to-croissants.jpg?s=612x612&w=gi&k=20&c=79R_PZ9hAnKh_7ZKjgSpkqaYVL0lc8DvBUcN9Xu99d0="
+    "id": 5,
+    "name": "Colorful Macarons (Box of 6)",
+    "description": "Assorted flavors: pistachio, raspberry, vanilla",
+    "price": 12,
+    "stock": 25,
+    "id_categorie": 3,
+    "image": "https://www.shutterstock.com/shutterstock/photos/1020942025/display_1500/stock-photo-multi-colored-almond-macarons-biscuits-close-up-in-a-box-box-of-fresh-colorful-french-macaroon-1020942025.jpg"
   },
   {
     "id": 10,
@@ -87,7 +114,25 @@
     "price": 3.2,
     "stock": 40,
     "id_categorie": 5,
-    "image": "https://platform.ny.eater.com/wp-content/uploads/sites/6/chorus/uploads/chorus_asset/file/24793514/PXL_20230714_145831786.jpg?quality=90&strip=all&crop=0%2C5.5555555555556%2C100%2C88.888888888889&w=2400"
+    "image": "https://www.ambitiouskitchen.com/wp-content/uploads/2021/05/blueberrymuffins-4long.jpg"
+  },
+  {
+    "id": 22,
+    "name": "Chocolate Chip Muffin",
+    "description": "Bakery-style muffin loaded with chocolate chips",
+    "price": 3.4,
+    "stock": 38,
+    "id_categorie": 5,
+    "image": "https://www.thepaintedhinge.com/wp-content/uploads/2025/04/Bakery-Style-Chocolate-Chip-Muffins-To-Wow-Your-Taste-Buds--1024x574.jpg"
+  },
+  {
+    "id": 23,
+    "name": "Banana Nut Muffin",
+    "description": "Moist muffin with ripe bananas and walnuts",
+    "price": 3.5,
+    "stock": 30,
+    "id_categorie": 5,
+    "image": "https://www.shutterstock.com/image-photo/fresh-chocolate-chip-muffin-broken-260nw-2264994897.jpg"
   },
   {
     "id": 11,
@@ -96,7 +141,25 @@
     "price": 2.5,
     "stock": 55,
     "id_categorie": 6,
-    "image": "https://images.unsplash.com/photo-1585080876519-0346a3ff95e4?w=500&h=500&fit=crop"
+    "image": "https://hips.hearstapps.com/hmg-prod/images/glazed-donut-recipe-1-65008ab2b45fb.jpg?crop=1.00xw:0.892xh;0,0.0370xh&resize=1200:*"
+  },
+  {
+    "id": 17,
+    "name": "Assorted Donut Box",
+    "description": "Box of 6 assorted donuts with colorful glazes",
+    "price": 14,
+    "stock": 20,
+    "id_categorie": 6,
+    "image": "https://thumbs.dreamstime.com/b/assorted-glazed-doughnuts-box-ready-to-eat-share-deliciously-baked-round-sweets-colorful-icing-toppings-like-sprinkles-405866491.jpg"
+  },
+  {
+    "id": 24,
+    "name": "Chocolate Frosted Donut",
+    "description": "Classic donut with rich chocolate frosting",
+    "price": 2.8,
+    "stock": 45,
+    "id_categorie": 6,
+    "image": "https://www.shutterstock.com/image-photo/glazed-decorated-donuts-box-showcasing-600nw-2505435413.jpg"
   },
   {
     "id": 12,
@@ -105,7 +168,25 @@
     "price": 18.5,
     "stock": 10,
     "id_categorie": 7,
-    "image": "https://images.unsplash.com/photo-1535920527894-b400b62fe660?w=500&h=500&fit=crop"
+    "image": "https://www.dontsweattherecipe.com/wp-content/uploads/2023/10/lattice-crust-apple-pie-16.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Classic Lemon Pie",
+    "description": "Buttery crust filled with tangy lemon cream",
+    "price": 24,
+    "stock": 9,
+    "id_categorie": 7,
+    "image": "https://www.southernliving.com/thmb/hD8DRq4XMeOEmUnrBEa_c386t8c=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Lemon_Meringue_Pie_012-c7500dc5d56d47578af0d1121ce3be3e.jpg"
+  },
+  {
+    "id": 25,
+    "name": "Lemon Meringue Pie",
+    "description": "Mile-high meringue atop tangy lemon filling",
+    "price": 26,
+    "stock": 7,
+    "id_categorie": 7,
+    "image": "https://img.apmcdn.org/f3d1df95ce88acf8ba373caccad5780aaac14ac4/uncropped/79b7b2-splendid-table-sfs-mile-high-lemon-meringue-pie-14-cropped.jpg"
   },
   {
     "id": 13,
@@ -114,7 +195,16 @@
     "price": 1.8,
     "stock": 80,
     "id_categorie": 8,
-    "image": "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=500&h=500&fit=crop"
+    "image": "https://cdn.shopify.com/s/files/1/0555/3553/4218/files/IMG_2898_edit-1_web_1024x1024.jpg?v=1639410447"
+  },
+  {
+    "id": 26,
+    "name": "Oatmeal Raisin Cookie",
+    "description": "Chewy cookies with oats and plump raisins",
+    "price": 1.9,
+    "stock": 70,
+    "id_categorie": 8,
+    "image": "https://www.seriouseats.com/thmb/69Ewk0PbM5TOujiRV1CCm6wLXZM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/20241007-SEA-OatmealRaisinCookies-FredHardy-Hero-94-70645ebdd8c540488081305b4cfc6e19.jpg"
   },
   {
     "id": 14,
@@ -123,7 +213,16 @@
     "price": 22,
     "stock": 14,
     "id_categorie": 9,
-    "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500&h=500&fit=crop"
+    "image": "https://img.taste.com.au/xMJNaV8T/taste/2024/03/lemon-drizzle-cake-recipe-2-196877-1.jpg"
+  },
+  {
+    "id": 27,
+    "name": "Carrot Cake",
+    "description": "Spiced carrot cake with cream cheese frosting",
+    "price": 28,
+    "stock": 10,
+    "id_categorie": 9,
+    "image": "https://www.simplyrecipes.com/thmb/oR-ZM8gn9H0VG2SvXXOM68z-9P8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/simply-recipes-easy-carrot-cake-lead-6-7770d9f1cf51473287ceb635f2c1ebf9.jpg"
   },
   {
     "id": 15,
@@ -132,6 +231,60 @@
     "price": 8.5,
     "stock": 30,
     "id_categorie": 10,
-    "image": "https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?w=500&h=500&fit=crop"
+    "image": "https://images.food52.com/LKU81dyxidHzNSCs_1ua0Kp4804=/255b1aba-df4f-45d1-a346-4d83548a9298--2018-0803_pan-bagnat_3x2_julia-gartland_176.jpg"
+  },
+  {
+    "id": 28,
+    "name": "Chicken Club Sandwich",
+    "description": "Grilled chicken, bacon, lettuce, tomato on toasted bread",
+    "price": 9.2,
+    "stock": 25,
+    "id_categorie": 10,
+    "image": "https://www.shutterstock.com/image-photo/fresh-chocolate-chip-muffin-broken-260nw-2264994897.jpg"
+  },
+  {
+    "id": 29,
+    "name": "Cappuccino",
+    "description": "Espresso riche avec mousse de lait veloutée et joli latte art",
+    "price": 28,
+    "stock": 50,
+    "id_categorie": 4,
+    "image": "https://thumbs.dreamstime.com/b/indulge-rich-cappuccino-morning-relaxation-experience-creamy-latte-art-aroma-indulge-rich-cappuccino-morning-396309844.jpg"
+  },
+  {
+    "id": 30,
+    "name": "Jus d'Orange Pressé",
+    "description": "100% orange fraîchement pressée, servi bien frais avec glaçons",
+    "price": 22,
+    "stock": 40,
+    "id_categorie": 4,
+    "image": "https://thumbs.dreamstime.com/b/tall-glass-filled-fresh-orange-juice-ice-cubes-slice-garnish-bright-sunny-background-whole-sliced-oranges-surround-393683813.jpg"
+  },
+  {
+    "id": 31,
+    "name": "Iced Matcha Latte",
+    "description": "Matcha premium glacé avec lait végétal, très tendance et rafraîchissant",
+    "price": 35,
+    "stock": 25,
+    "id_categorie": 4,
+    "image": "https://weaverscoffee.com/cdn/shop/articles/Two_tall_glasses_of_Iced_matcha_lattes_eae75406-d6c3-4eae-9560-37199ad5f5d6_1000x.jpg?v=1759614324"
+  },
+  {
+    "id": 32,
+    "name": "Chocolat Chaud Maison",
+    "description": "Chocolat chaud onctueux avec crème fouettée et copeaux de chocolat",
+    "price": 30,
+    "stock": 35,
+    "id_categorie": 4,
+    "image": "https://thumbs.dreamstime.com/b/cozy-hot-chocolate-whipped-cream-chocolate-shavings-warm-fireplace-steaming-mug-hot-chocolate-topped-427316278.jpg"
+  },
+  {
+    "id": 33,
+    "name": "Smoothie Mix Fruits",
+    "description": "Mélange frais de fraise, banane, mangue et ananas – super énergisant",
+    "price": 32,
+    "stock": 30,
+    "id_categorie": 4,
+    "image": "https://thumbs.dreamstime.com/b/healthy-fruit-smoothie-glasses-wood-table-colorful-fresh-juice-vibrant-orange-red-green-pink-smoothies-straws-kiwi-lemon-387086996.jpg"
   }
 ]

@@ -55,19 +55,12 @@
     "registrationDate": "2026-01-07T11:20:00.000Z"
   },
   {
-    "id": 1768046934287,
-    "name": "Haassani Lamya",
-    "email": "Hassani.Lamya@emsi-edu.ma",
-    "phone": "124456",
-    "address": "Casa\n",
-    "registrationDate": "2026-01-10T12:08:54.287Z"
-  },
-  {
     "id": 1768047798792,
     "name": "Haassani Lamya",
     "email": "Hassani.Lamya@emsi-edu.ma",
     "phone": "124456",
     "address": "Casa\n",
+    "role": "client",
     "registrationDate": "2026-01-10T12:23:18.792Z"
   },
   {
@@ -76,6 +69,7 @@
     "email": "Hassani.Lamya@emsi-edu.ma",
     "phone": "124456",
     "address": "Casa\n",
+    "role": "client",
     "registrationDate": "2026-01-10T12:23:20.966Z"
   },
   {
@@ -84,6 +78,7 @@
     "email": "Hassani.Lamya@emsi-edu.ma",
     "phone": "1234",
     "address": "CASA",
+    "role": "client",
     "registrationDate": "2026-01-10T12:23:48.132Z"
   },
   {
@@ -129,5 +124,61 @@
     "phone": "",
     "address": "",
     "registrationDate": "2026-01-11T13:38:55.280Z"
+  },
+  {
+    "id": 1768154605055,
+    "name": "karima",
+    "email": "karima@gmail",
+    "phone": "123456",
+    "address": "casa\n",
+    "role": "client",
+    "registrationDate": "2026-01-11T18:03:25.055Z"
+  },
+  {
+    "id": 1768155264888,
+    "name": "azs",
+    "email": "azq@a",
+    "phone": "12345",
+    "address": "casa\n",
+    "role": "client",
+    "registrationDate": "2026-01-11T18:14:24.888Z"
+  },
+  {
+    "id": 1768155485306,
+    "name": "loop",
+    "email": "admin@campusflow.com",
+    "phone": "12345",
+    "address": "2345",
+    "role": "client",
+    "registrationDate": "2026-01-11T18:18:05.306Z"
+  },
+  {
+    "id": 1768155637552,
+    "name": "zfx",
+    "email": "azef@esd",
+    "phone": "1234",
+    "address": "fsgdfh",
+    "role": "client",
+    "registrationDate": "2026-01-11T18:20:37.552Z"
+  },
+  {
+    "id": 1768155769430,
+    "name": "gv",
+    "email": "AZERT@N",
+    "phone": "12345",
+    "address": "DFGHJ\n",
+    "role": "client",
+    "registrationDate": "2026-01-11T18:22:49.430Z"
+  },
+  {
+    "id": 1768156081388,
+    "username": "",
+    "password": "$2b$10$X3KLO6x3.xpJPKkgsbd2sun9U1oFGxZrMXhcnB6GK2bt7RbpZ3fhG",
+    "role": "client",
+    "name": "rim",
+    "email": "SDC@e",
+    "phone": "12345",
+    "address": "casa\n",
+    "registrationDate": "2026-01-11T18:28:01.388Z"
   }
 ]

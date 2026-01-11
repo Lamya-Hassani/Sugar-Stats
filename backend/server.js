@@ -383,16 +383,40 @@ app.get("/api/orders/:id", authMiddleware, adminOnly, (req, res) => {
 
 // CREATE order (client ou admin)
 app.post("/api/orders", authMiddleware, (req, res) => {
+  const items = req.body.items || [];
+
+  // 1. Verify stock availability
+  for (const item of items) {
+    const product = products.find(p => p.id === item.productId);
+    if (!product) {
+      return res.status(404).json({ error: `Produit #${item.productId} introuvable.` });
+    }
+    if (product.stock < item.quantity) {
+      return res.status(400).json({ error: `Stock insuffisant pour ${product.name}. Disponible: ${product.stock}` });
+    }
+  }
+
+  // 2. Decrement stock
+  items.forEach(item => {
+    const product = products.find(p => p.id === item.productId);
+    if (product) {
+      product.stock -= item.quantity;
+    }
+  });
+  writeJSONFile("products.json", products);
+
+  // 3. Create order
   const newOrder = {
     id: Date.now(),
     clientId: req.body.clientId || req.user.id,
-    items: req.body.items,
+    items: items,
     totalAmount: req.body.totalAmount,
     orderDate: req.body.orderDate || new Date().toISOString(),
     status: req.body.status || "En attente",
   };
   orders.push(newOrder);
   writeJSONFile("orders.json", orders);
+
   res.status(201).json(newOrder);
 });
 
@@ -441,18 +465,39 @@ app.get("/api/clients/:id", authMiddleware, adminOnly, (req, res) => {
 });
 
 // création brute de client via API (admin, ex. back-office)
-app.post("/api/clients", authMiddleware, adminOnly, (req, res) => {
+app.post("/api/clients", authMiddleware, adminOnly, async (req, res) => {
+  const { username, password } = req.body;
+
+  // Basic Validation
+  if (!username || !password) {
+    return res.status(400).json({ error: "Username et password sont obligatoires." });
+  }
+
+  // Check uniqueness
+  if (clients.some(c => c.username && c.username.toLowerCase() === username.toLowerCase())) {
+    return res.status(400).json({ error: "Ce nom d'utilisateur est déjà pris." });
+  }
+
+  // Hash Password
+  const hashedPassword = await bcrypt.hash(password, 10);
+
   const newClient = {
     id: Date.now(),
+    username: username,
+    password: hashedPassword,
+    role: "client",
     name: req.body.name,
     email: req.body.email,
     phone: req.body.phone,
     address: req.body.address,
     registrationDate: req.body.registrationDate || new Date().toISOString(),
   };
+
   clients.push(newClient);
   writeJSONFile("clients.json", clients);
-  res.status(201).json(newClient);
+
+  const { password: _, ...clientWithoutPassword } = newClient;
+  res.status(201).json(clientWithoutPassword);
 });
 
 app.put("/api/clients/:id", authMiddleware, (req, res) => {
