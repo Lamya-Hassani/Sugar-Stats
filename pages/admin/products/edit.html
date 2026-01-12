@@ -83,15 +83,12 @@
             grid-template-columns: repeat(4, 1fr);
             gap: 1.5rem;
             align-items: end;
-            /* Aligns inputs nicely */
         }
 
         .form-group {
             margin-bottom: 0.5rem;
-            /* Reduced margin since grid handles spacing */
         }
 
-        /* Span Helpers */
         .span-1 {
             grid-column: span 1;
         }
@@ -139,7 +136,6 @@
 
         textarea {
             resize: none;
-            /* Prevents breaking layout */
         }
 
         .btn-row {
@@ -248,8 +244,6 @@
     <script src="../../../scripts/admin/products.js"></script>
     <script>
         const user = JSON.parse(localStorage.getItem('authUser')) || JSON.parse(localStorage.getItem('user'));
-        // Security check commented out for dev
-        // if (!user || user.role !== 'admin') { window.location.href = '../../auth.html'; }
 
         document.addEventListener('DOMContentLoaded', async () => {
             await prefillEditForm(); // Loads categories and correct fields

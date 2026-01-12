@@ -1,8 +1,6 @@
 const API_BASE_URL = "http://localhost:3000";
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Get current user info from localStorage or fetch "me"
-    // Since we don't have a specific "me" endpoint guaranteed, we use localStorage + getById
     const user = JSON.parse(localStorage.getItem('authUser')) || JSON.parse(localStorage.getItem('user'));
 
     if (!user || user.role !== 'admin') {
@@ -67,7 +65,7 @@ document.getElementById('profileForm').addEventListener('submit', async (e) => {
             const updatedUser = await res.json();
             // Update local storage
             localStorage.setItem('authUser', JSON.stringify(updatedUser));
-            localStorage.setItem('user', JSON.stringify(updatedUser)); // Legacy support
+            localStorage.setItem('user', JSON.stringify(updatedUser)); 
 
             window.showToast("Profil mis à jour avec succès !", "success");
             setTimeout(() => window.location.reload(), 1500);

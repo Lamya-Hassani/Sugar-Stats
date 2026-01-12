@@ -22,21 +22,21 @@ function getUserInfo() {
 }
 
 // Est connecté ?
-function isLoggedIn() {
+function isLoggedIn() { // Vérifie si le token et l'utilisateur sont stockés
   return !!getAuthToken() && !!getUserInfo();
 }
 
 // ========== UI AUTH ==========
 
 function updateAuthUI() {
-  const loggedIn = isLoggedIn();
-  const user = getUserInfo();
+  const loggedIn = isLoggedIn(); // Vérifie si l'utilisateur est connecté
+  const user = getUserInfo(); // Récupère les informations de l'utilisateur
 
+  // querySelector is used to select the first element that matches the selector
   const authBtn = document.getElementById("auth-btn") || document.querySelector(".login-btn");
   if (authBtn) {
     if (loggedIn) {
-      authBtn.textContent = "Mon Profil";
-      // Adjust path if needed
+      authBtn.textContent = "Mon Profil"; // Change le texte du bouton
       const currentPath = window.location.pathname;
       if (currentPath.includes('pages/')) {
         authBtn.href = "../profile.html";
@@ -46,7 +46,6 @@ function updateAuthUI() {
     } else {
       authBtn.textContent = "Connexion";
       if (window.location.pathname.includes('pages/')) {
-        // Already in pages/
       } else {
         authBtn.href = "pages/auth.html";
       }
@@ -196,6 +195,8 @@ async function handleLogin(event) {
 }
 
 // ========== INIT ==========
+
+// Add event listeners when the DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
   const registerForm = document.getElementById("register-form");
   const loginForm = document.getElementById("login-form");
@@ -210,11 +211,11 @@ document.addEventListener("DOMContentLoaded", () => {
   updateAuthUI();
 
   // Real-time Username Check
-  const regUser = document.getElementById("register-username");
+  const regUser = document.getElementById("register-username"); // Get the register-username element
   if (regUser) {
     regUser.addEventListener('blur', async () => {
-      const val = regUser.value.trim();
-      const msg = document.getElementById("register-message");
+      const val = regUser.value.trim(); // Get the value of the register-username element
+      const msg = document.getElementById("register-message"); // Get the register-message element
       if (!val) return;
 
       try {

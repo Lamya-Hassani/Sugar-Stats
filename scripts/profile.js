@@ -53,7 +53,7 @@ function renderProfile(user) {
   if (document.getElementById('editAddress')) document.getElementById('editAddress').value = user.address || '';
   if (document.getElementById('editPassword')) document.getElementById('editPassword').value = '';
 
-  // Mock stats for demo (or calculate from history later)
+  // Mock stats for demo (
   if (document.getElementById('sessionsCount')) document.getElementById('sessionsCount').textContent = Math.floor(Math.random() * 20) + 5;
   if (document.getElementById('favCount')) document.getElementById('favCount').textContent = Math.floor(Math.random() * 10) + 2;
 }
@@ -214,28 +214,28 @@ function updateLoyalty(totalSpent) {
 function exportToCSV(data, filename = 'export.csv') {
   if (!data || !data.length) return;
 
-  const headers = Object.keys(data[0]);
+  const headers = Object.keys(data[0]); // Get the headers from the first row
   const csvContent = [
-    headers.join(','),
+    headers.join(','), // Join the headers with commas
     ...data.map(row => headers.map(header => {
       let val = row[header] === null || row[header] === undefined ? '' : row[header];
       // Escape quotes and commas
       val = val.toString().replace(/"/g, '""');
-      if (val.search(/("|,|\n)/g) >= 0) val = '"' + val + '"';
+      if (val.search(/("|,|\n)/g) >= 0) val = '"' + val + '"'; //search for quotes, commas, and new lines
       return val;
     }).join(','))
   ].join('\n');
 
-  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-  const link = document.createElement("a");
-  if (link.download !== undefined) {
-    const url = URL.createObjectURL(blob);
-    link.setAttribute("href", url);
-    link.setAttribute("download", filename);
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' }); // Create a Blob object with the CSV content
+  const link = document.createElement("a"); // Create a link element
+  if (link.download !== undefined) { 
+    const url = URL.createObjectURL(blob); // Create a Blob URL
+    link.setAttribute("href", url); // Set the link's href attribute to the Blob URL
+    link.setAttribute("download", filename); // Set the link's download attribute to the filename
+    link.style.visibility = 'hidden'; // Hide the link element
+    document.body.appendChild(link); // Append the link element to the document
+    link.click(); // Trigger the download
+    document.body.removeChild(link); // Remove the link element from the document
   }
 }
 
@@ -251,6 +251,7 @@ window.exportHistory = function () {
       // Parse items safely with name resolution
       let itemsList = '';
       if (Array.isArray(order.items)) {
+        // the role of map is to transform the array of items into a string
         itemsList = order.items.map(i => {
           let name = i.name;
           if (!name && i.productId) {
@@ -262,7 +263,7 @@ window.exportHistory = function () {
       }
 
       return {
-        'ID Commande': `#${order.id.toString().slice(-6)}`,
+        'ID Commande': `#${order.id.toString().slice(-6)}`, 
         'Date': new Date(order.orderDate).toLocaleDateString('fr-FR'),
         'Articles': itemsList,
         'Montant Total (DH)': Number(order.totalAmount).toFixed(2),

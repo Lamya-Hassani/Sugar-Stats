@@ -312,12 +312,12 @@ window.exportToCSV = function (data, filename = 'export.csv') {
  * @param {String} key 
  * @param {Boolean} desc 
  */
-window.sortData = function (arr, key, desc = false) {
+window.sortData = function (arr, key, desc = false) { // Sort an array of objects by a key
     return [...arr].sort((a, b) => {
         let valA = a[key];
         let valB = b[key];
 
-        if (typeof valA === 'string') valA = valA.toLowerCase();
+        if (typeof valA === 'string') valA = valA.toLowerCase(); // Convert strings to lowercase for case-insensitive comparison
         if (typeof valB === 'string') valB = valB.toLowerCase();
 
         if (valA < valB) return desc ? 1 : -1;
@@ -332,12 +332,12 @@ window.sortData = function (arr, key, desc = false) {
  * @param {Number} page 1-indexed
  * @param {Number} perPage 
  */
-window.paginateData = function (arr, page, perPage) {
-    const start = (page - 1) * perPage;
+window.paginateData = function (arr, page, perPage) { // Paginate an array
+    const start = (page - 1) * perPage; // Calculate the start index
     return {
-        items: arr.slice(start, start + perPage),
-        total: arr.length,
-        pages: Math.ceil(arr.length / perPage)
+        items: arr.slice(start, start + perPage), // Return the items for the current page
+        total: arr.length, // Return the total number of items
+        pages: Math.ceil(arr.length / perPage) // Return the total number of pages
     };
 };
 
@@ -346,7 +346,7 @@ window.paginateData = function (arr, page, perPage) {
  * @param {String} message 
  * @param {String} type 'success' | 'error' | 'info'
  */
-window.showToast = function (message, type = 'success') {
+window.showToast = function (message, type = 'success') { // Show a toast notification
     let container = document.querySelector('.toast-container');
     if (!container) {
         container = document.createElement('div');
@@ -360,7 +360,7 @@ window.showToast = function (message, type = 'success') {
     toast.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`;
 
     container.appendChild(toast);
-    setTimeout(() => toast.classList.add('active'), 10);
+    setTimeout(() => toast.classList.add('active'), 10); // Add the active class to show the toast
 
     setTimeout(() => {
         toast.classList.remove('active');
@@ -379,7 +379,7 @@ window.showToast = function (message, type = 'success') {
  * @param {Number} currentPage 
  * @param {Function} goToPageFn Function to call on page click
  */
-window.renderPagination = function (totalPages) {
+window.renderPagination = function (totalPages) { // Render pagination buttons
     const container = document.getElementById('pagination');
     if (!container) return;
 
@@ -394,7 +394,7 @@ window.renderPagination = function (totalPages) {
 };
 // ==================== MOBILE NAVIGATION ====================
 
-window.initMobileSidebar = function () {
+window.initMobileSidebar = function () { // Initialize mobile sidebar       
     const header = document.querySelector('.header');
     if (!header) return;
 
@@ -431,7 +431,7 @@ window.initMobileSidebar = function () {
  * @param {String} status 
  * @returns {String} HTML string
  */
-window.getStatusPill = function (status) {
+window.getStatusPill = function (status) { // Map a status string to a color-coded HTML pill
     if (!status) return `<span class="status-pill status-pending"><i class="fas fa-clock"></i> N/A</span>`;
 
     const s = status.toLowerCase().trim();
@@ -467,7 +467,6 @@ window.getStatusPill = function (status) {
 };
 
 // Auto-init on DOMContentLoaded
-// Auto-init on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
     window.initMobileSidebar();
 
@@ -501,7 +500,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.warn("Admin Sidebar Debug: 'Admins' nav link not found.");
     }
 
-    // NEW: Hide Reviews link for Admins and Superadmins (as requested)
+    // NEW: Hide Reviews link for Admins and Superadmins
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
         if (link.textContent.includes('Reviews') || link.href.includes('reviews/list.html')) {

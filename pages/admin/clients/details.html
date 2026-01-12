@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DÃƒÂ©tails du Client | Sugar & Stats</title>
+    <title>Détails du Client | Sugar & Stats</title>
 
     <!-- Fonts -->
     <link
@@ -79,7 +79,7 @@
             align-items: flex-start;
         }
 
-        /* colonne gauche = avatar + rÃƒÂ©sumÃƒÂ© + bouton */
+        /* colonne gauche = avatar + résumé + bouton */
         .details-left {
             flex: 0 0 260px;
             display: flex;
@@ -90,7 +90,7 @@
             padding-right: 2rem;
         }
 
-        /* colonne droite = dÃƒÂ©tails en grille */
+        /* colonne droite = détails en grille */
         .details-right {
             flex: 1;
             display: grid;
@@ -282,14 +282,6 @@
         const clientId = urlParams.get('id');
 
         if (clientId) {
-            // showDetails doit:
-            // - remplir clientName, clientLab, clientType, clientAvatar
-            // - remplir #detailsContent avec des .detail-row
-            // Exemple de structure de .detail-row:
-            // <div class="detail-row">
-            //   <span class="detail-label">Email</span>
-            //   <span class="detail-value">client@example.com</span>
-            // </div>
             showDetails(clientId);
         } else {
             const detailsContent = document.getElementById('detailsContent');

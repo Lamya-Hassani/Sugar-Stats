@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function init() {
     await fetchCategories();
     await fetchProducts();
-    renderCategories(); // New: dynamic categories
+    renderCategories(); 
     setupSearch();
     renderProducts();
 }
@@ -46,7 +46,7 @@ function renderCategories() {
     });
 
     container.innerHTML = html;
-    setupFilters(); // Re-attach listeners to new buttons
+    setupFilters();
 }
 
 function setupFilters() {

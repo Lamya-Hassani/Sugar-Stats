@@ -5,7 +5,7 @@ const V_THEME = {
     rose: '#FF3366',    // Raspberry
     gold: '#FFC107',    // Bright Gold
     purple: '#AA00FF',  // Lavender
-    blue: '#00B0FF',    // Cyan
+    blue: '#00e1ffff',    // Cyan
     pop: '#FF6D00',     // Orange
     chocolate: '#3E2723',
     white: '#FFFFFF'
@@ -21,7 +21,7 @@ async function initDashboard() {
     const token = localStorage.getItem("authToken");
     if (!token) {
         console.warn("No authToken found. Are you logged in?");
-        // Optionally redirect or show a warning UI
+        window.location.href = "../../pages/auth.html";
     }
 
     try {

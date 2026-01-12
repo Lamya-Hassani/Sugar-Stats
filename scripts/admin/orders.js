@@ -1,6 +1,8 @@
 const API_BASE_URL = "http://localhost:3000";
 let allOrders = [];
 let allClients = [];
+let allProducts = [];
+let currentOrderItems = [];
 
 let currentPage = 1;
 const itemsPerPage = 8;
@@ -8,6 +10,15 @@ let sortKey = 'id';
 let sortDesc = true;
 let searchQuery = '';
 let selectedStatus = '';
+
+async function fetchProducts() {
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/products`);
+        allProducts = await res.json();
+    } catch (err) {
+        console.error("Error fetching products:", err);
+    }
+}
 
 async function fetchClients() {
     const res = await fetch(`${API_BASE_URL}/api/clients`, {
@@ -47,7 +58,7 @@ async function deleteOrder(id) {
 
         if (res.ok) {
             window.showToast("Mission logistique annulée.", "success");
-            await fetchOrders(); // Refresh data
+            await fetchOrders();
             renderOrdersTable();
         } else {
             window.showToast("Échec de l'annulation.", "error");
@@ -56,8 +67,6 @@ async function deleteOrder(id) {
         console.error("Error deleting order:", err);
     }
 }
-
-// ... existing functions ...
 
 window.exportOrdersCSV = function () {
     const dataToExport = allOrders.map(o => ({
@@ -81,7 +90,7 @@ async function saveOrder(event) {
         orderDate: document.getElementById('orderDate').value,
         status: document.getElementById('status').value,
         totalAmount: parseFloat(document.getElementById('totalAmount').value),
-        items: [] // In a real app, nested items would be here
+        items: currentOrderItems
     };
 
     const token = localStorage.getItem("authToken");
@@ -107,6 +116,94 @@ async function saveOrder(event) {
 function getClientName(id) {
     const c = allClients.find(client => client.id == id);
     return c ? (c.name || c.username) : "Sujet Inconnu";
+}
+
+// Nested Items Management
+window.addItemToOrder = function () {
+    const productId = document.getElementById('productSelect')?.value;
+    const quantity = parseInt(document.getElementById('productQuantity')?.value || 1);
+
+    if (!productId) {
+        window.showToast("Veuillez sélectionner un produit.", "info");
+        return;
+    }
+
+    const product = allProducts.find(p => p.id == productId);
+    if (!product) return;
+
+    const existingItem = currentOrderItems.find(i => i.productId == productId);
+    if (existingItem) {
+        existingItem.quantity += quantity;
+    } else {
+        currentOrderItems.push({
+            productId: parseInt(productId),
+            name: product.name,
+            price: product.price,
+            quantity: quantity
+        });
+    }
+
+    renderItemsTable();
+    calculateTotal();
+
+    // Reset selection
+    document.getElementById('productSelect').value = "";
+    document.getElementById('productQuantity').value = "1";
+};
+
+window.removeOrderItem = function (index) {
+    currentOrderItems.splice(index, 1);
+    renderItemsTable();
+    calculateTotal();
+};
+
+function renderItemsTable() {
+    const container = document.getElementById('itemsContainer');
+    if (!container) return;
+
+    if (currentOrderItems.length === 0) {
+        container.innerHTML = `<p style="color: var(--c-text-muted); font-size: 0.9rem; text-align: center;">Aucun produit ajouté.</p>`;
+        return;
+    }
+
+    let html = `
+        <table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
+            <thead>
+                <tr style="border-bottom:1px solid rgba(0,0,0,0.1); text-align:left;">
+                    <th style="padding:0.5rem;">Produit</th>
+                    <th style="padding:0.5rem;">Qté</th>
+                    <th style="padding:0.5rem;">Prix</th>
+                    <th style="padding:0.5rem;">Sous-total</th>
+                    <th style="padding:0.5rem;"></th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    currentOrderItems.forEach((item, index) => {
+        html += `
+            <tr style="border-bottom:1px solid rgba(0,0,0,0.05);">
+                <td style="padding:0.5rem;">${item.name}</td>
+                <td style="padding:0.5rem;">${item.quantity}</td>
+                <td style="padding:0.5rem;">$${item.price.toFixed(2)}</td>
+                <td style="padding:0.5rem;">$${(item.price * item.quantity).toFixed(2)}</td>
+                <td style="padding:0.5rem; text-align:right;">
+                    <button type="button" onclick="window.removeOrderItem(${index})" style="background:none; border:none; color:var(--c-magenta); cursor:pointer;"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>
+        `;
+    });
+
+    html += `</tbody></table>`;
+    container.innerHTML = html;
+}
+
+function calculateTotal() {
+    const total = currentOrderItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const totalInput = document.getElementById('totalAmount');
+    if (totalInput) {
+        totalInput.value = total.toFixed(2);
+    }
 }
 
 async function renderOrdersTable() {
@@ -144,8 +241,6 @@ async function renderOrdersTable() {
 
     renderPagination(pages);
 }
-
-// ... (existing navigation/export) ...
 
 async function showDetails(id) {
     if (allClients.length === 0) await fetchClients();
@@ -274,9 +369,17 @@ window.handleSort = function (key) {
 async function populateDropdowns() {
     await fetchClients();
     const select = document.getElementById('clientId');
-    if (!select) return;
-    select.innerHTML = '<option value="">Choisir un sujet gourmet</option>' +
-        allClients.map(c => `<option value="${c.id}">${c.name || c.username}</option>`).join('');
+    if (select) {
+        select.innerHTML = '<option value="">Choisir un sujet gourmet</option>' +
+            allClients.map(c => `<option value="${c.id}">${c.name || c.username}</option>`).join('');
+    }
+
+    await fetchProducts();
+    const productSelect = document.getElementById('productSelect');
+    if (productSelect) {
+        productSelect.innerHTML = '<option value="">Ajouter un produit...</option>' +
+            allProducts.map(p => `<option value="${p.id}">${p.name} ($${p.price})</option>`).join('');
+    }
 }
 
 async function prefillOrderForm() {
@@ -293,7 +396,23 @@ async function prefillOrderForm() {
         document.getElementById('orderDate').value = order.orderDate.split('T')[0];
         document.getElementById('status').value = order.status;
         document.getElementById('totalAmount').value = order.totalAmount;
+
+        // Load items if they exist (assuming backend sends them, otherwise start empty or mock)
+        if (order.items && Array.isArray(order.items)) {
+            currentOrderItems = order.items.map(item => ({
+                productId: item.productId || item.id, // Handle potential backend naming diffs
+                name: item.name || getProductName(item.productId),
+                price: item.price,
+                quantity: item.quantity
+            }));
+            renderItemsTable();
+        }
     }
+}
+
+function getProductName(id) {
+    const p = allProducts.find(product => product.id == id);
+    return p ? p.name : "Produit Inconnu";
 }
 
 window.deleteOrder = deleteOrder;
@@ -303,3 +422,5 @@ window.prefillOrderForm = prefillOrderForm;
 window.showDetails = showDetails;
 window.exportToPDF = exportToPDF;
 window.populateDropdowns = populateDropdowns;
+window.addItemToOrder = addItemToOrder;
+window.removeOrderItem = removeOrderItem;

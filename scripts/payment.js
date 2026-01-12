@@ -61,13 +61,15 @@ function closeModal() {
 }
 
 async function executeOrder() {
+    //JSON.parse() is used to parse a JSON string into a JavaScript object
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const user = JSON.parse(localStorage.getItem('authUser')) || JSON.parse(localStorage.getItem('user'));
     const token = localStorage.getItem('authToken');
     const method = document.querySelector('.method-option.active').dataset.method;
 
-    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const totalAmount = subtotal + 20;
+    //reduce() is used to calculate the subtotal of the cart it takes as arguments a callback function and an initial value
+    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0); // Calculate the subtotal of the cart   
+    const totalAmount = subtotal + 20; // Add delivery cost
 
     const orderData = {
         clientId: user.id,
@@ -92,7 +94,7 @@ async function executeOrder() {
         });
 
         if (!orderRes.ok) throw new Error('Failed to create order');
-        const order = await orderRes.json();
+        const order = await orderRes.json(); // Parse the response as JSON
 
         // 2. Create Payment Record
         const paymentData = {

@@ -272,6 +272,7 @@ window.goToPage = function (page) {
     renderAdminsTable();
 };
 
+//window functions are used to make the functions available to the global scope
 window.createAdmin = createAdmin;
 window.renderAdminsTable = renderAdminsTable;
 window.removeAdmin = removeAdmin;

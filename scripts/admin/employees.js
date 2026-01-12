@@ -133,8 +133,6 @@ async function renderEmployeesTable() {
     renderPagination(pages);
 }
 
-// ... (existing navigation/export) ...
-
 async function showDetails(id) {
     await fetchEmployees();
     const emp = allEmployees.find(e => e.id == id);

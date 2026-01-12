@@ -38,14 +38,13 @@ let orders = readJSONFile("orders.json");
 let clients = readJSONFile("clients.json");
 let employees = readJSONFile("employees.json");
 let payments = readJSONFile("payement.json");
-// Reviews are now sourced from public APIs directly
 
 // ==================== AUTH & ROLE MIDDLEWARES ====================
 
-function authMiddleware(req, res, next) {
-  const authHeader = req.headers.authorization || "";
-  const token = authHeader.startsWith("Bearer ")
-    ? authHeader.slice(7)
+function authMiddleware(req, res, next) { // this middleware is used to authenticate the user
+  const authHeader = req.headers.authorization || ""; //get the token from the header
+  const token = authHeader.startsWith("Bearer ") // check if the token is valid
+    ? authHeader.slice(7) // remove the "Bearer " prefix
     : null;
 
   if (!token) {
@@ -54,46 +53,46 @@ function authMiddleware(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET); // { id, username, role }
-    req.user = decoded;
-    next();
+    req.user = decoded; // store the user in the request object
+    next(); // pass the request to the next middleware
   } catch (err) {
-    return res.status(401).json({ error: "Token invalide ou expiré" });
+    return res.status(401).json({ error: "Token invalide ou expiré" });$
   }
 }
 
-function adminOnly(req, res, next) {
-  if (!req.user || (req.user.role !== "admin" && req.user.role !== "superadmin")) {
+function adminOnly(req, res, next) { // this middleware is used to authorize the user
+  if (!req.user || (req.user.role !== "admin" && req.user.role !== "superadmin")) { // check if the user is an admin or superadmin
     return res
       .status(403)
       .json({ error: "Accès réservé aux administrateurs" });
   }
-  next();
+  next(); // pass the request to the next middleware
 }
 
-function superAdminOnly(req, res, next) {
-  if (!req.user || req.user.role !== "superadmin") {
+function superAdminOnly(req, res, next) { // this middleware is used to authorize the user
+  if (!req.user || req.user.role !== "superadmin") { // check if the user is a superadmin
     return res.status(403).json({ error: "Accès réservé au Super Admin" });
   }
-  next();
+  next(); // pass the request to the next middleware
 }
 
 // ==================== AUTHENTIFICATION API ====================
 
 // POST /api/auth/check-username (Public for validation)
-app.post("/api/auth/check-username", (req, res) => {
-  const { username } = req.body;
-  if (!username) return res.status(400).json({ error: "Username required" });
+app.post("/api/auth/check-username", (req, res) => { // this middleware is used to check if the username is available
+  const { username } = req.body; // get the username from the request body
+  if (!username) return res.status(400).json({ error: "Username required" }); // check if the username is provided
 
-  const exists = clients.some(c => c.username.toLowerCase() === username.toLowerCase());
-  res.json({ exists });
+  const exists = clients.some(c => c.username.toLowerCase() === username.toLowerCase()); // check if the username exists
+  res.json({ exists }); // return the result
 });
 
 // POST /api/auth/register
-app.post("/api/auth/register", async (req, res) => {
+app.post("/api/auth/register", async (req, res) => { // this middleware is used to register a new user
   const { username, password, adminSecret } = req.body;
   let { role } = req.body;
 
-  if (!username || !password) {
+  if (!username || !password) { // check if the username and password are provided
     return res.status(400).json({
       error: "Tous les champs sont obligatoires (username, password)",
     });
@@ -102,24 +101,24 @@ app.post("/api/auth/register", async (req, res) => {
   // Default role to client
   if (!role) role = "client";
 
-  if (role !== "admin" && role !== "client" && role !== "superadmin") {
+  if (role !== "admin" && role !== "client" && role !== "superadmin") { // check if the role is valid
     return res.status(400).json({ error: "Le rôle doit être 'admin', 'superadmin' ou 'client'" });
   }
 
-  if ((role === "admin" || role === "superadmin") && adminSecret !== ADMIN_SECRET) {
+  if ((role === "admin" || role === "superadmin") && adminSecret !== ADMIN_SECRET) { // check if the admin secret is valid
     return res
       .status(403)
       .json({ error: "Code secret requis pour créer un administrateur" });
   }
 
-  const existingClient = clients.find((c) => c.username === username);
+  const existingClient = clients.find((c) => c.username === username); // check if the username exists
   if (existingClient) {
     return res
       .status(400)
       .json({ error: "Ce nom d'utilisateur existe déjà" });
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(password, 10); // hash the password
 
   const newUser = {
     id: Date.now(),
@@ -133,10 +132,10 @@ app.post("/api/auth/register", async (req, res) => {
     registrationDate: new Date().toISOString(),
   };
 
-  clients.push(newUser);
-  writeJSONFile("clients.json", clients);
+  clients.push(newUser); // add the new user to the clients array
+  writeJSONFile("clients.json", clients); // write the clients array to the clients.json file
 
-  const { password: _, ...userWithoutPassword } = newUser;
+  const { password: _, ...userWithoutPassword } = newUser; // remove the password from the user object
   res.status(201).json({
     message: "Utilisateur créé avec succès",
     user: userWithoutPassword,
@@ -144,7 +143,7 @@ app.post("/api/auth/register", async (req, res) => {
 });
 
 // POST /api/auth/login
-app.post("/api/auth/login", async (req, res) => {
+app.post("/api/auth/login", async (req, res) => { // this middleware is used to login a user
   const { username, password } = req.body;
 
   if (!username || !password) {
@@ -156,12 +155,12 @@ app.post("/api/auth/login", async (req, res) => {
   // Force reload of clients to ensure fresh data (dev convenience)
   clients = readJSONFile("clients.json");
 
-  const user = clients.find((c) => c.username === username);
+  const user = clients.find((c) => c.username === username); // check if the username exists
   if (!user) {
     return res.status(401).json({ error: "Identifiants incorrects" });
   }
 
-  const passwordMatch = await bcrypt.compare(password, user.password);
+  const passwordMatch = await bcrypt.compare(password, user.password); // check if the password is correct
   if (!passwordMatch) {
     return res.status(401).json({ error: "Identifiants incorrects" });
   }
@@ -172,7 +171,7 @@ app.post("/api/auth/login", async (req, res) => {
     { expiresIn: "12h" }
   );
 
-  const { password: _, ...userWithoutPassword } = user;
+  const { password: _, ...userWithoutPassword } = user; // remove the password from the user object because it's not needed
 
   res.json({
     message: "Connexion réussie",
@@ -183,84 +182,85 @@ app.post("/api/auth/login", async (req, res) => {
 
 // ==================== REVIEWS API (MOCKED VIA PUBLIC API) ====================
 
-// GET reviews for a product (public - returns mock data)
-app.get("/api/products/:id/reviews", async (req, res) => {
-  try {
-    const response = await fetch("https://randomuser.me/api/?results=3&nat=fr");
-    const data = await response.json();
-    const productId = req.params.id;
+// // GET reviews for a product (public - returns mock data)
+// app.get("/api/products/:id/reviews", async (req, res) => { // this middleware is used to get reviews for a product
+//   try {
+//     const response = await fetch("https://randomuser.me/api/?results=3&nat=fr"); // fetch random users from the randomuser.me API
+//     const data = await response.json(); // parse the response
+//     const productId = req.params.id; // get the product id from the request parameters
 
-    const labReviews = [
-      "The molar balance between glucose and acidity in the lemon curd is masterful. Rare structural precision.",
-      "An algorithmic layering of pastry with a lightness that defies gravity. My prefrontal cortex approves.",
-      "The isotropic distribution of chocolate chips ensures a homogeneous sensory experience in every sample."
-    ];
+//     const labReviews = [
+//       "L'équilibre molaire entre le glucose et l'acidité dans le lemon curd est magistral. Rare précision structurelle.",
+//       "Un feuilletage algorithmique d'une légèreté défiant la gravité. Mon cortex préfrontal approuve.",
+//       "La distribution isotrope des pépites de chocolat garantit une expérience sensorielle homogène dans chaque échantillon."
+//     ];
 
-    const mockReviews = data.results.map((person, i) => ({
-      id: `mock_${i}`,
-      productId,
-      username: `${person.name.first} ${person.name.last}`,
-      avatar: person.picture.medium,
-      comment: labReviews[i],
-      rating: 5,
-      date: new Date().toISOString(),
-      status: "Verified Subject"
-    }));
+//     const mockReviews = data.results.map((person, i) => ({ // map the data to the mock reviews format
+//       id: `mock_${i}`,
+//       productId,
+//       username: `${person.name.first} ${person.name.last}`,
+//       avatar: person.picture.medium,
+//       comment: labReviews[i],
+//       rating: 5,
+//       date: new Date().toISOString(),
+//       status: "Verified Subject"
+//     }));
 
-    res.json(mockReviews);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to fetch mock reviews" });
-  }
-});
+//     res.json(mockReviews); // return the mock reviews
+//   } catch (err) {
+//     res.status(500).json({ error: "Failed to fetch mock reviews" });
+//   }
+// });
 
-// GET all reviews (returns top mock reviews)
-app.get("/api/reviews", async (req, res) => {
-  try {
-    const response = await fetch("https://randomuser.me/api/?results=6&nat=fr");
-    const data = await response.json();
+// // GET all reviews (returns top mock reviews)
+// app.get("/api/reviews", async (req, res) => { // this middleware is used to get reviews for all products
+//   try {
+//     const response = await fetch("https://randomuser.me/api/?results=6&nat=fr"); // fetch random users from the randomuser.me API
+//     const data = await response.json(); // parse the response
 
-    const comments = [
-      "Exceptional density-to-flavor ratio.",
-      "Thermodynamic perfection in the crust.",
-      "Symmetry optimized for maximum crunch.",
-      "Molecular composition is perfectly stable.",
-      "Refined textures, peak engineering.",
-      "Elite performance in flavor trials."
-    ];
+//     const comments = [
+//       "Rapport densité-saveur exceptionnel.",
+//       "Perfection thermodynamique de la croûte.",
+//       "Symétrie optimisée pour un croquant maximal.",
+//       "Composition moléculaire parfaitement stable.",
+//       "Textures raffinées, ingénierie de pointe.",
+//       "Performance d'élite lors des essais gustatifs."
+//     ];
 
-    const mockReviews = data.results.map((person, i) => ({
-      id: `global_${i}`,
-      username: `${person.name.first} ${person.name.last}`,
-      avatar: person.picture.medium,
-      comment: comments[i],
-      rating: 5,
-      status: "Gourmet Specialist"
-    }));
+//     const mockReviews = data.results.map((person, i) => ({ // map the data to the mock reviews format
+//       id: `global_${i}`,
+//       username: `${person.name.first} ${person.name.last}`,
+//       avatar: person.picture.medium,
+//       comment: comments[i],
+//       rating: 5,
+//       status: "Gourmet Specialist"
+//     }));
 
-    res.json(mockReviews);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to fetch mock reviews" });
-  }
-});
+//     res.json(mockReviews); // return the mock reviews
+//   } catch (err) {
+//     res.status(500).json({ error: "Failed to fetch mock reviews" });
+//   }
+// });
 
 // ==================== PRODUCTS API ====================
 
 // GET all products (public)
-app.get("/api/products", (req, res) => {
-  res.json(readJSONFile("products.json"));
+app.get("/api/products", (req, res) => { // this middleware is used to get all products
+  res.json(readJSONFile("products.json")); // return the products
 });
 
 
 // GET product by ID (public)
-app.get("/api/products/:id", (req, res) => {
-  const id = Number(req.params.id);
-  const product = products.find((p) => p.id === id);
-  if (!product) return res.status(404).json({ error: "Produit non trouvé" });
-  res.json(product);
+app.get("/api/products/:id", (req, res) => { // this middleware is used to get a product by ID
+  const id = Number(req.params.id); // get the product id from the request parameters
+  const product = products.find((p) => p.id === id); // find the product by ID
+  if (!product) return res.status(404).json({ error: "Produit non trouvé" }); // return a 404 error if the product is not found
+  res.json(product); // return the product
 });
 
 // CREATE product (admin)
-app.post("/api/products", authMiddleware, adminOnly, (req, res) => {
+//  adminOnly middleware is used to authorize the by checking the role of the user is admin 
+app.post("/api/products", authMiddleware, adminOnly, (req, res) => { // this middleware is used to create a product
   const newProduct = {
     id: Date.now(),
     name: req.body.name,
@@ -276,24 +276,24 @@ app.post("/api/products", authMiddleware, adminOnly, (req, res) => {
 });
 
 // UPDATE product (admin)
-app.put("/api/products/:id", authMiddleware, adminOnly, (req, res) => {
-  const id = Number(req.params.id);
-  const index = products.findIndex((p) => p.id === id);
-  if (index === -1) return res.status(404).json({ error: "Produit non trouvé" });
+app.put("/api/products/:id", authMiddleware, adminOnly, (req, res) => { // this middleware is used to update a product
+  const id = Number(req.params.id); // get the product id from the request parameters
+  const index = products.findIndex((p) => p.id === id); // find the product by ID
+  if (index === -1) return res.status(404).json({ error: "Produit non trouvé" }); // return a 404 error if the product is not found
 
-  const updatedProduct = { ...products[index], ...req.body, id };
+  const updatedProduct = { ...products[index], ...req.body, id }; // update the product
   products[index] = updatedProduct;
   writeJSONFile("products.json", products);
   res.json(updatedProduct);
 });
 
 // DELETE product (admin)
-app.delete("/api/products/:id", authMiddleware, adminOnly, (req, res) => {
-  const id = Number(req.params.id);
-  const initialLength = products.length;
-  products = products.filter((p) => p.id !== id);
-  if (products.length === initialLength) {
-    return res.status(404).json({ error: "Produit non trouvé" });
+app.delete("/api/products/:id", authMiddleware, adminOnly, (req, res) => { // this middleware is used to delete a product
+  const id = Number(req.params.id); // get the product id from the request parameters
+  const initialLength = products.length; // get the initial length of the products array
+  products = products.filter((p) => p.id !== id); // filter the products array to remove the product with the given id
+  if (products.length === initialLength) { // if the length of the products array is the same as the initial length, the product was not found
+    return res.status(404).json({ error: "Produit non trouvé" }); // return a 404 error if the product is not found
   }
   writeJSONFile("products.json", products);
   res.json({ message: "Produit supprimé", id });
@@ -302,23 +302,23 @@ app.delete("/api/products/:id", authMiddleware, adminOnly, (req, res) => {
 // ==================== CATEGORIES API ====================
 
 // GET all categories (public)
-app.get("/api/categories", (req, res) => {
-  res.json(readJSONFile("categories.json"));
+app.get("/api/categories", (req, res) => { // this middleware is used to get all categories
+  res.json(readJSONFile("categories.json")); // return the categories
 });
 
 
 // GET category by ID (public)
-app.get("/api/categories/:id", (req, res) => {
-  const id = Number(req.params.id);
-  const category = categories.find((c) => c.id_categorie === id);
-  if (!category) {
-    return res.status(404).json({ error: "Catégorie non trouvée" });
+app.get("/api/categories/:id", (req, res) => { // this middleware is used to get a category by ID
+  const id = Number(req.params.id); // get the category id from the request parameters
+  const category = categories.find((c) => c.id_categorie === id); // find the category by ID
+  if (!category) { // if the category is not found
+    return res.status(404).json({ error: "Catégorie non trouvée" }); // return a 404 error if the category is not found
   }
-  res.json(category);
+  res.json(category); // return the category
 });
 
 // CREATE category (admin)
-app.post("/api/categories", authMiddleware, adminOnly, (req, res) => {
+app.post("/api/categories", authMiddleware, adminOnly, (req, res) => { // this middleware is used to create a category  
   const newCategory = {
     id_categorie: Date.now(),
     libelle: req.body.libelle,
@@ -330,11 +330,11 @@ app.post("/api/categories", authMiddleware, adminOnly, (req, res) => {
 });
 
 // UPDATE category (admin)
-app.put("/api/categories/:id", authMiddleware, adminOnly, (req, res) => {
-  const id = Number(req.params.id);
-  const index = categories.findIndex((c) => c.id_categorie === id);
-  if (index === -1) {
-    return res.status(404).json({ error: "Catégorie non trouvée" });
+app.put("/api/categories/:id", authMiddleware, adminOnly, (req, res) => { // this middleware is used to update a category
+  const id = Number(req.params.id); // get the category id from the request parameters
+  const index = categories.findIndex((c) => c.id_categorie === id); // find the category by ID
+  if (index === -1) { // if the category is not found
+    return res.status(404).json({ error: "Catégorie non trouvée" }); // return a 404 error if the category is not found
   }
   categories[index] = {
     ...categories[index],
@@ -346,12 +346,12 @@ app.put("/api/categories/:id", authMiddleware, adminOnly, (req, res) => {
 });
 
 // DELETE category (admin)
-app.delete("/api/categories/:id", authMiddleware, adminOnly, (req, res) => {
-  const id = Number(req.params.id);
-  const initialLength = categories.length;
-  categories = categories.filter((c) => c.id_categorie !== id);
-  if (categories.length === initialLength) {
-    return res.status(404).json({ error: "Catégorie non trouvée" });
+app.delete("/api/categories/:id", authMiddleware, adminOnly, (req, res) => { // this middleware is used to delete a category
+  const id = Number(req.params.id); // get the category id from the request parameters
+  const initialLength = categories.length; // get the initial length of the categories array
+  categories = categories.filter((c) => c.id_categorie !== id); // filter the categories array to remove the category with the given id
+  if (categories.length === initialLength) { // if the length of the categories array is the same as the initial length, the category was not found
+    return res.status(404).json({ error: "Catégorie non trouvée" }); // return a 404 error if the category is not found
   }
   writeJSONFile("categories.json", categories);
   res.json({ message: "Catégorie supprimée", id });
@@ -360,29 +360,29 @@ app.delete("/api/categories/:id", authMiddleware, adminOnly, (req, res) => {
 // ==================== ORDERS API ====================
 
 // GET all orders (admin)
-app.get("/api/orders", authMiddleware, adminOnly, (req, res) => {
-  res.json(readJSONFile("orders.json"));
+app.get("/api/orders", authMiddleware, adminOnly, (req, res) => { // this middleware is used to get all orders
+  res.json(readJSONFile("orders.json")); // return the orders
 });
 
 
 // GET my orders (logged-in client)
-app.get("/api/orders/my", authMiddleware, (req, res) => {
-  const myOrders = readJSONFile("orders.json").filter(o => o.clientId == req.user.id);
-  res.json(myOrders);
+app.get("/api/orders/my", authMiddleware, (req, res) => { // this middleware is used to get all orders of a logged-in client
+  const myOrders = readJSONFile("orders.json").filter(o => o.clientId == req.user.id); // filter the orders to get only the orders of the logged-in client
+  res.json(myOrders); // return the orders of the logged-in client
 });
 
 // GET order by ID (admin)
-app.get("/api/orders/:id", authMiddleware, adminOnly, (req, res) => {
-  const id = Number(req.params.id);
-  const order = orders.find((o) => o.id === id);
-  if (!order) {
-    return res.status(404).json({ error: "Commande non trouvée" });
+app.get("/api/orders/:id", authMiddleware, adminOnly, (req, res) => { // this middleware is used to get an order by ID
+  const id = Number(req.params.id); // get the order id from the request parameters
+  const order = orders.find((o) => o.id === id); // find the order by ID
+  if (!order) { // if the order is not found
+    return res.status(404).json({ error: "Commande non trouvée" }); // return a 404 error if the order is not found
   }
   res.json(order);
 });
 
 // CREATE order (client ou admin)
-app.post("/api/orders", authMiddleware, (req, res) => {
+app.post("/api/orders", authMiddleware, (req, res) => { // this middleware is used to create an order 
   const items = req.body.items || [];
 
   // 1. Verify stock availability
@@ -594,7 +594,7 @@ app.delete("/api/employees/:id", authMiddleware, adminOnly, (req, res) => {
   res.json({ message: "Employé supprimé", id });
 });
 
-// ==================== PAYMENTS API (admin only) ====================
+// ==================== PAYMENTS API  ====================
 
 app.get("/api/payments", authMiddleware, adminOnly, (req, res) => {
   res.json(payments);

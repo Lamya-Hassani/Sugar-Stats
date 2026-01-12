@@ -226,8 +226,9 @@
 
             <!-- Row 2: Amount (50%) & Date (50%) -->
             <div class="form-group span-2">
-                <label for="totalAmount">Montant Prévisionnel ($)</label>
-                <input type="number" id="totalAmount" step="0.01" required placeholder="0.00">
+                <label for="totalAmount">Montant Total (Calculé)</label>
+                <input type="number" id="totalAmount" step="0.01" required placeholder="0.00" readonly
+                    style="background:rgba(0,0,0,0.03); cursor:not-allowed;">
             </div>
 
             <div class="form-group span-2">
@@ -238,8 +239,21 @@
             <!-- Row 3: Items (Full Width) -->
             <div class="form-group span-4">
                 <label>Inventaire des Produits</label>
+
+                <!-- Add Item Controls -->
+                <div style="display:flex; gap:1rem; margin-bottom:1rem; align-items:center;">
+                    <select id="productSelect" style="flex:2;">
+                        <option value="">Chargement des produits...</option>
+                    </select>
+                    <input type="number" id="productQuantity" value="1" min="1" style="flex:0.5; text-align: center;">
+                    <button type="button" onclick="window.addItemToOrder()" class="btn"
+                        style="padding:0.8rem 1.5rem; background:var(--c-magenta); color:white; border:none; box-shadow:none; border-radius:12px; font-size:0.9rem;">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+
                 <div id="itemsContainer" class="items-list">
-                    <!-- Items will be injected here if logic allows, or keep it simple -->
+                    <!-- Items table will be rendered here -->
                 </div>
             </div>
 

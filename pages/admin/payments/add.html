@@ -249,9 +249,7 @@
     <script src="../../../scripts/admin/payments.js"></script>
     <script>
         const user = JSON.parse(localStorage.getItem('authUser')) || JSON.parse(localStorage.getItem('user'));
-        // Security check commented out for dev
-        // if (!user || user.role !== 'admin') { window.location.href = '../../auth.html'; }
-
+        
         document.addEventListener('DOMContentLoaded', async () => {
             if (window.populateDropdowns) {
                 await window.populateDropdowns();
